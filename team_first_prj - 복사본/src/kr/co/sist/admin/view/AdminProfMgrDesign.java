@@ -2,7 +2,6 @@ package kr.co.sist.admin.view;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -14,23 +13,22 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
-import kr.co.sist.admin.controller.AdminStuMgrDesignEvt;
-import kr.co.sist.admin.dto.StudentDTO;
+import kr.co.sist.admin.controller.AdminProfMgrDesignEvt;
 
-public class AdminStuMgrDesign extends JDialog {
+public class AdminProfMgrDesign extends JDialog {
 
-	private JTextField jtfNum;
+	private JTextField jtfName;
 	private DefaultTableModel dtmStuMgr;
 	private JTable jtStuMgr;
 	private JButton jbtnSearch, jbtnModify, jbtnAdd, jbtnDelete, jbtnClose;
 //	private StudentDTO sDTO;
 
-	public AdminStuMgrDesign(AdminInfoDesign aid, boolean modal) {
-		super(aid,"관리자 - 학생관리",modal);
+	public AdminProfMgrDesign(AdminInfoDesign aid, boolean modal) {
+		super(aid,"관리자 - 교수관리",modal);
 		JPanel jpNouthSerch= new JPanel();
 		JPanel jpSouthButton= new JPanel(new FlowLayout(FlowLayout.CENTER, 30, 10));
-		String[] columnNames = { "학번", "이름", "휴대폰번호", "가입일" };
-		jtfNum = new JTextField(15);
+		String[] columnNames = { "교번", "이름", "휴대폰번호", "가입일" };
+		jtfName = new JTextField(15);
 		dtmStuMgr = new DefaultTableModel(columnNames, 0);
 		jtStuMgr = new JTable(dtmStuMgr);
 
@@ -43,33 +41,28 @@ public class AdminStuMgrDesign extends JDialog {
 
 		// 글꼴 설정
 		Font font = new Font("맑은 고딕", Font.BOLD, 15);
-		jtfNum.setFont(font);
+		jtfName.setFont(font);
 		jtStuMgr.setFont(font);
-		
 		jbtnSearch.setFont(font);
 		jbtnModify.setFont(font);
 		jbtnAdd.setFont(font);
 		jbtnDelete.setFont(font);
 		jbtnClose.setFont(font);
 		
+		
 		//액션리스너, 윈도우 리스너 추가 
-		AdminStuMgrDesignEvt asde= new AdminStuMgrDesignEvt(this);
+		AdminProfMgrDesignEvt asde= new AdminProfMgrDesignEvt(this);
 		addWindowListener(asde);
 		jbtnSearch.addActionListener(asde);
 		jbtnModify.addActionListener(asde);
 		jbtnAdd.addActionListener(asde);
 		jbtnDelete.addActionListener(asde);
 		jbtnClose.addActionListener(asde);
-		jtStuMgr.addMouseListener(asde);
-		
-		
-		
-		
 		
 
 		// columns(열)의 넓이 설정
 		TableColumnModel tcm = jtStuMgr.getColumnModel();
-		tcm.getColumn(0).setPreferredWidth(40);// 학번
+		tcm.getColumn(0).setPreferredWidth(40);// 교번
 		tcm.getColumn(1).setPreferredWidth(80);// 이름
 		tcm.getColumn(2).setPreferredWidth(100);// 휴대폰 번호
 		tcm.getColumn(3).setPreferredWidth(120);// 가입일
@@ -85,7 +78,7 @@ public class AdminStuMgrDesign extends JDialog {
 		jpSouthButton.add(jbtnAdd);
 		jpSouthButton.add(jbtnDelete);
 		jpSouthButton.add(jbtnClose);
-		jpNouthSerch.add(jtfNum);
+		jpNouthSerch.add(jtfName);
 		jpNouthSerch.add(jbtnSearch);
 		
 		
@@ -95,48 +88,54 @@ public class AdminStuMgrDesign extends JDialog {
 		
 		
 		setSize(600, 300);
-		setResizable(false);
 		setLocationRelativeTo(null);
+		setResizable(false);
 		setVisible(true);
-	}//AdminStuMgrDesign
+	}//AdminProfMgrDesign
+	
 
-	public JTextField getJtfNum() {
-		return jtfNum;
+	public JTextField getJtfName() {
+		return jtfName;
 	}
+
 
 	public DefaultTableModel getDtmStuMgr() {
 		return dtmStuMgr;
 	}
 
+
 	public JTable getJtStuMgr() {
 		return jtStuMgr;
 	}
+
 
 	public JButton getJbtnSearch() {
 		return jbtnSearch;
 	}
 
+
 	public JButton getJbtnModify() {
 		return jbtnModify;
 	}
+
 
 	public JButton getJbtnAdd() {
 		return jbtnAdd;
 	}
 
+
 	public JButton getJbtnDelete() {
 		return jbtnDelete;
 	}
+
 
 	public JButton getJbtnClose() {
 		return jbtnClose;
 	}
 	
-	
-
-	
-
-
+//	public static void main(String[] args) {
+//		new AdminProfMgrDesign();
+//	}//main
 
 
 }//class
