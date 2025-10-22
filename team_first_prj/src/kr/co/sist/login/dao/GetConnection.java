@@ -3,6 +3,7 @@ package kr.co.sist.login.dao;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -37,7 +38,9 @@ public class GetConnection {
 			}//end catch
 			//2. 로딩된 드라이버를 사용하여 커넥션 얻기 => properties 도입
 			
-			File file = new File("C:/dev/workspace/team_first_prj/src/properties/datebase.properties");
+			String userHome = System.getProperty("user.home");
+			File file = new File(userHome+"/git/team_first_prj/team_first_prj/src/properties/datebase.properties");
+			
 			if(!file.exists()) {
 				throw new IOException("properties가 지정된 위치에 존재하지 않습니다.");
 			}
