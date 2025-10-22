@@ -6,17 +6,38 @@ import java.awt.event.WindowAdapter;
 
 import javax.swing.JOptionPane;
 
+import kr.co.sist.stu.service.CourseSelectService;
 import kr.co.sist.stu.view.CourseSelectDesign;
 import kr.co.sist.stu.view.ShowSubjectDialog;
 
 public class CourseSelectDesignEvt extends WindowAdapter implements ActionListener {
 	
 	private CourseSelectDesign csd;
+	private CourseSelectService css;
 	
 	public CourseSelectDesignEvt(CourseSelectDesign csd) {
 		this.csd = csd;
+		css=new CourseSelectService();
 	}
 
+	
+//	/**
+//	 * 선택된 과정 내 과목을 보여주는 method
+//	 */
+//	public void showSubProcess() {
+//		
+//	}//showSubProcess
+//	
+//	
+//	
+//	/**
+//	 * 신청 선택 시 호출되는 method
+//	 */
+//	public void applyProcess() {
+//		
+//	}//applyProcess
+	
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource()==csd.getJbtnApplyCourse()) {
