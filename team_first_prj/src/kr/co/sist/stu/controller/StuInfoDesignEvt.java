@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import kr.co.sist.login.dao.CurrentStuData;
 import kr.co.sist.stu.view.CourseSelectDesign;
 import kr.co.sist.stu.view.StuCourseMgrDesign;
 import kr.co.sist.stu.view.StuInfoDesign;
@@ -16,6 +17,7 @@ public class StuInfoDesignEvt extends WindowAdapter implements ActionListener{
 	
 	public StuInfoDesignEvt(StuInfoDesign sd) {
 		this.sd = sd;
+		stuInfoView();
 	}
 
 	@Override
@@ -38,6 +40,16 @@ public class StuInfoDesignEvt extends WindowAdapter implements ActionListener{
 		sd.dispose();
 	}
 	
+	public void stuInfoView() {
+		
+		CurrentStuData csd = CurrentStuData.getInstance();
+		
+		sd.getJtfStuCourseData().setText(csd.getLogStuDTO().getStuCourseName());
+		sd.getJtfStuNameData().setText(csd.getLogStuDTO().getStuName());
+		sd.getJtfStuTelData().setText(csd.getLogStuDTO().getStuTel());
+		sd.getJtfStuNumData().setText(String.valueOf(csd.getLogStuDTO().getStuNum()));
+		
+	}
 	
 	
 

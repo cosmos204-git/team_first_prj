@@ -125,7 +125,7 @@ public class LoginProfDTO {
 	}
 
 	public void setCourseNum(int courseNum) {
-		CourseNum = courseNum;
+		this.CourseNum = courseNum;
 	}
 
 	public String getCourseName() {
@@ -133,7 +133,7 @@ public class LoginProfDTO {
 	}
 
 	public void setCourseName(String courseName) {
-		CourseName = courseName;
+		this.CourseName = courseName;
 	}
 
 	public String getProfDelFlag() {

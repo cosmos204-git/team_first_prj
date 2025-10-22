@@ -50,9 +50,9 @@ public class LoginDAO {
 			//3.쿼리문 생성 객체 얻기
 			StringBuilder selectOneMember = new StringBuilder();
 			selectOneMember
-			.append("		SELECT STU_NUM,STU_IMG,STU_NAME,STU_PASS,STU_TEL,STU_EMAIL,STU_ADDR1,STU_ADDR2,STU_REG_INPUTDATE,COURSE_CODE,STU_DEL_FLAG")
-			.append("		FROM  STUDENT")
-			.append("		WHERE STU_NUM = ?");
+			.append("		SELECT STU_NUM,STU_IMG,STU_NAME,STU_PASS,STU_TEL,STU_EMAIL,STU_ADDR1,STU_ADDR2,STU_REG_INPUTDATE,STUDENT.COURSE_CODE,STU_DEL_FLAG, COURSE.COURSE_NAME")
+			.append("		FROM  STUDENT, COURSE")
+			.append("		WHERE student.course_code = course.course_code and STU_NUM = ?");
 
 			pstmt = con.prepareStatement(selectOneMember.toString());
 			
@@ -72,7 +72,8 @@ public class LoginDAO {
 				logStuDTO.setStuAddr1(rs.getString("stu_addr1"));
 				logStuDTO.setStuAddr2(rs.getString("stu_addr2"));
 				logStuDTO.setStuInputDate(rs.getDate("stu_reg_inputdate"));
-				logStuDTO.setStuCourseName(rs.getString("course_code"));
+				logStuDTO.setStuCourseNum(rs.getInt("course_code"));
+				logStuDTO.setStuCourseName(rs.getString("course_name"));
 				logStuDTO.setStuDelFlag(rs.getString("stu_del_flag"));
 				
 				//이미지는 스트림을 별도로 연결하여 읽어 들인다.
@@ -135,9 +136,9 @@ public class LoginDAO {
 			//3.쿼리문 생성 객체 얻기
 			StringBuilder selectOneMember = new StringBuilder();
 			selectOneMember
-			.append("		SELECT PROF_NUM,PROF_IMG,PROF_NAME,PROF_PASS,PROF_TEL,PROF_EMAIL,PROF_INPUTDATE,PROF_DEL_FLAG")
-			.append("		FROM  PROFESSOR")
-			.append("		WHERE PROF_NUM = ?");
+			.append("		SELECT PROFESSOR.PROF_NUM,PROF_IMG,PROF_NAME,PROF_PASS,PROF_TEL,PROF_EMAIL,PROF_INPUTDATE,PROF_DEL_FLAG, COURSE.COURSE_NAME")
+			.append("		FROM  PROFESSOR,COURSE")
+			.append("		WHERE PROFESSOR.PROF_NUM = COURSE.PROF_NUM and PROFESSOR.PROF_NUM = ?");
 			
 			pstmt = con.prepareStatement(selectOneMember.toString());
 			
@@ -156,7 +157,7 @@ public class LoginDAO {
 				logProfDTO.setProfEmail(rs.getString("prof_email"));
 				logProfDTO.setProfInputDate(rs.getDate("prof_inputdate"));
 				logProfDTO.setProfDelFlag(rs.getString("prof_del_flag"));
-				
+				logProfDTO.setCourseName(rs.getString("course_name"));
 				
 				//이미지는 스트림을 별도로 연결하여 읽어 들인다.
 				Properties prop = new Properties();
