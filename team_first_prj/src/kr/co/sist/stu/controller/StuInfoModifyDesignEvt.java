@@ -7,20 +7,26 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JOptionPane;
 
+import kr.co.sist.login.dao.CurrentStuData;
+import kr.co.sist.stu.service.StuInfoModifyService;
 import kr.co.sist.stu.view.StuInfoModifyDesign;
 import kr.co.sist.stu.view.StuPwMdfDialog;
 
 public class StuInfoModifyDesignEvt extends WindowAdapter implements ActionListener{
 	private StuInfoModifyDesign simd;
+	private StuInfoModifyService sims;
+	
+	
 	
 	public StuInfoModifyDesignEvt(StuInfoModifyDesign simd) {
 		this.simd = simd;
 	}
+	
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource()==simd.getJbtnModifyStuInfo()) {
-			modifyStuInfoProcess();
+		//	modifyStuInfoProcess();
 		}
 		if(e.getSource()==simd.getJbtnModifyPw()) {
 			modifyStuPwProcess();
@@ -34,7 +40,10 @@ public class StuInfoModifyDesignEvt extends WindowAdapter implements ActionListe
 	}
 	
 	public void modifyStuInfoProcess() {
-		JOptionPane.showMessageDialog(simd, "변경 완료 기능 구현 필요");
+		CurrentStuData csd = CurrentStuData.getInstance();
+		
+		sims.modifyMember(csd,simd);
+		
 	}
 	
 	public void modfiyStuPicProcess() {
