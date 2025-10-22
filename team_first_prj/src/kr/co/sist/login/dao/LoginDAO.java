@@ -19,7 +19,7 @@ import kr.co.sist.login.dto.LoginStudentDTO;
 public class LoginDAO {
 	
 	private static LoginDAO logDAO;
-	
+	String userHome = System.getProperty("user.home");
 	private LoginDAO() {
 		
 	}
@@ -77,7 +77,7 @@ public class LoginDAO {
 				
 				//이미지는 스트림을 별도로 연결하여 읽어 들인다.
 				Properties prop = new Properties();
-				String userHome = System.getProperty("user.home");
+				
 				prop.load(new FileInputStream(userHome+"/git/team_first_prj/team_first_prj/src/properties/datebase.properties"));
 				
 				File dir = new File(prop.getProperty("savePath"));
@@ -160,7 +160,7 @@ public class LoginDAO {
 				
 				//이미지는 스트림을 별도로 연결하여 읽어 들인다.
 				Properties prop = new Properties();
-				prop.load(new FileInputStream("C:/dev/workspace/team_first_prj/src/properties/datebase.properties"));
+				prop.load(new FileInputStream(userHome+"/git/team_first_prj/team_first_prj/src/properties/datebase.properties"));
 				
 				File dir = new File(prop.getProperty("savePath"));
 				
