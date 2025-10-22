@@ -20,13 +20,15 @@ public class StuInfoModifyDesignEvt extends WindowAdapter implements ActionListe
 	
 	public StuInfoModifyDesignEvt(StuInfoModifyDesign simd) {
 		this.simd = simd;
+		sims = new StuInfoModifyService();
+		viewStuInfo();
 	}
 	
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource()==simd.getJbtnModifyStuInfo()) {
-		//	modifyStuInfoProcess();
+			modifyStuInfoProcess();
 		}
 		if(e.getSource()==simd.getJbtnModifyPw()) {
 			modifyStuPwProcess();
@@ -41,8 +43,13 @@ public class StuInfoModifyDesignEvt extends WindowAdapter implements ActionListe
 	
 	public void modifyStuInfoProcess() {
 		CurrentStuData csd = CurrentStuData.getInstance();
+		csd.getLogStuDTO().setStuEmail(simd.getJtfStuEmail().getText());
+		csd.getLogStuDTO().setStuAddr1(simd.getJtfStuAddr().getText());
+		csd.getLogStuDTO().setStuAddr2(simd.getJtfStuAddr2().getText());
 		
-		sims.modifyMember(csd,simd);
+		if(sims.modifyMember(csd)==1) {
+			JOptionPane.showMessageDialog(simd, "개인정보를 변경하였습니다.");
+		}
 		
 	}
 	
@@ -59,7 +66,18 @@ public class StuInfoModifyDesignEvt extends WindowAdapter implements ActionListe
 		simd.dispose();
 	}
 	
-	
+	public void viewStuInfo() {
+		CurrentStuData csd = CurrentStuData.getInstance();
+		
+		simd.getJtfStuNumData().setText(String.valueOf(csd.getLogStuDTO().getStuNum()));
+		simd.getJtfStuNameData().setText(csd.getLogStuDTO().getStuName());
+		simd.getJtfStuTelData().setText(csd.getLogStuDTO().getStuTel());
+		simd.getJtfStuEmail().setText(csd.getLogStuDTO().getStuEmail());
+		simd.getJtfStuAddr().setText(csd.getLogStuDTO().getStuAddr1());
+		simd.getJtfStuAddr2().setText(csd.getLogStuDTO().getStuAddr2());
+		
+		
+	}
 	
 
 }

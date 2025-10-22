@@ -3,12 +3,11 @@ package kr.co.sist.prof.view;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.event.WindowListener;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
+import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -17,7 +16,7 @@ import javax.swing.table.DefaultTableModel;
 
 import kr.co.sist.prof.controller.ProfScoreMgrDesignEvt;
 
-public class ProfScoreMgrDesign extends JFrame{
+public class ProfScoreMgrDesign extends JDialog{
 	
 	private JComboBox<String> jcbProfCourse;
 	private DefaultComboBoxModel<String> dcbmProfCourse;
@@ -30,8 +29,8 @@ public class ProfScoreMgrDesign extends JFrame{
 	private JButton jbtnShowStuReportInfo;
 	
 	
-	public ProfScoreMgrDesign() {
-		super("성적 관리");
+	public ProfScoreMgrDesign(ProfInfoDesign pid, boolean modal) {
+		super(pid,"성적 관리",modal);
 	
 		dcbmProfCourse = new DefaultComboBoxModel<String>();
 		dcbmProfSub = new DefaultComboBoxModel<String>();

@@ -17,7 +17,7 @@ public class StuInfoDesignEvt extends WindowAdapter implements ActionListener{
 	
 	public StuInfoDesignEvt(StuInfoDesign sd) {
 		this.sd = sd;
-		stuInfoView();
+		viewStuInfo();
 	}
 
 	@Override
@@ -40,7 +40,7 @@ public class StuInfoDesignEvt extends WindowAdapter implements ActionListener{
 		sd.dispose();
 	}
 	
-	public void stuInfoView() {
+	public void viewStuInfo() {
 		
 		CurrentStuData csd = CurrentStuData.getInstance();
 		

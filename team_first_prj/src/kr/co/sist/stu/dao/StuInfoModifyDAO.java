@@ -28,6 +28,7 @@ public class StuInfoModifyDAO {
 	
 	
 	public int updateMember(CurrentStuData csDTO) throws SQLException, IOException {
+		
 		int flag = 0;
 		
 		GetConnection gc = GetConnection.getInstance();
@@ -51,10 +52,10 @@ public class StuInfoModifyDAO {
 			pstmt = con.prepareStatement(updateMember.toString());
 			
 			//4. 바인드변수에 값 설정
-			pstmt.setString(1, csDTO.getInstance().getLogStuDTO().getStuEmail());
-			pstmt.setString(2, csDTO.getInstance().getLogStuDTO().getStuAddr1());
-			pstmt.setString(3, csDTO.getInstance().getLogStuDTO().getStuAddr2());
-			pstmt.setInt(4, csDTO.getInstance().getLogStuDTO().getStuNum());
+			pstmt.setString(1, csDTO.getLogStuDTO().getStuEmail());
+			pstmt.setString(2, csDTO.getLogStuDTO().getStuAddr1());
+			pstmt.setString(3, csDTO.getLogStuDTO().getStuAddr2());
+			pstmt.setInt(4, csDTO.getLogStuDTO().getStuNum());
 			
 			//5. 쿼리문 수행 후 결과 얻기 
 			flag=pstmt.executeUpdate(); //변경한 행의 수		

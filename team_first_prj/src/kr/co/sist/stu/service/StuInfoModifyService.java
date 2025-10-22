@@ -15,15 +15,13 @@ public class StuInfoModifyService {
 		
 	}
 	
-	public int modifyMember(CurrentStuData csDTO,StuInfoModifyDesign simd) {
-		
-		System.out.println(simd.getJtfStuAddr());
+	public int modifyMember(CurrentStuData csd) {
 		
 		int flag=0;
 		
 		try {
 			StuInfoModifyDAO simDAO = StuInfoModifyDAO.getInstance();
-			flag=simDAO.updateMember(csDTO);
+			flag=simDAO.updateMember(csd);
 			//DB테이블에 회원번호가 PK가 아니라면 flag가 n개가 반환될 수 있고
 			//그 경우에는 1로 재설정한다.
 		}catch(IOException ie){
