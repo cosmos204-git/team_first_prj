@@ -16,9 +16,10 @@ public class StuInfoModifyDesign extends JDialog{
    private JLabel jlblStuImg;
    private JTextField jtfStuNumData,jtfStuNameData,jtfStuTelData,jtfStuEmail, jtfStuAddr, jtfStuAddr2;
    private JButton jbtnSelectImage, jbtnModifyPw , jbtnModifyStuInfo , jbtnClose ;
-
+   private StuInfoDesign sid;
    public StuInfoModifyDesign(StuInfoDesign sid, boolean modal) {
       super(sid,"학생 개인정보 변경",modal);
+      this.sid=sid;
       
       JLabel jlblStuName = new JLabel("이름");
       JLabel jlblStuNum = new JLabel("학번");
@@ -26,6 +27,7 @@ public class StuInfoModifyDesign extends JDialog{
       JLabel jlblStuEmail= new JLabel("이메일주소");
       JLabel jlblStuAddr = new JLabel("주소");
       JLabel jlblStuAddr2 = new JLabel("상세주소");
+      
       
       
       jlblStuImg = new JLabel();
@@ -154,6 +156,14 @@ public class StuInfoModifyDesign extends JDialog{
       
       setBounds(sid.getX()+50,sid.getY()+50,600,350);
       setVisible(true);
+   }
+
+   public StuInfoDesign getSid() {
+	return sid;
+}
+
+   public void setSid(StuInfoDesign sid) {
+	this.sid = sid;
    }
 
    public JLabel getJlblStuImg() {

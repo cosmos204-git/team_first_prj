@@ -17,22 +17,17 @@ public class LoginProfDTO {
 	private int CourseNum;
 	private String CourseName;
 	private String profDelFlag;
+	private String ext;
 	
 	public LoginProfDTO() {
 		
 	}
 
-	@Override
-	public String toString() {
-		return "LoginProfDTO [profNum=" + profNum + ", profImg=" + profImg + ", file=" + file + ", profName=" + profName
-				+ ", profPass=" + profPass + ", profNewPass=" + profNewPass + ", profTel=" + profTel + ", profEmail="
-				+ profEmail + ", profInputDate=" + profInputDate + ", CourseNum=" + CourseNum + ", CourseName="
-				+ CourseName + ", profDelFlag=" + profDelFlag + "]";
-	}
+	
 
 	public LoginProfDTO(int profNum, FileInputStream profImg, File file, String profName, String profPass,
 			String profNewPass, String profTel, String profEmail, Date profInputDate, int courseNum, String courseName,
-			String profDelFlag) {
+			String profDelFlag, String ext) {
 		super();
 		this.profNum = profNum;
 		this.profImg = profImg;
@@ -43,10 +38,35 @@ public class LoginProfDTO {
 		this.profTel = profTel;
 		this.profEmail = profEmail;
 		this.profInputDate = profInputDate;
-		this.CourseNum = courseNum;
-		this.CourseName = courseName;
+		CourseNum = courseNum;
+		CourseName = courseName;
 		this.profDelFlag = profDelFlag;
+		this.ext = ext;
 	}
+
+
+
+	@Override
+	public String toString() {
+		return "LoginProfDTO [profNum=" + profNum + ", profImg=" + profImg + ", file=" + file + ", profName=" + profName
+				+ ", profPass=" + profPass + ", profNewPass=" + profNewPass + ", profTel=" + profTel + ", profEmail="
+				+ profEmail + ", profInputDate=" + profInputDate + ", CourseNum=" + CourseNum + ", CourseName="
+				+ CourseName + ", profDelFlag=" + profDelFlag + ", ext=" + ext + "]";
+	}
+
+
+
+	public String getExt() {
+		return ext;
+	}
+
+
+
+	public void setExt(String ext) {
+		this.ext = ext;
+	}
+
+
 
 	public int getProfNum() {
 		return profNum;

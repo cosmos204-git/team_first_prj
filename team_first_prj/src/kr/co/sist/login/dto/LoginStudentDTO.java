@@ -19,7 +19,16 @@ public class LoginStudentDTO {
 	private int stuCourseNum;
 	private String stuCourseName;
 	private String stuDelFlag;
+	private String ext;
 	
+	public String getExt() {
+		return ext;
+	}
+
+	public void setExt(String ext) {
+		this.ext = ext;
+	}
+
 	public LoginStudentDTO() {
 		
 	}
@@ -142,12 +151,12 @@ public class LoginStudentDTO {
 				+ ", stuPass=" + stuPass + ", stuNewPass=" + stuNewPass + ", stuTel=" + stuTel + ", stuEmail="
 				+ stuEmail + ", stuInputDate=" + stuInputDate + ", stuAddr1=" + stuAddr1 + ", stuAddr2=" + stuAddr2
 				+ ", stuCourseNum=" + stuCourseNum + ", stuCourseName=" + stuCourseName + ", stuDelFlag=" + stuDelFlag
-				+ "]";
+				+ ", ext=" + ext + "]";
 	}
 
 	public LoginStudentDTO(int stuNum, FileInputStream stuImg, File file, String stuName, String stuPass,
 			String stuNewPass, String stuTel, String stuEmail, Date stuInputDate, String stuAddr1, String stuAddr2,
-			int stuCourseNum, String stuCourseName, String stuDelFlag) {
+			int stuCourseNum, String stuCourseName, String stuDelFlag, String ext) {
 		super();
 		this.stuNum = stuNum;
 		this.stuImg = stuImg;
@@ -163,6 +172,7 @@ public class LoginStudentDTO {
 		this.stuCourseNum = stuCourseNum;
 		this.stuCourseName = stuCourseName;
 		this.stuDelFlag = stuDelFlag;
+		this.ext = ext;
 	}
 
 	

@@ -7,6 +7,7 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JOptionPane;
 
+import kr.co.sist.login.dao.CurrentStuData;
 import kr.co.sist.stu.view.StuPwMdfDialog;
 
 public class StuPwMdfDialogEvt extends WindowAdapter implements ActionListener{
@@ -28,6 +29,7 @@ public class StuPwMdfDialogEvt extends WindowAdapter implements ActionListener{
 		
 		if(e.getSource()==spmd.getJbtnModify()) {
 			 modifyProcess();
+			 
 		}
 		
 		
@@ -39,7 +41,19 @@ public class StuPwMdfDialogEvt extends WindowAdapter implements ActionListener{
 	}
 	
 	public void modifyProcess() {
-		JOptionPane.showMessageDialog(spmd, "비밀번호 변경 기능 구현 필요");
+		CurrentStuData csd = CurrentStuData.getInstance();
+		if(!csd.getLogStuDTO().getStuPass().equals(spmd.getJtfCurrentStuPw())) {
+			JOptionPane.showMessageDialog(spmd, "기존 비밀번호가 틀립니다.");
+			return;
+		}
+		if(!spmd.getJtfNewStuPw().equals(spmd.getJtfConfirmnStuPw())) {
+			JOptionPane.showMessageDialog(spmd, "새로운 비밀번호가 같지 않습니다.");
+			return;
+		}
+		
+		
+		
+		
 	}
 	
 

@@ -25,8 +25,12 @@ public class ProfInfoModifyDesign extends JDialog {
 	private JFileChooser jfcAddProfPic;
 	private JButton jbtnAddImg, jbtnModifyProfPW, jbtnModifyProfInfo, jbtnClose;
 
+	private ProfInfoDesign pid;
+	
 	public ProfInfoModifyDesign(ProfInfoDesign pid, boolean modal) {
 		super(pid,"교수 기본 화면",true);
+		
+		this.pid = pid;
 		
 		JLabel jlblProfNum = new JLabel("교번");
 		JLabel jlblProfName = new JLabel("이름");
@@ -45,7 +49,6 @@ public class ProfInfoModifyDesign extends JDialog {
 		jtfProfCourseData = new JTextField();
 		jtfProfCourseData.setEditable(false);
 		jtfProfEmailData = new JTextField();
-		jtfProfEmailData.setEditable(false);
 		
 		//사진 추가를 위한 FileChooser
 		jfcAddProfPic = new JFileChooser();
@@ -155,6 +158,14 @@ public class ProfInfoModifyDesign extends JDialog {
 		setBounds(pid.getX()+50,pid.getY()+50,600,350);
 		setVisible(true);
 		
+	}
+
+	public ProfInfoDesign getPid() {
+		return pid;
+	}
+
+	public void setPid(ProfInfoDesign pid) {
+		this.pid = pid;
 	}
 
 	public JLabel getJlblProfImg() {

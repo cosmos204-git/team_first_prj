@@ -87,14 +87,19 @@ public class LoginDAO {
 				if(!dir.exists()){
 					dir.mkdirs();
 				}//end if
-
+				if(logStuDTO.getExt()==null) {
+					logStuDTO.setExt("png");
+				}
 				//다운로드되는 파일명은 "PK값 + 확장자"의 형식
 //				File file = new File(dir.getAbsolutePath()+File.separator+logStuDTO.getStuNum()+"."+logStuDTO.getExt());
-				File file = new File(dir.getAbsolutePath()+File.separator+logStuDTO.getStuNum()+"s.png");
+				File file = new File(dir.getAbsolutePath()+File.separator+logStuDTO.getStuNum()+"s."+logStuDTO.getExt());
+				
 				fos = new FileOutputStream(file); //파일이 존재하면 덮어쓰고, 존재하지 않으면 생성
 						
 				//입력스트림 얻기
 				is  = rs.getBinaryStream("stu_img");
+				
+				
 				if (is!=null) {
 					int dataLength = 0;
 					byte[] readData = new byte[512];
@@ -170,9 +175,12 @@ public class LoginDAO {
 					dir.mkdirs();
 				}//end if
 				
+				if(logProfDTO.getExt()==null) {
+					logProfDTO.setExt("png");
+				}
+				
 				//다운로드되는 파일명은 "PK값 + 확장자"의 형식
-//				File file = new File(dir.getAbsolutePath()+File.separator+logStuDTO.getStuNum()+"."+logStuDTO.getExt());
-				File file = new File(dir.getAbsolutePath()+File.separator+logProfDTO.getProfNum()+"p.png");
+				File file = new File(dir.getAbsolutePath()+File.separator+logProfDTO.getProfNum()+"p."+logProfDTO.getExt());
 				fos = new FileOutputStream(file); //파일이 존재하면 덮어쓰고, 존재하지 않으면 생성
 				
 				//입력스트림 얻기

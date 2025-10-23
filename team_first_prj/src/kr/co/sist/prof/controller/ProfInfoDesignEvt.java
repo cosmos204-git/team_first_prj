@@ -4,6 +4,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
+
+import javax.swing.ImageIcon;
 
 import kr.co.sist.login.dao.CurrentProfData;
 import kr.co.sist.prof.view.ProfExamMgrDesign;
@@ -52,6 +57,18 @@ public class ProfInfoDesignEvt extends WindowAdapter implements ActionListener{
 		pid.getJtfProfNumData().setText(String.valueOf(cpd.getLogProfDTO().getProfNum()));
 		pid.getJtfProfEmailData().setText(cpd.getLogProfDTO().getProfEmail());
 		pid.getJtfProfCourseData().setText(cpd.getLogProfDTO().getCourseName());
+		
+		Properties prop = new Properties();
+		String userHome = System.getProperty("user.home");
+		try {
+			prop.load(new FileInputStream(userHome+"/git/team_first_prj/team_first_prj/src/properties/datebase.properties"));
+			ImageIcon ii = new ImageIcon(prop.getProperty("savePath")+cpd.getLogProfDTO().getProfNum()+"p."+cpd.getLogProfDTO().getExt());
+			pid.getJlblProfImg().setIcon(ii);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		
 		
 	}
 
