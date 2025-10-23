@@ -2,6 +2,8 @@ package kr.co.sist.admin.view;
 
 import java.awt.Dimension;
 import java.awt.Font;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -15,6 +17,8 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import kr.co.sist.admin.controller.AdminScoreMgrDesignEvt;
+import kr.co.sist.admin.dto.CourseDTO;
+import kr.co.sist.admin.service.AdminScoreMgrService;
 
 public class AdminScoreMgrDesign extends JDialog {
 	private DefaultTableModel dtmAdminScoreMgr ; 
@@ -36,6 +40,7 @@ public class AdminScoreMgrDesign extends JDialog {
 				jps = new JScrollPane(jtAdminScoreMgr);
 		
 		dcbmCourse = new DefaultComboBoxModel<String>();
+		
 		jcbCourse = new JComboBox<String>(dcbmCourse);
 		jcbCourse.setPreferredSize(new Dimension(70,20));
 		dcbmSub = new DefaultComboBoxModel<String>();
@@ -61,9 +66,9 @@ public class AdminScoreMgrDesign extends JDialog {
 		//리스너 추가 
 		AdminScoreMgrDesignEvt  asmde = new AdminScoreMgrDesignEvt(this);
 		jbtnSearchStuNum.addActionListener(asmde);
+		jcbCourse.addActionListener(asmde);
 		addWindowListener(asmde);
-		
-		
+		asmde.searchCourseProcess();
 		
 		
 		setSize(600,300);
@@ -74,9 +79,6 @@ public class AdminScoreMgrDesign extends JDialog {
 		
 	}//AdminScoreMrgDesign
 	
-//	public static void main(String[] args) {
-//		new AdminScoreMgrDesign();
-//	}
 
 	public DefaultTableModel getDtmAdminScoreMgr() {
 		return dtmAdminScoreMgr;
@@ -113,6 +115,8 @@ public class AdminScoreMgrDesign extends JDialog {
 	public JScrollPane getJps() {
 		return jps;
 	}
-	
+	public static void main(String[] args) {
+		
+	}
 	
 }//class
