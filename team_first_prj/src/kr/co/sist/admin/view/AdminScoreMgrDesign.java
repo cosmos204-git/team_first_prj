@@ -69,6 +69,7 @@ public class AdminScoreMgrDesign extends JDialog {
 		jcbCourse.addActionListener(asmde);
 		addWindowListener(asmde);
 		asmde.searchCourseProcess();
+		asmde.seacrhAllScore();
 		
 		
 		setSize(600,300);

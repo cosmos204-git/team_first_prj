@@ -2,19 +2,19 @@ package kr.co.sist.admin.dto;
 
 public class ScoreMgrDTO {
 	private int stuNum,stuScore ;
-	private String stuName,	subName, courseName;
+	private String stuName,	subName;
 	
 	public ScoreMgrDTO() {
 		super();
 	}
 	
-	public ScoreMgrDTO(int stuNum, int stuScore, String stuName, String subName, String courseName) {
+	public ScoreMgrDTO(int stuNum, int stuScore, String stuName, String subName) {
 		super();
 		this.stuNum = stuNum;
 		this.stuScore = stuScore;
 		this.stuName = stuName;
 		this.subName = subName;
-		this.courseName = courseName;
+		
 	}//ScoreMgrDTO
 	
 	public int getStuNum() {
@@ -41,16 +41,11 @@ public class ScoreMgrDTO {
 	public void setSubName(String subName) {
 		this.subName = subName;
 	}
-	public String getCourseName() {
-		return courseName;
-	}
-	public void setCourseName(String courseName) {
-		this.courseName = courseName;
-	}
+
 	@Override
 	public String toString() {
 		return "ScoreMgrDTO [stuNum=" + stuNum + ", stuScore=" + stuScore + ", stuName=" + stuName + ", subName="
-				+ subName + ", courseName=" + courseName + "]";
+				+ subName + ", courseName=]";
 	} 
 	 
 }
