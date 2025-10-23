@@ -5,18 +5,20 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import kr.co.sist.admin.dao.AdminProfMgrDAO;
 import kr.co.sist.admin.dao.AdminStuMgrDAO;
+import kr.co.sist.admin.dto.ProfDTO;
 import kr.co.sist.admin.dto.StudentDTO;
 
-public class AdminStuMgrService {
+public class AdminProfMgrService {
 
-	public List<StudentDTO> searchAllStudent() {
-		List<StudentDTO> list = new ArrayList<StudentDTO>();
-		AdminStuMgrDAO aDAO = AdminStuMgrDAO.getInstance();
+	public List<ProfDTO> searchAllProfessor() {
+		List<ProfDTO> list = new ArrayList<ProfDTO>();
+		AdminProfMgrDAO apDAO = AdminProfMgrDAO.getInstance();
 
 		
 		try {
-			list=aDAO.selectAllStudent();
+			list=apDAO.selectAllProfessor();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -24,16 +26,16 @@ public class AdminStuMgrService {
 		}//end catch
 		
 		return list;
-	}//searchAllStudent
+	}//searchAllProfessor
 	
 	
-	public StudentDTO searchStudent(int stuNum) {
-		StudentDTO sDTO = null;
+	public ProfDTO searchProfessor(int ProfNum) {
+		ProfDTO pDTO = null;
 		
-		AdminStuMgrDAO aDAO = AdminStuMgrDAO.getInstance();
+		AdminProfMgrDAO apDAO = AdminProfMgrDAO.getInstance();
 		try {
 			
-			sDTO=aDAO.selectStudent(stuNum);
+			pDTO=apDAO.selectProfessor(ProfNum);
 			
 		}catch (IOException e) {
 			e.printStackTrace();
@@ -41,21 +43,19 @@ public class AdminStuMgrService {
 			e.printStackTrace();
 		}//end catch
 		
-		return sDTO;
+		return pDTO;
 		
-	}//searchStudent
+	}//searchProfessor
 	
-	public int removeStudent(int stunum) {
+	public int removeProfessor(int stunum) {
 		int flag = 0;
 		
-		AdminStuMgrDAO aDAO = AdminStuMgrDAO.getInstance();
+		AdminProfMgrDAO apDAO = AdminProfMgrDAO.getInstance();
 		try {
-			flag=aDAO.deleteStudent(stunum);//변경한 수의 개수 
+			flag=apDAO.deleteProfessor(stunum);//변경한 수의 개수 
 		} catch (SQLException e) {
-			flag=2;
 			e.printStackTrace();
 		} catch (IOException e) {
-			flag=2;
 			e.printStackTrace();
 		}//end catch
 	

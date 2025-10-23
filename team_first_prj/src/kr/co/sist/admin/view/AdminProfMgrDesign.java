@@ -17,9 +17,9 @@ import kr.co.sist.admin.controller.AdminProfMgrDesignEvt;
 
 public class AdminProfMgrDesign extends JDialog {
 
-	private JTextField jtfName;
-	private DefaultTableModel dtmStuMgr;
-	private JTable jtStuMgr;
+	private JTextField jtfProfNum;
+	private DefaultTableModel dtmProMgr;
+	private JTable jtProfMgr ;
 	private JButton jbtnSearch, jbtnModify, jbtnAdd, jbtnDelete, jbtnClose;
 //	private StudentDTO sDTO;
 
@@ -28,9 +28,9 @@ public class AdminProfMgrDesign extends JDialog {
 		JPanel jpNouthSerch= new JPanel();
 		JPanel jpSouthButton= new JPanel(new FlowLayout(FlowLayout.CENTER, 30, 10));
 		String[] columnNames = { "교번", "이름", "휴대폰번호", "가입일" };
-		jtfName = new JTextField(15);
-		dtmStuMgr = new DefaultTableModel(columnNames, 0);
-		jtStuMgr = new JTable(dtmStuMgr);
+		jtfProfNum = new JTextField(15);
+		dtmProMgr = new DefaultTableModel(columnNames, 0);
+		jtProfMgr = new JTable(dtmProMgr);
 
 		jbtnSearch = new JButton("검색");
 
@@ -41,8 +41,8 @@ public class AdminProfMgrDesign extends JDialog {
 
 		// 글꼴 설정
 		Font font = new Font("맑은 고딕", Font.BOLD, 15);
-		jtfName.setFont(font);
-		jtStuMgr.setFont(font);
+		jtfProfNum.setFont(font);
+		jtProfMgr.setFont(font);
 		jbtnSearch.setFont(font);
 		jbtnModify.setFont(font);
 		jbtnAdd.setFont(font);
@@ -58,27 +58,28 @@ public class AdminProfMgrDesign extends JDialog {
 		jbtnAdd.addActionListener(asde);
 		jbtnDelete.addActionListener(asde);
 		jbtnClose.addActionListener(asde);
+		jtProfMgr.addMouseListener(asde);
 		
 
 		// columns(열)의 넓이 설정
-		TableColumnModel tcm = jtStuMgr.getColumnModel();
+		TableColumnModel tcm = jtProfMgr.getColumnModel();
 		tcm.getColumn(0).setPreferredWidth(40);// 교번
 		tcm.getColumn(1).setPreferredWidth(80);// 이름
 		tcm.getColumn(2).setPreferredWidth(100);// 휴대폰 번호
 		tcm.getColumn(3).setPreferredWidth(120);// 가입일
 
 		// 행의 높이
-		jtStuMgr.setRowHeight(20);
+		jtProfMgr.setRowHeight(20);
 
 		// 스크롤바 설정
-		JScrollPane jspStuMgr = new JScrollPane(jtStuMgr);
+		JScrollPane jspStuMgr = new JScrollPane(jtProfMgr);
 
 		setLayout(new BorderLayout());
 		jpSouthButton.add(jbtnModify);
 		jpSouthButton.add(jbtnAdd);
 		jpSouthButton.add(jbtnDelete);
 		jpSouthButton.add(jbtnClose);
-		jpNouthSerch.add(jtfName);
+		jpNouthSerch.add(jtfProfNum);
 		jpNouthSerch.add(jbtnSearch);
 		
 		
@@ -92,50 +93,46 @@ public class AdminProfMgrDesign extends JDialog {
 		setResizable(false);
 		setVisible(true);
 	}//AdminProfMgrDesign
-	
 
-	public JTextField getJtfName() {
-		return jtfName;
+	public JTextField getJtfProfNum() {
+		return jtfProfNum;
 	}
 
-
-	public DefaultTableModel getDtmStuMgr() {
-		return dtmStuMgr;
+	public DefaultTableModel getDtmProMgr() {
+		return dtmProMgr;
 	}
 
-
-	public JTable getJtStuMgr() {
-		return jtStuMgr;
+	public JTable getJtProfMgr() {
+		return jtProfMgr;
 	}
-
 
 	public JButton getJbtnSearch() {
 		return jbtnSearch;
 	}
 
-
 	public JButton getJbtnModify() {
 		return jbtnModify;
 	}
-
 
 	public JButton getJbtnAdd() {
 		return jbtnAdd;
 	}
 
-
 	public JButton getJbtnDelete() {
 		return jbtnDelete;
 	}
-
 
 	public JButton getJbtnClose() {
 		return jbtnClose;
 	}
 	
+
+	
+	
 //	public static void main(String[] args) {
 //		new AdminProfMgrDesign();
 //	}//main
+	
 
 
 }//class

@@ -15,18 +15,19 @@ public class StuModifyDialog extends JDialog {
 	private JTextField jtfStuNum,jtfStuName,jtfStuTel,jtfStuPass;
 	private JButton jbtnAdd,jbtnClose;
 //	private StudentDTO sDTO;
+	private AdminStuMgrDesign asmd;
 	
 
-	public StuModifyDialog(AdminStuMgrDesign asmd, boolean modal) {
+	public StuModifyDialog(AdminStuMgrDesign asmd, boolean modal,int StuNum) {
 		super(asmd,"관리자 - 학생관리(수정)",modal);
-		
+		this.asmd=asmd;
 
 		jlbStufNum = new JLabel("학번");
 		jlbStufName = new JLabel("이름");
 		jlbStuTel = new JLabel("휴대폰번호");
 		jlblStuPass = new JLabel("비밀번호");
 		
-		jtfStuNum = new JTextField();
+		jtfStuNum = new JTextField(String.valueOf(StuNum));
 		jtfStuName= new JTextField();
 		jtfStuTel= new JTextField();
 		jtfStuPass= new JTextField();
@@ -77,6 +78,7 @@ public class StuModifyDialog extends JDialog {
 		add(jtfStuNum);
 		add(jtfStuName);
 		add(jtfStuTel);
+		
 		add(jtfStuPass);
 		
 		add(jbtnAdd);

@@ -48,7 +48,8 @@ public class AdminStuMgrDAO {
 			selectStudent
 			.append("	select stu_num,stu_name,stu_tel,stu_pass,stu_reg_inputdate	")
 			.append("	from 	student												")
-			.append("	where 	STU_DEL_FLAG='N'								 	");
+			.append("	where 	STU_DEL_FLAG='N' 								 	")
+			.append("	order by stu_num asc								 		");
 			
 			pstmt = con.prepareStatement(selectStudent.toString());
 			
@@ -92,7 +93,8 @@ public class AdminStuMgrDAO {
 			selectOneStudent
 			.append("	select stu_num,stu_name,stu_tel,stu_pass,stu_reg_inputdate	")
 			.append("	from 	student												")
-			.append("	where 	STU_DEL_FLAG='N' and stu_num=?								 	");
+			.append("	where 	STU_DEL_FLAG='N' and stu_num=?						");
+
 			
 			pstmt = con.prepareStatement(selectOneStudent.toString());
 			
@@ -115,7 +117,7 @@ public class AdminStuMgrDAO {
 		return sDTO;
 	}//selectStudent
 	
-	public int removeStudent(int StuNum) throws SQLException, IOException {
+	public int deleteStudent(int StuNum) throws SQLException, IOException {
 		int flag = 0;
 		
 		Connection con = null;
@@ -128,9 +130,9 @@ public class AdminStuMgrDAO {
 			
 			StringBuilder updateStudent = new StringBuilder();
 			updateStudent
-			.append("		update member		    ")
-			.append("		set STU_DEL_FLAG='Y'	")
-			.append("		where num=?		        ");
+			.append("		update student		    ")
+			.append("		set stu_del_flag='Y'	")
+			.append("		where STU_NUM=?		     ");
 			
 			pstmt = con.prepareStatement(updateStudent.toString());
 			

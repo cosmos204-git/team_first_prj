@@ -6,8 +6,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -23,6 +21,8 @@ public class AdminStuMgrDesignEvt extends WindowAdapter implements ActionListene
 	
 	private AdminStuMgrDesign asmd;
 	private AdminStuMgrService asms;
+	private List<StudentDTO> listStuData;
+	private int selectedNum =-1;
 	
 	public AdminStuMgrDesignEvt(AdminStuMgrDesign asmd) {
 		this.asmd=asmd;
@@ -38,31 +38,33 @@ public class AdminStuMgrDesignEvt extends WindowAdapter implements ActionListene
 			
 				searchProcess();
 			}catch (NumberFormatException ne) {
-				JOptionPane.showMessageDialog(asmd, "숫자만 입력해주세요.");
-				asmd.getJtfNum().setText("");
+//				JOptionPane.showMessageDialog(asmd, "숫자만 입력해주세요.");
+				asmd.getJtfStuNum().setText("");
 				searchAllStu();
 			
 			}catch (NullPointerException e) {
 				JOptionPane.showMessageDialog(asmd, "존재하지 않는 회원입니다.");
-				asmd.getJtfNum().setText("");
+				asmd.getJtfStuNum().setText("");
 				searchAllStu();
 			}//end catch
 		
 		}//end if 
 		
 		if(ae.getSource()==asmd.getJbtnModify()) {
-			System.out.println("학생관리 - 수정");
-			new StuModifyDialog(asmd,false);
+				ModifyProcess();
+				searchAllStu();
+			
 		}//end if 
 		
 		if(ae.getSource()==asmd.getJbtnAdd()) {
-			System.out.println("학생관리 - 추가");
-			new StuAddDialog(asmd,false);
+//			new StuAddDialog(asmd,true);
+			addProcess();
+			searchAllStu();
 		}//end if 
 		
 		if(ae.getSource()==asmd.getJbtnDelete()) {
-			System.out.println("학생관리 - 삭제");
 			deleteProcess();
+			
 		}//end if 
 		
 		if(ae.getSource()==asmd.getJbtnClose()) {
@@ -74,9 +76,12 @@ public class AdminStuMgrDesignEvt extends WindowAdapter implements ActionListene
 	@Override
 	public void mouseClicked(MouseEvent me) {
 			
-//		if(me.getButton() == MouseEvent.BUTTON1)//왼쪽버튼 클릭 시 
-		 int selectedRowCount = asmd.getJtStuMgr().getSelectedRow();
-		 System.out.println(selectedRowCount);
+		if(me.getButton() == MouseEvent.BUTTON1){//왼쪽버튼 클릭 시 
+			
+			selectedNum = asmd.getJtStuMgr().getSelectedRow();
+			
+		}//end if 
+		
 		
 			
 	}//mouseClicked
@@ -86,9 +91,23 @@ public class AdminStuMgrDesignEvt extends WindowAdapter implements ActionListene
 		asmd.dispose();
 	}//windowClosing
 	
+	public void ModifyProcess() throws IndexOutOfBoundsException{
+		
+		if(selectedNum == -1) {
+			JOptionPane.showMessageDialog(asmd,"수정할 학생을 선택해주세요 ");
+		}else {
+			
+			StudentDTO sDTO = asms.searchAllStudent().get(selectedNum);
+			int stuNum =sDTO.getStuNum();
+			
+			new StuModifyDialog(asmd,true,stuNum);
+		}//end else
+	}//ModifyProcess
+	
 	public void searchAllStu() {
 		List<StudentDTO> listStudentData=asms.searchAllStudent();
 		
+		this.listStuData = listStudentData;
 		DefaultTableModel dtm=asmd.getDtmStuMgr();
 		
 		dtm.setRowCount(0);
@@ -107,10 +126,25 @@ public class AdminStuMgrDesignEvt extends WindowAdapter implements ActionListene
 		
 	}//searchAllStu
 	
+	public void addProcess() {
+		
+		DefaultTableModel dtmStuMgr = asmd.getDtmStuMgr();
+		
+		int dtmStuMgrlastIndex= dtmStuMgr.getRowCount()-1;
+		System.out.println(dtmStuMgrlastIndex);
+//		StudentDTO sDTO= asms.searchStudent(dtmStuMgrlastIndex);
+		
+		
+		int newStuNum=listStuData.get(dtmStuMgrlastIndex).getStuNum()+1;
+		System.out.println(newStuNum);
+		
+		
+		new StuAddDialog(asmd,true,newStuNum);
+	}//end addProcess
 	
 	
 	public void searchProcess() throws NumberFormatException,NullPointerException {
-		int StuNum = Integer.parseInt(asmd.getJtfNum().getText().trim());
+		int StuNum = Integer.parseInt(asmd.getJtfStuNum().getText().trim());
 		
 		DefaultTableModel dtmStuMgr =null;
 		dtmStuMgr = asmd.getDtmStuMgr();
@@ -131,14 +165,42 @@ public class AdminStuMgrDesignEvt extends WindowAdapter implements ActionListene
 		
 	}//searchProcess
 	
-	public void addProcess() {
-		
-	}//addProcess
-	public void modifyProcess() {
-		
-	}//modifyProcess
-	public void deleteProcess() {
-
+	public void deleteProcess(){
+			DefaultTableModel dtm = asmd.getDtmStuMgr();
+			
+			if(selectedNum==-1) {
+				JOptionPane.showMessageDialog(asmd, "삭제할 학생을 선택해주세요.");
+				
+			}//end if
+			
+			
+			StudentDTO sDTO = listStuData.get(selectedNum);
+			int deleteStuNum=sDTO.getStuNum();
+//			System.out.println(deleteStuNum);
+			
+			switch (JOptionPane.showConfirmDialog(asmd,deleteStuNum+"번 학생 정보를 정말 삭제 하시겠습니까?")) {
+			case JOptionPane.OK_OPTION: 
+				break;
+			case JOptionPane.NO_OPTION: 
+			case JOptionPane.CANCEL_OPTION:
+			default:
+				return;
+			}//end switch
+			
+			
+			int flag= asms.removeStudent(deleteStuNum);
+			
+			String outputmsg="문제가 발생했습니다. 잠시후 다시 시도해주세요";
+			
+			if(flag==1) {
+				outputmsg=deleteStuNum+"번 학생의 정보가 삭제되었습니다.";
+			}//end if
+			
+			JOptionPane.showMessageDialog(asmd, outputmsg);
+			
+			//삭제된 것을 확인하기위해 새로 반영 후 selectedNum 초기화 
+			searchAllStu();
+			selectedNum=-1;
 	}//deleteProcess
 
 	

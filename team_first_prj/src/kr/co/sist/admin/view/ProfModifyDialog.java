@@ -17,7 +17,7 @@ public class ProfModifyDialog extends JDialog {
 //	private StudentDTO sDTO;
 	
 
-	public ProfModifyDialog(AdminProfMgrDesign asmd, boolean modal) {
+	public ProfModifyDialog(AdminProfMgrDesign asmd, boolean modal,int ProfNum) {
 		super(asmd,"관리자 - 교수관리(수정)",modal);
 		
 
@@ -26,7 +26,7 @@ public class ProfModifyDialog extends JDialog {
 		jlblProfTel = new JLabel("휴대폰번호");
 		jlblProfPass = new JLabel("비밀번호");
 		
-		jtfProfNum = new JTextField();
+		jtfProfNum = new JTextField(String.valueOf(ProfNum));
 		jtfProfName= new JTextField();
 		jtfProfTel= new JTextField();
 		jtfProfPass= new JTextField();
@@ -91,6 +91,7 @@ public class ProfModifyDialog extends JDialog {
 		jbtnAdd.addActionListener(pade); 
 		jbtnClose.addActionListener(pade); 
 		addWindowListener(pade);
+		
 		
 		setSize(600,300);
 		setLocationRelativeTo(null);

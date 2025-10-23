@@ -24,24 +24,24 @@ public class AdminInfoDesignEvt extends WindowAdapter implements ActionListener 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == aid.getJbtnCourseMgr()) {
-			new AdminCourseMgrDesign(aid,false);
+			new AdminCourseMgrDesign(aid,true);
 		}//end if
 		if(e.getSource() == aid.getJbtnScoreMgr()) {
-			new AdminScoreMgrDesign(aid,false);
+			new AdminScoreMgrDesign(aid,true);
 		}//end if
 		if(e.getSource() == aid.getJbtnSubjectMgr()) {
-			new AdminSubjectMgrDesign(aid,false);
+			new AdminSubjectMgrDesign(aid,true);
 		}//end if
 		if(e.getSource() == aid.getJbtnAllStuMgr()) {
-			new AdminAllStuMgrDesign(aid,false);
+			new AdminAllStuMgrDesign(aid,true);
 		}//end if
 		
 		if(e.getSource() == aid.getJbtnStuMgr()) {
-			new AdminStuMgrDesign(aid,false);
+			new AdminStuMgrDesign(aid,true);
 		}//end if
 		
 		if(e.getSource() == aid.getJbtnProfMgr()) {
-			new AdminProfMgrDesign(aid,false);
+			new AdminProfMgrDesign(aid,true);
 		}//end if
 	}//actionPerformed
 

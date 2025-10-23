@@ -14,6 +14,33 @@ public class StudentDTO {
 		super();
 	}
 
+	
+	
+	public StudentDTO(int stuNum, String stuName, String stuTel) {
+		super();
+		this.stuNum = stuNum;
+		this.stuName = stuName;
+		this.stuTel = stuTel;
+	}
+
+
+
+	public StudentDTO(int stuNum, ImageIcon stuImg, String stuName, String stuTel, String stuPass, String stuEmail,
+			String stuAddr1, String stuAddr2, Date stuInputDate) {
+		super();
+		this.stuNum = stuNum;
+		this.stuImg = stuImg;
+		this.stuName = stuName;
+		this.stuTel = stuTel;
+		this.stuPass = stuPass;
+		this.stuEmail = stuEmail;
+		this.stuAddr1 = stuAddr1;
+		this.stuAddr2 = stuAddr2;
+		this.stuInputDate = stuInputDate;
+	}
+
+
+
 	public int getStuNum() {
 		return stuNum;
 	}

@@ -19,7 +19,7 @@ import kr.co.sist.admin.dto.StudentDTO;
 
 public class AdminStuMgrDesign extends JDialog {
 
-	private JTextField jtfNum;
+	private JTextField jtfStuNum;
 	private DefaultTableModel dtmStuMgr;
 	private JTable jtStuMgr;
 	private JButton jbtnSearch, jbtnModify, jbtnAdd, jbtnDelete, jbtnClose;
@@ -30,7 +30,7 @@ public class AdminStuMgrDesign extends JDialog {
 		JPanel jpNouthSerch= new JPanel();
 		JPanel jpSouthButton= new JPanel(new FlowLayout(FlowLayout.CENTER, 30, 10));
 		String[] columnNames = { "학번", "이름", "휴대폰번호", "가입일" };
-		jtfNum = new JTextField(15);
+		jtfStuNum = new JTextField(15);
 		dtmStuMgr = new DefaultTableModel(columnNames, 0);
 		jtStuMgr = new JTable(dtmStuMgr);
 
@@ -43,7 +43,7 @@ public class AdminStuMgrDesign extends JDialog {
 
 		// 글꼴 설정
 		Font font = new Font("맑은 고딕", Font.BOLD, 15);
-		jtfNum.setFont(font);
+		jtfStuNum.setFont(font);
 		jtStuMgr.setFont(font);
 		
 		jbtnSearch.setFont(font);
@@ -85,7 +85,7 @@ public class AdminStuMgrDesign extends JDialog {
 		jpSouthButton.add(jbtnAdd);
 		jpSouthButton.add(jbtnDelete);
 		jpSouthButton.add(jbtnClose);
-		jpNouthSerch.add(jtfNum);
+		jpNouthSerch.add(jtfStuNum);
 		jpNouthSerch.add(jbtnSearch);
 		
 		
@@ -100,8 +100,8 @@ public class AdminStuMgrDesign extends JDialog {
 		setVisible(true);
 	}//AdminStuMgrDesign
 
-	public JTextField getJtfNum() {
-		return jtfNum;
+	public JTextField getJtfStuNum() {
+		return jtfStuNum;
 	}
 
 	public DefaultTableModel getDtmStuMgr() {
@@ -131,7 +131,7 @@ public class AdminStuMgrDesign extends JDialog {
 	public JButton getJbtnClose() {
 		return jbtnClose;
 	}
-	
+
 	
 
 	

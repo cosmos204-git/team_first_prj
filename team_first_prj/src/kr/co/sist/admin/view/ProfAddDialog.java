@@ -18,7 +18,7 @@ public class ProfAddDialog extends JDialog {
 	
 
 
-	public ProfAddDialog(AdminProfMgrDesign asmd, boolean modal) {
+	public ProfAddDialog(AdminProfMgrDesign asmd, boolean modal,int ProfNum) {
 		super(asmd,"관리자 - 교수관리(추가)",modal);
 		
 
@@ -29,7 +29,7 @@ public class ProfAddDialog extends JDialog {
 		jbtnAdd= new JButton("추가완료");
 		jbtnClose= new JButton("닫기");
 		
-		jtfProNum = new JTextField();
+		jtfProNum = new JTextField(String.valueOf(ProfNum));
 		jtfProName= new JTextField();
 		jtfProTel= new JTextField();
 
