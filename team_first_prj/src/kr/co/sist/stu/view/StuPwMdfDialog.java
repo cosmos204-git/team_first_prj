@@ -7,9 +7,9 @@ import java.awt.GridLayout;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
@@ -35,9 +35,11 @@ public class StuPwMdfDialog extends JDialog{
 		jlblNewStuPw = new JLabel("새로운 비밀번호");
 		jlblConfirmnStuPw = new JLabel("새로운 비밀번호 확인");
 		
-		jtfCurrentStuPw = new JTextField();
-		jtfNewStuPw = new JTextField();
-		jtfConfirmnStuPw = new JTextField();
+		
+		jtfCurrentStuPw = new JPasswordField(20);
+		jtfNewStuPw = new JPasswordField(20);
+		jtfConfirmnStuPw = new JPasswordField(20);
+
 		
 		jpStuPwMdf.add(jlblCurrentStuPw);
 		jpStuPwMdf.add(jtfCurrentStuPw);
@@ -80,8 +82,7 @@ public class StuPwMdfDialog extends JDialog{
 		
 	}//StuPwMdfDialog
 
-
-
+	
 
 	public JTextField getJtfCurrentStuPw() {
 		return jtfCurrentStuPw;

@@ -1,30 +1,30 @@
-package kr.co.sist.stu.dao;
+package kr.co.sist.prof.dao;
 
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import kr.co.sist.login.dao.CurrentStuData;
+import kr.co.sist.login.dao.CurrentProfData;
 import kr.co.sist.login.dao.GetConnection;
 
-public class StuPwModifyDAO {
+public class ProfPwModifyDAO {
+
+	private static ProfPwModifyDAO ppmDAO;
 	
-	private static StuPwModifyDAO spmDAO;
-	
-	private StuPwModifyDAO() {
+	private ProfPwModifyDAO() {
 		
 	}
 	
-	public static StuPwModifyDAO getInstance() {
-		if(spmDAO == null) {
-			spmDAO = new StuPwModifyDAO();
+	public static ProfPwModifyDAO getInstance() {
+		if(ppmDAO == null) {
+			ppmDAO = new ProfPwModifyDAO();
 		}
 		
-		return spmDAO;
+		return ppmDAO;
 	}
 	
-	public int updateStuPw(CurrentStuData csDTO) throws SQLException, IOException {
+	public int updateProfPw(CurrentProfData cpDTO) throws SQLException, IOException {
 		
 		
 		int flag = 0;
@@ -43,15 +43,15 @@ public class StuPwModifyDAO {
 			StringBuilder updateMember = new StringBuilder();
 			
 			updateMember
-			.append("	update	student				")
-			.append("	set		stu_pass=?		 	")
-			.append("	where	stu_num=?			");
+			.append("	update	professor				")
+			.append("	set		prof_pass=?		 	")
+			.append("	where	prof_num=?			");
 			
 			pstmt = con.prepareStatement(updateMember.toString());
 			
 			//4. 바인드변수에 값 설정
-			pstmt.setString(1, csDTO.getLogStuDTO().getStuPass());
-			pstmt.setInt(2, csDTO.getLogStuDTO().getStuNum());
+			pstmt.setString(1, cpDTO.getLogProfDTO().getProfPass());
+			pstmt.setInt(2, cpDTO.getLogProfDTO().getProfNum());
 			
 			//5. 쿼리문 수행 후 결과 얻기 
 			flag=pstmt.executeUpdate(); //변경한 행의 수		
@@ -63,5 +63,4 @@ public class StuPwModifyDAO {
 		return flag;		
 	}
 	
-
 }

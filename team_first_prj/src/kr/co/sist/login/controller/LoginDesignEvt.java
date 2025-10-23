@@ -45,6 +45,7 @@ public class LoginDesignEvt extends WindowAdapter implements ActionListener{
 			
 			switch(ld.getLoginFlag()) {
 			case STUDENT_FLAG:
+	
 				loginStuProcess();
 				//로그인 성공시 학생 화면으로 넘어감.
 				break;
@@ -76,8 +77,18 @@ public class LoginDesignEvt extends WindowAdapter implements ActionListener{
 				JOptionPane.showMessageDialog(ld, "삭제된 학생의 정보입니다.");
 				return;
 			}
+			
+			
+
+			
+			
+			
 			if(logDTO.getStuNum() == stuNum)
 			{
+				if(logDTO.getStuPass().length()>20) {
+					JOptionPane.showMessageDialog(ld, "비밀번호는 20자 내로 입력하세요.");
+					return;
+				}
 				if(logDTO.getStuPass().equals(stuPass)){
 					CurrentStuData.getInstance().setLogStuDTO(logDTO);
 					JOptionPane.showMessageDialog(ld, logDTO.getStuName() + "학생님 환영합니다.");

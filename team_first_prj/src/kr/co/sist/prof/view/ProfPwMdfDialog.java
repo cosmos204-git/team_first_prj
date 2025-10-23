@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
@@ -16,8 +17,8 @@ import kr.co.sist.prof.controller.ProfPwMdfDialogEvt;
 
 public class ProfPwMdfDialog extends JDialog{
 	
-	private JLabel jlblCurrentStuPw, jlblNewStuPw, jlblConfirmnStuPw;
-	private JTextField jtfCurrentStuPw, jtfNewStuPw, jtfConfirmnStuPw;
+	private JLabel jlblCurrentProfPw, jlblNewProfPw, jlblConfirmnProfPw;
+	private JTextField jtfCurrentProfPw, jtfNewProfPw, jtfConfirmnProfPw;
 	private JButton jbtnModify, jbtnClose; 
 	
 	public ProfPwMdfDialog(ProfInfoModifyDesign pimd, boolean modal) {
@@ -28,20 +29,20 @@ public class ProfPwMdfDialog extends JDialog{
 		JPanel jpStuPwMdf = new JPanel(new GridLayout(6,1,5,5));
 		jpStuPwMdf.setBorder(new EmptyBorder(15, 30, 15, 30)); 
 		
-		jlblCurrentStuPw = new JLabel("현재 비밀번호");
-		jlblNewStuPw = new JLabel("새로운 비밀번호");
-		jlblConfirmnStuPw = new JLabel("새로운 비밀번호 확인");
+		jlblCurrentProfPw = new JLabel("현재 비밀번호");
+		jlblNewProfPw = new JLabel("새로운 비밀번호");
+		jlblConfirmnProfPw = new JLabel("새로운 비밀번호 확인");
 		
-		jtfCurrentStuPw = new JTextField();
-		jtfNewStuPw = new JTextField();
-		jtfConfirmnStuPw = new JTextField();
+		jtfCurrentProfPw = new JPasswordField();
+		jtfNewProfPw = new JPasswordField();
+		jtfConfirmnProfPw = new JPasswordField();
 		
-		jpStuPwMdf.add(jlblCurrentStuPw);
-		jpStuPwMdf.add(jtfCurrentStuPw);
-		jpStuPwMdf.add(jlblNewStuPw);
-		jpStuPwMdf.add(jtfNewStuPw);
-		jpStuPwMdf.add(jlblConfirmnStuPw);
-		jpStuPwMdf.add(jtfConfirmnStuPw);
+		jpStuPwMdf.add(jlblCurrentProfPw);
+		jpStuPwMdf.add(jtfCurrentProfPw);
+		jpStuPwMdf.add(jlblNewProfPw);
+		jpStuPwMdf.add(jtfNewProfPw);
+		jpStuPwMdf.add(jlblConfirmnProfPw);
+		jpStuPwMdf.add(jtfConfirmnProfPw);
 		
 		add(jpStuPwMdf, BorderLayout.CENTER);
 		
@@ -59,12 +60,12 @@ public class ProfPwMdfDialog extends JDialog{
 		
 	    Font font = new Font("맑은고딕",Font.BOLD,15);
 	    
-	    jlblCurrentStuPw.setFont(font);
-	    jlblNewStuPw.setFont(font);
-	    jlblConfirmnStuPw.setFont(font);
-		jtfCurrentStuPw.setFont(font);
-		jtfNewStuPw.setFont(font);
-		jtfConfirmnStuPw.setFont(font);
+	    jlblCurrentProfPw.setFont(font);
+	    jlblNewProfPw.setFont(font);
+	    jlblConfirmnProfPw.setFont(font);
+		jtfCurrentProfPw.setFont(font);
+		jtfNewProfPw.setFont(font);
+		jtfConfirmnProfPw.setFont(font);
 	    
 		ProfPwMdfDialogEvt ppmde = new ProfPwMdfDialogEvt(this);
 		jbtnModify.addActionListener(ppmde);
@@ -75,33 +76,48 @@ public class ProfPwMdfDialog extends JDialog{
 		
 	    setBounds(600,300,600,350);
 		setVisible(true);	     
-		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		
 	}//StuPwMdfDialog
 
-	public JTextField getJtfCurrentStuPw() {
-		return jtfCurrentStuPw;
+	public JTextField getJtfCurrentProfPw() {
+		return jtfCurrentProfPw;
 	}
 
-	public JTextField getJtfNewStuPw() {
-		return jtfNewStuPw;
+	public void setJtfCurrentProfPw(JTextField jtfCurrentProfPw) {
+		this.jtfCurrentProfPw = jtfCurrentProfPw;
 	}
 
-	public JTextField getJtfConfirmnStuPw() {
-		return jtfConfirmnStuPw;
+	public JTextField getJtfNewProfPw() {
+		return jtfNewProfPw;
+	}
+
+	public void setJtfNewProfPw(JTextField jtfNewProfPw) {
+		this.jtfNewProfPw = jtfNewProfPw;
+	}
+
+	public JTextField getJtfConfirmnProfPw() {
+		return jtfConfirmnProfPw;
+	}
+
+	public void setJtfConfirmnProfPw(JTextField jtfConfirmnProfPw) {
+		this.jtfConfirmnProfPw = jtfConfirmnProfPw;
 	}
 
 	public JButton getJbtnModify() {
 		return jbtnModify;
 	}
 
+	public void setJbtnModify(JButton jbtnModify) {
+		this.jbtnModify = jbtnModify;
+	}
+
 	public JButton getJbtnClose() {
 		return jbtnClose;
 	}
-	
-//	public static void main(String[] args) {
-//		ProfInfoModifyDesign pimd = new  ProfInfoModifyDesign();
-//		new ProfPwMdfDialog(pimd, true);
-//	}
-	
+
+	public void setJbtnClose(JButton jbtnClose) {
+		this.jbtnClose = jbtnClose;
+	}
+
+
 }//class

@@ -5,6 +5,7 @@ import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import kr.co.sist.login.controller.LoginDesignEvt;
@@ -44,7 +45,7 @@ public class LoginDesign extends JFrame{
 		Font font = new Font("맑은고딕",Font.BOLD,24);
 		
 		jtfNum = new JTextField();
-		jtfPw = new JTextField();
+		jtfPw = new JPasswordField();
 		jbtnLogin = new JButton("로그인");
 		
 		
