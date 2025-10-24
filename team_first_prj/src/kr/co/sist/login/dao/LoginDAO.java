@@ -9,6 +9,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import kr.co.sist.login.dto.LoginAdminDTO;
@@ -52,7 +54,7 @@ public class LoginDAO {
 			selectOneMember
 			.append("		SELECT STU_NUM,STU_IMG,STU_NAME,STU_PASS,STU_TEL,STU_EMAIL,STU_ADDR1,STU_ADDR2,STU_REG_INPUTDATE,STUDENT.COURSE_CODE,STU_DEL_FLAG, COURSE.COURSE_NAME")
 			.append("		FROM  STUDENT, COURSE")
-			.append("		WHERE student.course_code = course.course_code and STU_NUM = ?");
+			.append("		WHERE student.course_code = course.course_code and STU_NUM = ? and sysdate < course_enddate");
 
 			pstmt = con.prepareStatement(selectOneMember.toString());
 			
@@ -124,7 +126,9 @@ public class LoginDAO {
 		
 	}//selectStuOneMember
 	
-	public LoginProfDTO selectProfOneMember(int memberNum) throws SQLException, IOException {
+	public List<LoginProfDTO> selectProfOneMember(int memberNum) throws SQLException, IOException {
+		
+		List<LoginProfDTO> list = new ArrayList<LoginProfDTO>();
 		
 		LoginProfDTO logProfDTO = null;
 		GetConnection gc = GetConnection.getInstance();
@@ -143,7 +147,7 @@ public class LoginDAO {
 			selectOneMember
 			.append("		SELECT PROFESSOR.PROF_NUM,PROF_IMG,PROF_NAME,PROF_PASS,PROF_TEL,PROF_EMAIL,PROF_INPUTDATE,PROF_DEL_FLAG, COURSE.COURSE_NAME")
 			.append("		FROM  PROFESSOR,COURSE")
-			.append("		WHERE PROFESSOR.PROF_NUM = COURSE.PROF_NUM and PROFESSOR.PROF_NUM = ?");
+			.append("		WHERE PROFESSOR.PROF_NUM = COURSE.PROF_NUM and PROFESSOR.PROF_NUM = ? and course_del_flag='N'");
 			
 			pstmt = con.prepareStatement(selectOneMember.toString());
 			
@@ -153,7 +157,8 @@ public class LoginDAO {
 			rs = pstmt.executeQuery();
 			
 			
-			if(rs.next()) { //쿼리로 인한 조회 결과가 존재.
+			
+			while(rs.next()) { //쿼리로 인한 조회 결과가 존재.
 				logProfDTO=new LoginProfDTO();
 				logProfDTO.setProfNum(memberNum);
 				logProfDTO.setProfName(rs.getString("prof_name"));
@@ -195,20 +200,24 @@ public class LoginDAO {
 					}//end while
 					fos.flush();
 				}
-			}//end if
-			
-			
+				
+				
+				list.add(logProfDTO);
+				
+			}//end while			
 		}finally {
 			//5. 연결 끊기.
 			gc.dbClose(con, pstmt, rs);
 			
 		}
 		
-		return logProfDTO;
+		
+		return list;
 		
 	}//selectProfOneMember
 	
 	public LoginAdminDTO selectAdminOneMember(String id) throws SQLException, IOException {
+		
 		
 		LoginAdminDTO logAdminDTO = null;
 		GetConnection gc = GetConnection.getInstance();
@@ -252,9 +261,13 @@ public class LoginDAO {
 			
 		}
 		
+	
 		return logAdminDTO;
 		
 	}//selectProfOneMember	
+	
+	
+	
 	
 	
 	

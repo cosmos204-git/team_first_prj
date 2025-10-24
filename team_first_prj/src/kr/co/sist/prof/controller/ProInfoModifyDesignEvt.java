@@ -7,10 +7,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
+import java.util.regex.Pattern;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 import kr.co.sist.login.dao.CurrentProfData;
 import kr.co.sist.prof.service.ProfInfoModifyService;
@@ -138,10 +140,38 @@ public class ProInfoModifyDesignEvt extends WindowAdapter implements ActionListe
 	public void modifyProfPwProcess() {
 		new ProfPwMdfDialog(pimd, true);
 	}
+	
+	
 	public void modifyProfInfoProcess() {
 		CurrentProfData cpd = CurrentProfData.getInstance();
-		cpd.getLogProfDTO().setProfEmail(pimd.getJtfProfEmailData().getText());
 		
+		JTextField emailField = pimd.getJtfProfEmailData();
+		String profEmail = emailField.getText();
+
+		final String EMAIL_REGEX = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$";
+	    final Pattern PATTERN = Pattern.compile(EMAIL_REGEX);
+	    
+	    String trimmedEmail = profEmail.trim();
+
+	    
+	    // 빈 값 체크
+	    if (trimmedEmail.isEmpty()) {
+	        JOptionPane.showMessageDialog(pimd, 
+	            "이메일 주소를 입력해주세요.", "입력 오류", JOptionPane.WARNING_MESSAGE);
+	        
+	        emailField.requestFocusInWindow();
+	        return; 
+	    }
+	    
+	    // Matcher.matches() 대신 Pattern.matcher(String).matches()를 바로 사용
+	    if (!PATTERN.matcher(trimmedEmail).matches()) {
+	        JOptionPane.showMessageDialog(pimd, 
+	            "올바른 이메일 주소 형식이 아닙니다.", "형식 오류", JOptionPane.ERROR_MESSAGE);
+	        
+	        emailField.requestFocusInWindow();
+	        emailField.selectAll(); 
+	        return;
+	    }
 		
 		if(pims.modifyProfInfo(cpd)==1) {
 			JOptionPane.showMessageDialog(pimd, "개인정보를 변경하였습니다.");

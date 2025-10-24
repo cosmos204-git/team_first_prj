@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
@@ -25,6 +26,7 @@ public class LoginDesignEvt extends WindowAdapter implements ActionListener{
 	private static final int STUDENT_FLAG = 0;
 	private static final int PROF_FLAG = 1;
 	private static final int ADMIN_FLAG = 2;
+	private LoginProfDTO logDTO = new LoginProfDTO();
 	
 	public LoginDesignEvt(LoginDesign ld) {
 		this.ld = ld;
@@ -65,6 +67,7 @@ public class LoginDesignEvt extends WindowAdapter implements ActionListener{
 	
 	
 	public void loginStuProcess() {
+		
 		try {
 			int stuNum = Integer.parseInt(ld.getJtfNum().getText());
 			String stuPass = ld.getJtfPw().getText();
@@ -72,15 +75,15 @@ public class LoginDesignEvt extends WindowAdapter implements ActionListener{
 			
 			LoginStudentDTO logDTO = ls.searchStuOneMember(stuNum);
 			
+			if(stuNum>99999) {
+				JOptionPane.showMessageDialog(ld, "아이디를 확인해주세요.");
+				return;
+			}
 			if(logDTO.getStuDelFlag().equals("Y"))
 			{
 				JOptionPane.showMessageDialog(ld, "삭제된 학생의 정보입니다.");
 				return;
 			}
-			
-			
-
-			
 			
 			
 			if(logDTO.getStuNum() == stuNum)
@@ -116,8 +119,29 @@ public class LoginDesignEvt extends WindowAdapter implements ActionListener{
 			int profNum = Integer.parseInt(ld.getJtfNum().getText());
 			String profPass = ld.getJtfPw().getText();
 			
+			if(profNum>9999) {
+				JOptionPane.showMessageDialog(ld, "아이디를 확인해주세요.");
+				return;
+			}
 			
-			LoginProfDTO logDTO = ls.searchProfOneMember(profNum);
+			
+			List<LoginProfDTO> list = ls.searchProfOneMember(profNum);			
+			
+			
+			StringBuilder CourseName = new StringBuilder();
+			
+			int i = 0;
+			if(list.size()!=-1) {
+				for(i = 0; i< list.size()-1;i++) {
+					CourseName.append(list.get(i).getCourseName()).append(", ");
+				}
+			}
+			CourseName.append(list.get(i).getCourseName());
+			
+			logDTO = list.get(0);
+			logDTO.setCourseName(CourseName.toString());
+			
+
 			
 			if(logDTO.getProfDelFlag().equals("Y"))
 			{
@@ -140,10 +164,11 @@ public class LoginDesignEvt extends WindowAdapter implements ActionListener{
 				JOptionPane.showMessageDialog(ld, "아이디를 확인해주세요");
 			}
 			
-		
 		}catch(NumberFormatException nfe) {
 			JOptionPane.showMessageDialog(ld, "숫자만 입력이 가능합니다");
 			return;
+		}catch(IndexOutOfBoundsException iobe) {
+			JOptionPane.showMessageDialog(ld, "배정된 과목이 없습니다. 관리자에게 문의 하세요.");
 		}
 		
 	}
@@ -155,22 +180,29 @@ public class LoginDesignEvt extends WindowAdapter implements ActionListener{
 		String AdminId = ld.getJtfNum().getText();
 		String AdminPass = ld.getJtfPw().getText();
 		
-		
 		LoginAdminDTO logDTO = ls.searchAdminOneMember(AdminId);
 		
-		
-		if(logDTO.getAdminId() == AdminId)
-		{
-			if(logDTO.getAdminPass().equals(AdminPass)){
-				JOptionPane.showMessageDialog(ld, "관리자 계정으로 로그인 하였습니다.");	
-				new AdminInfoDesign();
-				ld.dispose();
-			}else {
-				JOptionPane.showMessageDialog(ld, "비밀번호를 확인해주세요");
-			}
-		}else{
+		if(AdminId.length()>20) {
+			JOptionPane.showMessageDialog(ld, "아이디를 확인해주세요.");
+			return;
+		}
+
+		try {
+			if(logDTO.getAdminId() == AdminId)
+			{
+				if(logDTO.getAdminPass().equals(AdminPass)){
+					JOptionPane.showMessageDialog(ld, "관리자 계정으로 로그인 하였습니다.");	
+					new AdminInfoDesign();
+					ld.dispose();
+				}else {
+					JOptionPane.showMessageDialog(ld, "비밀번호를 확인해주세요");
+				}
+			}else{
+				JOptionPane.showMessageDialog(ld, "아이디를 확인해주세요");
+			}	
+		}catch(NullPointerException npe) {
 			JOptionPane.showMessageDialog(ld, "아이디를 확인해주세요");
-		}	
+		}
 	}
 
 }

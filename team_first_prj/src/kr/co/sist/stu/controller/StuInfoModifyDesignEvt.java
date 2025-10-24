@@ -8,10 +8,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
+import java.util.regex.Pattern;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 import kr.co.sist.login.dao.CurrentStuData;
 import kr.co.sist.stu.service.StuInfoModifyService;
@@ -65,10 +67,38 @@ public class StuInfoModifyDesignEvt extends WindowAdapter implements ActionListe
 	
 	public void modifyStuInfoProcess() {
 		CurrentStuData csd = CurrentStuData.getInstance();
+		
+		JTextField emailField = simd.getJtfStuEmail();
+		String stuEmail = emailField.getText();
+
+		final String EMAIL_REGEX = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$";
+	    final Pattern PATTERN = Pattern.compile(EMAIL_REGEX);
+	    
+	    String trimmedEmail = stuEmail.trim();
+
+	    
+	    // 5. 빈 값 체크
+	    if (trimmedEmail.isEmpty()) {
+	        JOptionPane.showMessageDialog(simd, 
+	            "이메일 주소를 입력해주세요.", "입력 오류", JOptionPane.WARNING_MESSAGE);
+	        
+	        emailField.requestFocusInWindow();
+	        return; 
+	    }
+	    
+	    // Matcher.matches() 대신 Pattern.matcher(String).matches()를 바로 사용
+	    if (!PATTERN.matcher(trimmedEmail).matches()) {
+	        JOptionPane.showMessageDialog(simd, 
+	            "올바른 이메일 주소 형식이 아닙니다.", "형식 오류", JOptionPane.ERROR_MESSAGE);
+	        
+	        emailField.requestFocusInWindow();
+	        emailField.selectAll(); 
+	        return;
+	    }
+		
 		csd.getLogStuDTO().setStuEmail(simd.getJtfStuEmail().getText());
 		csd.getLogStuDTO().setStuAddr1(simd.getJtfStuAddr().getText());
 		csd.getLogStuDTO().setStuAddr2(simd.getJtfStuAddr2().getText());
-		
 		
 		
 		if(sims.modifyStuInfo(csd)==1) {

@@ -56,8 +56,7 @@ public class ProfScoreMgrDesign extends JDialog{
 		JPanel jpSouth = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		
 		
-		dcbmProfCourse.addElement("---과정선택---");
-		dcbmProfSub.addElement("---과목선택---");
+		
 		
 		jtfStuNum.setPreferredSize(new Dimension(110,25));
 		//North Panel
@@ -77,12 +76,27 @@ public class ProfScoreMgrDesign extends JDialog{
 		
 		
 		ProfScoreMgrDesignEvt psmde = new ProfScoreMgrDesignEvt(this);
+		
+		
+		dcbmProfCourse.addElement("---과정선택---");
+		dcbmProfSub.addElement("---과목선택---");
+		for(int i=0;i<psmde.showAllCourse().size();i++) {
+			dcbmProfCourse.addElement(psmde.showAllCourse().get(i).getCourseName());			
+		}
+//		
+//		for(int i=0;i<psmde.showAllSubject().size();i++) {
+//			dcbmProfSub.addElement(psmde.showAllSubject().get(i).getSubName());			
+//		}
+//		
+//		
+		
+		jcbProfCourse.addActionListener(psmde);
+		jcbProfSub.addActionListener(psmde);
 		jbtnShowStuReportInfo.addActionListener(psmde);
 		jbtnSearchStuNum.addActionListener(psmde);
 		addWindowListener(psmde);
 		
-		
-		
+	
 		setBounds(100,100,500,300);
 		setVisible(true);
 	}
@@ -105,6 +119,51 @@ public class ProfScoreMgrDesign extends JDialog{
 
 	public DefaultComboBoxModel<String> getDcbmProfSub() {
 		return dcbmProfSub;
+	}
+
+
+	public void setJcbProfCourse(JComboBox<String> jcbProfCourse) {
+		this.jcbProfCourse = jcbProfCourse;
+	}
+
+
+	public void setDcbmProfCourse(DefaultComboBoxModel<String> dcbmProfCourse) {
+		this.dcbmProfCourse = dcbmProfCourse;
+	}
+
+
+	public void setJcbProfSub(JComboBox<String> jcbProfSub) {
+		this.jcbProfSub = jcbProfSub;
+	}
+
+
+	public void setDcbmProfSub(DefaultComboBoxModel<String> dcbmProfSub) {
+		this.dcbmProfSub = dcbmProfSub;
+	}
+
+
+	public void setJtProfScoreMgr(JTable jtProfScoreMgr) {
+		this.jtProfScoreMgr = jtProfScoreMgr;
+	}
+
+
+	public void setDtmProfScoreMgr(DefaultTableModel dtmProfScoreMgr) {
+		this.dtmProfScoreMgr = dtmProfScoreMgr;
+	}
+
+
+	public void setJtfStuNum(JTextField jtfStuNum) {
+		this.jtfStuNum = jtfStuNum;
+	}
+
+
+	public void setJbtnSearchStuNum(JButton jbtnSearchStuNum) {
+		this.jbtnSearchStuNum = jbtnSearchStuNum;
+	}
+
+
+	public void setJbtnShowStuReportInfo(JButton jbtnShowStuReportInfo) {
+		this.jbtnShowStuReportInfo = jbtnShowStuReportInfo;
 	}
 
 

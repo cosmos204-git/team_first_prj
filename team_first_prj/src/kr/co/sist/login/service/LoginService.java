@@ -2,6 +2,7 @@ package kr.co.sist.login.service;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 import kr.co.sist.login.dao.LoginDAO;
 import kr.co.sist.login.dto.LoginAdminDTO;
@@ -33,22 +34,41 @@ public class LoginService {
 		return logStuDTO;
 	}
 	
-	public LoginProfDTO searchProfOneMember(int num) {
+	
+	public List<LoginProfDTO> searchProfOneMember(int num){
 		
-		LoginProfDTO logProfDTO = null;
-		
+		List<LoginProfDTO> list = null;		
 		try {
+//			PstmtMemberDAO pmDAO = PstmtMemberDAO.getInstance();
 			LoginDAO logDAO = LoginDAO.getInstance();
-			logProfDTO = logDAO.selectProfOneMember(num);
 			
+			list = logDAO.selectProfOneMember(num);
+								
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
-		return logProfDTO;
+		return list;
+		 
 	}
+//	public LoginProfDTO searchProfOneMember(int num) {
+//		
+//		LoginProfDTO logProfDTO = null;
+//		
+//		try {
+//			LoginDAO logDAO = LoginDAO.getInstance();
+//			logProfDTO = logDAO.selectProfOneMember(num);
+//			
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//		
+//		return logProfDTO;
+//	}
 	
 	public LoginAdminDTO searchAdminOneMember(String id) {
 		
