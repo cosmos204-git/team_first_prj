@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import kr.co.sist.admin.view.AdminAllStuMgrDesign;
+import kr.co.sist.admin.view.AdminRegStuMgrDesign;
 import kr.co.sist.admin.view.AdminCourseMgrDesign;
 import kr.co.sist.admin.view.AdminInfoDesign;
 import kr.co.sist.admin.view.AdminProfMgrDesign;
@@ -33,7 +33,7 @@ public class AdminInfoDesignEvt extends WindowAdapter implements ActionListener 
 			new AdminSubjectMgrDesign(aid,true);
 		}//end if
 		if(e.getSource() == aid.getJbtnAllStuMgr()) {
-			new AdminAllStuMgrDesign(aid,true);
+			new AdminRegStuMgrDesign(aid,true);
 		}//end if
 		
 		if(e.getSource() == aid.getJbtnStuMgr()) {
