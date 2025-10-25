@@ -3,6 +3,8 @@ package kr.co.sist.prof.view;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -15,6 +17,7 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import kr.co.sist.prof.controller.ProfScoreMgrDesignEvt;
+import kr.co.sist.prof.dto.ProfCourseSubjectDTO;
 
 public class ProfScoreMgrDesign extends JDialog{
 	
@@ -27,7 +30,7 @@ public class ProfScoreMgrDesign extends JDialog{
 	private JTextField jtfStuNum;
 	private JButton jbtnSearchStuNum;
 	private JButton jbtnShowStuReportInfo;
-	
+	private Map<String,Integer> courseMap;
 	
 	public ProfScoreMgrDesign(ProfInfoDesign pid, boolean modal) {
 		super(pid,"성적 관리",modal);
@@ -39,11 +42,13 @@ public class ProfScoreMgrDesign extends JDialog{
 		jtfStuNum = new JTextField(); 
 		jcbProfCourse = new JComboBox<String>(dcbmProfCourse);
 		jcbProfSub = new JComboBox<String>(dcbmProfSub);
+		courseMap = new HashMap<>();
 		
 		//JTable			
 		String[] columnNames = {"학번","학생명","과목코드","과목명","점수"};
-		String[][] rowData = {{"202","이준원","101","Java", "40"},{"202","이준원","102","Oracle", "50"},{"202","이준원","102","Oracle", "50"},{"202","이준원","102","Oracle", "50"},{"202","이준원","102","Oracle", "50"},{"202","이준원","102","Oracle", "50"},{"202","이준원","102","Oracle", "50"},{"202","이준원","102","Oracle", "50"}};
-		dtmProfScoreMgr = new DefaultTableModel(rowData, columnNames);
+		String[] rowData = {"","","","",""};
+		//String[][] rowData = {{"202","이준원","101","Java", "40"},{"202","이준원","102","Oracle", "50"},{"202","이준원","102","Oracle", "50"},{"202","이준원","102","Oracle", "50"},{"202","이준원","102","Oracle", "50"},{"202","이준원","102","Oracle", "50"},{"202","이준원","102","Oracle", "50"},{"202","이준원","102","Oracle", "50"}};
+		dtmProfScoreMgr = new DefaultTableModel(null, columnNames);
 		jtProfScoreMgr = new JTable(dtmProfScoreMgr);
 		jtProfScoreMgr.setRowHeight(25);
 		
@@ -81,14 +86,11 @@ public class ProfScoreMgrDesign extends JDialog{
 		dcbmProfCourse.addElement("---과정선택---");
 		dcbmProfSub.addElement("---과목선택---");
 		for(int i=0;i<psmde.showAllCourse().size();i++) {
-			dcbmProfCourse.addElement(psmde.showAllCourse().get(i).getCourseName());			
+			dcbmProfCourse.addElement(psmde.showAllCourse().get(i).getCourseName());
+			courseMap.put(psmde.showAllCourse().get(i).getCourseName(), psmde.showAllCourse().get(i).getCourseCode());
 		}
-//		
-//		for(int i=0;i<psmde.showAllSubject().size();i++) {
-//			dcbmProfSub.addElement(psmde.showAllSubject().get(i).getSubName());			
-//		}
-//		
-//		
+		
+
 		
 		jcbProfCourse.addActionListener(psmde);
 		jcbProfSub.addActionListener(psmde);
@@ -99,6 +101,16 @@ public class ProfScoreMgrDesign extends JDialog{
 	
 		setBounds(100,100,500,300);
 		setVisible(true);
+	}
+
+
+	public Map<String, Integer> getCourseMap() {
+		return courseMap;
+	}
+
+
+	public void setCourseMap(Map<String, Integer> courseMap) {
+		this.courseMap = courseMap;
 	}
 
 
