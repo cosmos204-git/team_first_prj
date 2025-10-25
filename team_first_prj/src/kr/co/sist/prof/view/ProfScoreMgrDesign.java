@@ -17,7 +17,6 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import kr.co.sist.prof.controller.ProfScoreMgrDesignEvt;
-import kr.co.sist.prof.dto.ProfCourseSubjectDTO;
 
 public class ProfScoreMgrDesign extends JDialog{
 	
@@ -31,6 +30,9 @@ public class ProfScoreMgrDesign extends JDialog{
 	private JButton jbtnSearchStuNum;
 	private JButton jbtnShowStuReportInfo;
 	private Map<String,Integer> courseMap;
+	
+	
+	
 	
 	public ProfScoreMgrDesign(ProfInfoDesign pid, boolean modal) {
 		super(pid,"성적 관리",modal);
@@ -92,6 +94,8 @@ public class ProfScoreMgrDesign extends JDialog{
 		
 
 		
+		jtProfScoreMgr.getSelectionModel().addListSelectionListener(psmde);
+		jtProfScoreMgr.addMouseListener(psmde);
 		jcbProfCourse.addActionListener(psmde);
 		jcbProfSub.addActionListener(psmde);
 		jbtnShowStuReportInfo.addActionListener(psmde);
