@@ -52,7 +52,7 @@ public class AdminRegStuMgrDesign extends JDialog {
 		jpNorth.add(jbtnSearchStuNum);
 		jpNorth.setFont(font);
 		
-		String[] columNames = {"과정명","교수명","학번","학생명","등록일"};
+		String[] columNames = {"과정명","교수명","학생명","학번","등록일"};
 		dtmStudent = new DefaultTableModel(columNames,0);
 		jtAdminSubjectMgr = new JTable(dtmStudent);
 		JScrollPane jsp = new JScrollPane(jtAdminSubjectMgr);

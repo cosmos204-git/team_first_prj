@@ -37,8 +37,9 @@ public class AdminScoreMgrDesign extends JDialog {
 		String[] columNames = {"학번", "학생명","과목명","점수"};
 		dtmAdminScoreMgr = new DefaultTableModel(columNames,0);
 		jtAdminScoreMgr = new JTable(dtmAdminScoreMgr);
-				jps = new JScrollPane(jtAdminScoreMgr);
+		jps = new JScrollPane(jtAdminScoreMgr);
 		
+		jtAdminScoreMgr.setFont(font);
 		dcbmCourse = new DefaultComboBoxModel<String>();
 		
 		jcbCourse = new JComboBox<String>(dcbmCourse);

@@ -6,7 +6,6 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -25,6 +24,9 @@ public class AdminSubjectMgrDesign extends JDialog {
 	private DefaultComboBoxModel<String> dcbmCourse,dcbmSub;
 	private JComboBox<String> jcbCourse,jcbSub;
 	
+	public AdminSubjectMgrDesign() {
+		
+	}
 	public AdminSubjectMgrDesign(AdminInfoDesign aid, boolean modal) {
 		
 		super(aid,"관리자 - 과목 관리",modal);
@@ -59,10 +61,15 @@ public class AdminSubjectMgrDesign extends JDialog {
 
 		//리스너 추가 
 		AdminSubjectMgrDesignEvt asmde = new AdminSubjectMgrDesignEvt(this);
+		asmde.searchCourseProcess();
+		asmde.searchSubProcess();
+		asmde.searchCourseSub();
 		jbtnMgrTestExam.addActionListener(asmde);
 		jbtnClose.addActionListener(asmde);
 		jbtnDelete.addActionListener(asmde);
 		jbtnAdd.addActionListener(asmde);
+		jcbCourse.addActionListener(asmde);
+		jcbSub.addActionListener(asmde);
 		
 		addWindowListener(asmde);
 		
@@ -72,8 +79,8 @@ public class AdminSubjectMgrDesign extends JDialog {
 		jlblSubName.setBounds(30,85,70,20);
 		jlblSubNum.setBounds(30,120,80,20);
 		jlblCourseInputdate.setBounds(30,155,70,20);
-		jlblCourseInputdateData.setBounds(30,155,70,20);
-		jlblSubNumdata.setBounds(90,120,100,20);
+		jlblCourseInputdateData.setBounds(90,155,140,20);
+		jlblSubNumdata.setBounds(100,120,100,20);
 		
 		jcbCourse.setBounds(90,50,100,20);
 		jcbSub.setBounds(90,85,100,20);
@@ -90,6 +97,7 @@ public class AdminSubjectMgrDesign extends JDialog {
 		add(jlblSubName);
 		add(jlblSubNum);
 		add(jlblCourseInputdate);
+		add(jlblCourseInputdateData);
 		add(jlblSubNumdata);
 		add(jcbCourse);
 		add(jcbSub);

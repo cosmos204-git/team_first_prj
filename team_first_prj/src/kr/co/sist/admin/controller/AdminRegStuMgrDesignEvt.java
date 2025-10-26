@@ -80,8 +80,8 @@ public class AdminRegStuMgrDesignEvt extends WindowAdapter implements ActionList
 		for(RegStuMgrDTO rsmDTO : list) {
 			rowData[0] = rsmDTO.getCourseName();
 			rowData[1] = rsmDTO.getProfName();
-			rowData[2] = String.valueOf( rsmDTO.getStuNum());
-			rowData[3] = rsmDTO.getStuName();
+			rowData[2] = rsmDTO.getStuName();
+			rowData[3] = String.valueOf( rsmDTO.getStuNum());
 			rowData[4] = rsmDTO.getStuRegInputDate();
 			
 			dtm.addRow(rowData);

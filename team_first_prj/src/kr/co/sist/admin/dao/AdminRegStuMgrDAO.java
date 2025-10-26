@@ -43,10 +43,11 @@ public class AdminRegStuMgrDAO {
 			con = gc.getConn();
 
 			StringBuilder selectAllStu = new StringBuilder();
-			selectAllStu.append("	select course_name, prof_name, stu_num, stu_name, stu_reg_inputdate	")
+			selectAllStu.append("	select course_name, prof_name, stu_num, stu_name, to_char(stu_reg_inputdate,'yyyy-mm-dd') stu_reg_inputdate	")
 					.append("	from student s, course c, professor p	")
 					.append("	where s.course_code= c.course_code and c.prof_num=p.prof_num	")
-					.append("	order by c.course_code	");
+					.append("   and s.stu_del_flag='N'   ")
+					.append("	order by c.course_code, stu_num	");
 
 			pstmt = con.prepareStatement(selectAllStu.toString());
 
@@ -54,13 +55,14 @@ public class AdminRegStuMgrDAO {
 
 			String courseName, profName, stuName, sysdate;
 			int stuNum;
+			RegStuMgrDTO rsmDTO = null;
 			while (rs.next()) {
 				courseName = rs.getString("course_name");
 				profName = rs.getString("prof_name");
 				stuNum = rs.getInt("stu_num");
 				stuName = rs.getString("stu_name");
 				sysdate = rs.getString("stu_reg_inputdate");
-				RegStuMgrDTO rsmDTO = new RegStuMgrDTO(stuNum, courseName, profName, stuName, sysdate);
+				rsmDTO= new RegStuMgrDTO(stuNum, courseName, profName, stuName, sysdate);
 
 				rsmDTOList.add(rsmDTO);
 			} // end while
@@ -123,22 +125,24 @@ public class AdminRegStuMgrDAO {
 			StringBuilder selectStu = new StringBuilder();
 			if(jtfStuNum.getText()==null || jtfStuNum.getText().trim().isEmpty()&&jc.getSelectedItem().toString().isEmpty()) {
 				selectStu
-				.append("	select course_name, prof_name, stu_num, stu_name, stu_reg_inputdate	")
+				.append("	select course_name, prof_name, stu_num, stu_name, to_char(stu_reg_inputdate,'yyyy-mm-dd') stu_reg_inputdate	")
 				.append("	from student s, course c, professor p	")
 				.append("	where s.course_code= c.course_code and c.prof_num=p.prof_num	")
-				.append("	order by c.course_code, stu_num	");
+				.append("   and s.stu_del_flag='N'   ")
+				.append("	order by c.course_code, stu_name	");
 				
 				pstmt = con.prepareStatement(selectStu.toString());
 				
 			}else if(jtfStuNum.getText()!=null && !jtfStuNum.getText().trim().isEmpty() && !jc.getSelectedItem().toString().isEmpty()) {
 				int stuNum = Integer.parseInt(jtfStuNum.getText().trim());
 				selectStu
-				.append("	select course_name, prof_name, stu_num, stu_name, stu_reg_inputdate	")
+				.append("	select course_name, prof_name, stu_num, stu_name, to_char(stu_reg_inputdate,'yyyy-mm-dd') stu_reg_inputdate	")
 				.append("	from student s, course c, professor p	")
 				.append("	where s.course_code= c.course_code and c.prof_num=p.prof_num	")
 				.append("	and c.course_code = (select course_code from course where course_name=?)	 ")
 				.append("	and stu_num =?	 ")
-				.append("	order by c.course_code, stu_num	 ");
+				.append("   and s.stu_del_flag='N'   ")
+				.append("	order by c.course_code, stu_name	 ");
 						
 				pstmt = con.prepareStatement(selectStu.toString());
 				
@@ -148,11 +152,12 @@ public class AdminRegStuMgrDAO {
 			}else if(jtfStuNum.getText()!=null && !jtfStuNum.getText().trim().isEmpty() && jc.getSelectedItem().toString().isEmpty()) {
 				int stuNum = Integer.parseInt(jtfStuNum.getText().trim());
 				selectStu
-				.append("	select course_name, prof_name, stu_num, stu_name, stu_reg_inputdate	")
+				.append("	select course_name, prof_name, stu_num, stu_name, to_char(stu_reg_inputdate,'yyyy-mm-dd') stu_reg_inputdate	")
 				.append("	from student s, course c, professor p	")
 				.append("	where s.course_code= c.course_code and c.prof_num=p.prof_num	")
 				.append("	and stu_num =?	 ")
-				.append("	order by c.course_code, stu_num	 ");
+				.append("   and s.stu_del_flag='N'   ")
+				.append("	order by c.course_code, stu_name	 ");
 				
 				pstmt = con.prepareStatement(selectStu.toString());
 				
@@ -161,11 +166,12 @@ public class AdminRegStuMgrDAO {
 			
 			}else if(jtfStuNum.getText()==null || jtfStuNum.getText().trim().isEmpty() && !jc.getSelectedItem().toString().isEmpty()) {
 				selectStu
-				.append("	select course_name, prof_name, stu_num, stu_name, stu_reg_inputdate	")
+				.append("	select course_name, prof_name, stu_num, stu_name, to_char(stu_reg_inputdate,'yyyy-mm-dd') stu_reg_inputdate	")
 				.append("	from student s, course c, professor p	")
 				.append("	where s.course_code= c.course_code and c.prof_num=p.prof_num	")
 				.append("	and c.course_code = (select course_code from course where course_name=?)	 ")
-				.append("	order by c.course_code, stu_num	 ");
+				.append("   and s.stu_del_flag='N'   ")
+				.append("	order by c.course_code, stu_name	 ");
 				
 				pstmt = con.prepareStatement(selectStu.toString());
 				
