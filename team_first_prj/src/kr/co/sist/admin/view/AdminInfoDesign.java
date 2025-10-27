@@ -28,7 +28,7 @@ public class AdminInfoDesign extends JFrame {
 		jbtnAllStuMgr.setFont(font);
 		jbtnSubjectMgr.setFont(font);
 		jbtnScoreMgr.setFont(font);
-
+ 
 		setLayout(null);
 
 		AdminInfoDesignEvt aide = new AdminInfoDesignEvt(this);

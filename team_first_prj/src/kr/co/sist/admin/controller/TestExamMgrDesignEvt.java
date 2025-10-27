@@ -33,6 +33,10 @@ public class TestExamMgrDesignEvt extends WindowAdapter implements ActionListene
 		if(ae.getSource()==temd.getJbtnModify()) {
 			System.out.println("시험지보기/추가 - 추가");
 			addProcess();
+			searchEiListProcess();
+			resetProcess();
+//			int row = temd.getJtExamList().getSelectedRow();
+//			selectedEIList(row);
 		}//end if 
 //		if(ae.getSource()==temd.getJbtnAdd()) {
 //			System.out.println("시험지보기/추가 - 추가");
@@ -70,7 +74,19 @@ public class TestExamMgrDesignEvt extends WindowAdapter implements ActionListene
 	
 	public void addProcess() {
 		try {
-			int correct = Integer.parseInt(temd.getJtfCorrect().getText().trim());
+			int selectedRow = temd.getJtExamList().getSelectedRow();
+			if(selectedRow<0) {
+				JOptionPane.showMessageDialog(temd, "문제를 선택 후 수정하세요.");
+				 return;
+			}
+			int correct = 0 ;
+//			if(temd.getJtfCorrect().getText() == null || temd.getJtfCorrect().getText().isEmpty()) {
+//				System.out.println("dsalkfjsalk");
+//				return;
+//			}
+			if(temd.getJtfCorrect().getText() != null && !temd.getJtfCorrect().getText().isEmpty()) {
+				correct = Integer.parseInt(temd.getJtfCorrect().getText().trim());
+			}
 			TestExamMgrService tems = new TestExamMgrService();
 			int row =  temd.getJtExamList().getSelectedRow();
 			int eiCode = examItemList.get(row).getExamCode();
@@ -82,9 +98,13 @@ public class TestExamMgrDesignEvt extends WindowAdapter implements ActionListene
 			eiDTO.setExamChoice4(temd.getJtfExamChoice4().getText());
 			eiDTO.setExamCorrectTChoice(correct);
 			int cnt = tems.modifyEI(eiDTO, eiCode);
+			if(cnt ==1) {
+				JOptionPane.showMessageDialog(temd, "수정 되었습니다.");
+			}
 		}catch(NumberFormatException nfe) {
 			JOptionPane.showMessageDialog(temd, "정답은 번호로만 입력 가능합니다.");
 		}
+		
 			
 		
 	}//addProcess
@@ -126,6 +146,11 @@ public class TestExamMgrDesignEvt extends WindowAdapter implements ActionListene
 		temd.getJtfExamChoice3().setText(choice3);
 		temd.getJtfExamChoice4().setText(choice4);
 		temd.getJtfCorrect().setText(correct);
+		
+
+		if(temd.getJtfCorrect().getText().equals("0")) {
+			temd.getJtfCorrect().setText("");
+		}
 	}//eiListselect
 	
 	

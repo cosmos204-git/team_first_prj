@@ -8,10 +8,10 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import kr.co.sist.admin.dto.CourseDTO;
@@ -32,12 +32,8 @@ public class AdminSubjectMgrDesignEvt extends WindowAdapter implements ActionLis
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == asmd.getJbtnMgrTestExam()) {
-			int row =asmd.getJtAdminSubMgr().getSelectedRow();
-			int subCode = courseSubList.get(row).getSubCode();
-			String subName = courseSubList.get(row).getSubName();
-			int crow = asmd.getJcbCourse().getSelectedIndex();
-			int courseCode = cDTOList.get(crow).getCourseCode();
-			new TestExamMgrDesign(asmd,false,subCode, courseCode, subName);
+			mgrTestExamProcess();
+			
 		}//end if 
 		if(e.getSource() == asmd.getJbtnAdd()) {
 			System.out.println("추가버튼");
@@ -133,10 +129,18 @@ public class AdminSubjectMgrDesignEvt extends WindowAdapter implements ActionLis
 	}
 	public void addProcess() {
 		AdminSubjectMgrDesignService asmds = new AdminSubjectMgrDesignService();
+		int sub = asmd.getJcbSub().getSelectedIndex();
+		if(sub==0) {
+			JOptionPane.showMessageDialog(asmd, "추가할 과목을 선택하세요.");
+			return;
+		}//end if
 		
 		int courseNum = asmd.getJcbCourse().getSelectedIndex();
 		int subNum = asmd.getJcbSub().getSelectedIndex()-1;
 		int rowCnt = asmds.addCourseSub(cDTOList.get(courseNum).getCourseCode(), sDTOList.get(subNum).getSubCode());
+		if(rowCnt==-1) {
+			JOptionPane.showMessageDialog(asmd, "이미 추가된 과목입니다.");
+		}
 	}//addProcess
 	public void deleteProcess() {
 		AdminSubjectMgrDesignService asmds = new AdminSubjectMgrDesignService();
@@ -146,7 +150,16 @@ public class AdminSubjectMgrDesignEvt extends WindowAdapter implements ActionLis
 		int rowCnt = asmds.removeCourseSub(cDTOList.get(courseNum).getCourseCode(),courseSubList.get(subNum).getSubCode());
 	} //deleteProcess
 	public void mgrTestExamProcess() {
-		
+		int row =asmd.getJtAdminSubMgr().getSelectedRow();
+		if(row<0) {
+			JOptionPane.showMessageDialog(asmd, "시험지를 열람할 과목을 선택해주세요.");
+			return;
+		}
+		int subCode = courseSubList.get(row).getSubCode();
+		String subName = courseSubList.get(row).getSubName();
+		int crow = asmd.getJcbCourse().getSelectedIndex();
+		int courseCode = cDTOList.get(crow).getCourseCode();
+		new TestExamMgrDesign(asmd,false,subCode, courseCode, subName);
 	}//mgrTestExamProcess
 	public void closeProcess() {
 		asmd.dispose();

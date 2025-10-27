@@ -67,6 +67,10 @@ public class AdminSubjectMgrDesignService {
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
+			int errorCode = e.getErrorCode();
+			if(errorCode==1) {
+				rowCnt=-1;
+			}
 			e.printStackTrace();
 		}
 		

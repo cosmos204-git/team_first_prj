@@ -83,7 +83,8 @@ public class AdminSubjectMgrDAO {
 			StringBuilder selectCourse = new StringBuilder();
 			selectCourse
 			.append("	select course_code, course_name	")
-			.append("	from Course	");
+			.append("	from Course	")
+			.append("	where course_del_flag='N'	");
 			pstmt = con.prepareStatement(selectCourse.toString());
 			
 			rs=pstmt.executeQuery();
@@ -124,7 +125,7 @@ public class AdminSubjectMgrDAO {
 			
 			StringBuilder selectCourse = new StringBuilder();
 			selectCourse
-			.append("	 select s.sub_code, sub_name,sub_inputdate	")
+			.append("	 select s.sub_code, sub_name, to_char(sub_inputdate,'yyyy-mm-dd') sub_inputdate	")
 			.append("	 from subject s , course_subject cs	")
 			.append("	 where s.sub_code = cs.sub_code	")
 			.append("	and cs.course_code = (select course_code from course where course_name = ?)");

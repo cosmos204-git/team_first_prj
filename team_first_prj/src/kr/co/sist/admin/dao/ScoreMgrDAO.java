@@ -15,8 +15,6 @@ import javax.swing.JTextField;
 import kr.co.sist.admin.dto.CourseDTO;
 import kr.co.sist.admin.dto.ScoreMgrDTO;
 import kr.co.sist.admin.dto.SubjectDTO;
-import kr.co.sist.admin.view.AdminScoreMgrDesign;
-import kr.co.sist.login.dao.CurrentStuData;
 import kr.co.sist.login.dao.GetConnection;
 
 public class ScoreMgrDAO {
@@ -100,10 +98,6 @@ public class ScoreMgrDAO {
 		} finally {
 			gc.dbClose(con, pstmt, rs);
 		} // end finally
-		for (SubjectDTO s : sDTOList) {
-
-			System.out.println(s);
-		}
 		return sDTOList;
 	}// selectSubject
 
