@@ -98,6 +98,10 @@ public class ProfScoreMgrDesignEvt extends WindowAdapter implements ActionListen
 		}
 		
 		if(e.getSource()== psmd.getJbtnShowStuReportInfo()) {
+			if(report==null) {
+				JOptionPane.showMessageDialog(psmd, "학생을 선택해주세요.");
+				return;
+			}
 			new ShowStuReportInfoDesignDialog(psmd, true, report);
 		}
 	
@@ -151,10 +155,7 @@ public class ProfScoreMgrDesignEvt extends WindowAdapter implements ActionListen
 		return;
 		
 	}
-	public void writeStuReport() {
-		
-	}
-	
+
 	public void sendStuRow() {
 		int selRow = psmd.getJtProfScoreMgr().getSelectedRow();
 		int selStuNum = Integer.parseInt((String)psmd.getJtProfScoreMgr().getModel().getValueAt(selRow, 0));
@@ -164,8 +165,6 @@ public class ProfScoreMgrDesignEvt extends WindowAdapter implements ActionListen
 		
 		listExam = ssris.searchStuReport(selStuNum,selSubCode);
 		
-		
-		writeStuReport();
 		
 		report = new StringBuilder();
 		for(int i = 0;  i<listExam.size();i++) {

@@ -1,7 +1,5 @@
 package kr.co.sist.login.dao;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -31,13 +29,28 @@ public class GetConnection {
 	
 	public Connection getConn() throws SQLException, IOException {
 		//1. 드라이버 로딩
-			try {
-				Class.forName("oracle.jdbc.OracleDriver");
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			}//end catch
-			//2. 로딩된 드라이버를 사용하여 커넥션 얻기 => properties 도입
-			
+		try {
+			Class.forName("oracle.jdbc.OracleDriver");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}//end catch
+		//2. 로딩된 드라이버를 사용하여 커넥션 얻기 => properties 도입
+		
+		
+		
+		Properties prop = new Properties();
+		InputStream is = null;
+		
+		is  = getClass().getClassLoader().getResourceAsStream("properties/datebase.properties");
+		
+		if (is == null) {
+			// JAR 내부에서 파일을 찾지 못하면, 예외 발생
+			throw new IOException("database.properties 파일을 클래스패스에서 찾을 수 없습니다.");
+		}
+		prop.load(is); // InputStream으로부터 Properties 로드
+		
+		// try-with-resources: is.close() 자동 처리됨
+		/*
 			String userHome = System.getProperty("user.home");
 			File file = new File(userHome+"/git/team_first_prj/team_first_prj/src/properties/datebase.properties");
 			
@@ -45,18 +58,17 @@ public class GetConnection {
 				throw new IOException("properties가 지정된 위치에 존재하지 않습니다.");
 			}
 			
-			Properties prop = new Properties();
 			prop.load(new FileInputStream(file));
-			
-			String url = prop.getProperty("url");
-			String id = prop.getProperty("id");
-			String pass = prop.getProperty("pass");
-			
-			PreparedStatement pstmt = null;
-				//사용이 종료되면 자용사용객체를 끊어준다.
-			Connection con = DriverManager.getConnection(url,id,pass);
-
-			return con;
+		 */
+		String url = prop.getProperty("url");
+		String id = prop.getProperty("id");
+		String pass = prop.getProperty("pass");
+		
+		PreparedStatement pstmt = null;
+		//사용이 종료되면 자용사용객체를 끊어준다.
+		Connection con = DriverManager.getConnection(url,id,pass);
+		
+		return con;
 	}//getConn
 	
 	public void dbClose(Connection con, PreparedStatement pstmt, ResultSet rs) throws SQLException {
@@ -69,6 +81,6 @@ public class GetConnection {
 		}//end finally
 		
 	}//dbClose			
-				
+	
 }
 

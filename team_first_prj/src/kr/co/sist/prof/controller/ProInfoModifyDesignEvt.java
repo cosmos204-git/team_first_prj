@@ -1,14 +1,20 @@
 package kr.co.sist.prof.controller;
 
+import java.awt.Image;
+import java.awt.MediaTracker;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.Properties;
 import java.util.regex.Pattern;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -24,6 +30,7 @@ public class ProInfoModifyDesignEvt extends WindowAdapter implements ActionListe
 
 	private ProfInfoModifyDesign pimd;
 	private ProfInfoModifyService pims;
+	private ImageIcon resizedIcon;
 	
 	private String selectedImg;
 	boolean jfcFlag =false;
@@ -44,7 +51,7 @@ public class ProInfoModifyDesignEvt extends WindowAdapter implements ActionListe
 				if (jfcFlag==true) {
 					JOptionPane.showMessageDialog(pimd, "사진이 변경되었습니다.");
 					ProfInfoDesign pid = pimd.getPid();				
-					pid.getJlblProfImg().setIcon(new ImageIcon(selectedImg));
+					pid.getJlblProfImg().setIcon(resizedIcon);
 					selectedImg="";
 				}
 			} catch (IOException e1) {
@@ -77,7 +84,6 @@ public class ProInfoModifyDesignEvt extends WindowAdapter implements ActionListe
 			jfcFlag = true;
 			File file = jfc.getSelectedFile();
 			if(file != null) { //이미지인 경우
-				//선택한 파일의 크기를 170(w) x 170(h)로 변경하고, 이미지 아이콘에 설정한다.
 				String FileName = file.getName();
 				String ext = FileName.substring(FileName.lastIndexOf(".")+1).toLowerCase();
 				//이미지는 png, jpg, gif, bmp만 사용한다.
@@ -96,20 +102,82 @@ public class ProInfoModifyDesignEvt extends WindowAdapter implements ActionListe
 				
 				if(!flag) {
 					JOptionPane.showMessageDialog(pimd, "이미지파일(png,jpg,gif,bmp)만 허용합니다.");
+					jfcFlag=false;
+					return;
 				}//end if
 				
 				//이미지 크기를 변경 : 170(w) x 170(h)
 				
-				
-				
+				BufferedImage originalImage = ImageIO.read(file);
+				Image scaledImage = originalImage.getScaledInstance(100, 180, Image.SCALE_SMOOTH);
 				//ImageResize.resizeImage(file.getAbsolutePath(), 130, 130);
-				selectedImg=file.getParent()+File.separator+file.getName();
+				resizedIcon = new ImageIcon(scaledImage);
+				
+				
+				
 				
 				//현재 스테이터스 창에 채워주고...
-				pimd.getJlblProfImg().setIcon(new ImageIcon(selectedImg));
+				pimd.getJlblProfImg().setIcon(resizedIcon);
+				//pimd.getJlblProfImg().setIcon(new ImageIcon(selectedImg));
 				
+				selectedImg=file.getParent()+File.separator+file.getName();
+
 				file = new File(selectedImg);
-				FileInputStream fisImg = new FileInputStream(file);
+				
+				FileInputStream fisImg = null;
+	            File tempResizedFile = null; 
+
+	            try {
+	                // a) Image를 BufferedImage로 변환 (ImageIO.write를 위해 필요)
+	                BufferedImage bufferedResizedImage = new BufferedImage(100, 180, BufferedImage.TYPE_INT_RGB);
+	                bufferedResizedImage.getGraphics().drawImage(scaledImage, 0, 0, null);
+
+	                // b) 임시 파일 생성 및 저장 (FileInputStream을 사용하기 위해 필요)
+	                String extension = "." + ext; 
+	                tempResizedFile = File.createTempFile("resized_img_", extension);
+	                tempResizedFile.deleteOnExit(); 
+	                
+	                ImageIO.write(bufferedResizedImage, ext, tempResizedFile); 
+	                
+	                // c) 임시 파일을 setProfImg가 요구하는 FileInputStream으로 읽어옴
+	                fisImg = new FileInputStream(tempResizedFile); 
+
+	                // -------------------------------------------------------------
+	                // 3. [기존 로직 수정] DTO에 데이터 전달 및 DB 저장
+	                // -------------------------------------------------------------
+	                CurrentProfData cpd = CurrentProfData.getInstance();
+	                
+	                // 원본 파일 객체를 setFile에 전달 (경로 참조용)
+	                cpd.getLogProfDTO().setFile(file);       
+	                // 🚨 핵심: 리사이징된 이미지의 FileInputStream 전달
+	                cpd.getLogProfDTO().setProfImg(fisImg);   
+	                // 확장자 전달
+	                cpd.getLogProfDTO().setExt(ext);         
+
+	                
+	                if(pims.modifyProfImg(cpd) == 1) { // 메서드명은 sims.modifyStuImg 대신 sims.modifyProfImg로 가정
+	                    // DB 저장 성공 시
+	                    if(fisImg != null) {fisImg.close();}
+	                    
+	                    // ⭐️ 임시 파일 삭제
+	                    if (tempResizedFile != null && tempResizedFile.exists()) {
+	                        tempResizedFile.delete();
+	                    }
+	                } else {
+	                    // DB 저장 실패 시에도 임시 파일 및 스트림 정리
+	                    if(fisImg != null) {fisImg.close();}
+	                    if (tempResizedFile != null && tempResizedFile.exists()) {
+	                        tempResizedFile.delete();
+	                    }
+	                } //end if (modifyProfImg)
+	                
+	            } catch (IOException e) {
+	                e.printStackTrace();
+	                if (fisImg != null) fisImg.close();
+	                if (tempResizedFile != null && tempResizedFile.exists()) tempResizedFile.delete();
+	            }
+				
+				/*
 				
 				ext = file.getName().substring(file.getName().lastIndexOf(".")+1);
 				
@@ -119,13 +187,14 @@ public class ProInfoModifyDesignEvt extends WindowAdapter implements ActionListe
 				cpd.getLogProfDTO().setExt(ext);
 				
 				
-				
 				if(pims.modifyProfImg(cpd) == 1) {
 					//변경된 크기의 이미지를 삭제. (참조 process가 존재하면 파일이 삭제되지 않는다.)
 					if(fisImg != null) {fisImg.close();}
 					
 //					lDTO.getFile().delete();
-				}//end if		
+				}//end if	
+				
+					*/
 				
 				
 			}
@@ -189,10 +258,35 @@ public class ProInfoModifyDesignEvt extends WindowAdapter implements ActionListe
 		pimd.getJtfProfCourseData().setText(cpd.getLogProfDTO().getCourseName());
 	
 		Properties prop = new Properties();
-		String userHome = System.getProperty("user.home");
+		InputStream is = null;
+		//String userHome = System.getProperty("user.home");
 		try {
-			prop.load(new FileInputStream(userHome+"/git/team_first_prj/team_first_prj/src/properties/datebase.properties"));
-			ImageIcon ii = new ImageIcon(prop.getProperty("savePath")+cpd.getLogProfDTO().getProfNum()+"p."+cpd.getLogProfDTO().getExt());
+			is = getClass().getClassLoader().getResourceAsStream("properties/database.properties");
+			//prop.load(new FileInputStream(userHome+"/git/team_first_prj/team_first_prj/src/properties/datebase.properties"));
+			if (is == null) {
+	            throw new IOException("database.properties 파일을 클래스패스에서 찾을 수 없습니다.");
+	        }
+			prop.load(is);
+			
+			String saveDir = prop.getProperty("savePath");
+	        int profNum = cpd.getLogProfDTO().getProfNum();
+	        String ext = cpd.getLogProfDTO().getExt();
+			
+	        String imagePath = saveDir + File.separator + profNum + "s." + ext;
+			
+			ImageIcon ii = new ImageIcon(imagePath);
+			
+			if (ii.getImageLoadStatus() != MediaTracker.COMPLETE || !(new File(imagePath).exists())) {
+	             // 기본 이미지는 JAR 내부 리소스(/images/default_profile.png)에서 불러옵니다.
+	             URL defaultImageUrl = getClass().getResource("/images/default_img.png"); 
+	             if (defaultImageUrl != null) {
+	                 ii = new ImageIcon(defaultImageUrl);
+	             } else {
+	                 // 기본 이미지도 없으면 콘솔 경고만 출력
+	                 System.err.println("경고: 기본 이미지 파일도 클래스패스에서 찾을 수 없습니다.");
+	             }
+	        }
+			
 			pimd.getJlblProfImg().setIcon(ii);
 		} catch (IOException e) {
 			e.printStackTrace();
