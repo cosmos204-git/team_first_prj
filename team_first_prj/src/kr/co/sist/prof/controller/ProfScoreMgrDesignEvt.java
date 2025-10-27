@@ -142,7 +142,7 @@ public class ProfScoreMgrDesignEvt extends WindowAdapter implements ActionListen
 			}
 		}catch(NumberFormatException nfe) {
 			JOptionPane.showMessageDialog(psmd, "숫자만 입력 가능합니다.");
-			return;
+			stuNum=-1;
 		}
 			
 		list = psms.searchSubStuCourseScore(cpd.getLogProfDTO().getProfNum(), courseCode, subCode, stuNum);

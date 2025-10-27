@@ -3,6 +3,7 @@ package kr.co.sist.prof.dao;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -65,9 +66,20 @@ public class ScoreMgrDAO {
 				csjDTO.setCourseName(rs.getString("course_name"));
 				csjDTO.setCourseCode(rs.getInt("course_code"));
 				
-				//이미지는 스트림을 별도로 연결하여 읽어 들인다.
 				Properties prop = new Properties();
-				prop.load(new FileInputStream(userHome+"/git/team_first_prj/team_first_prj/src/properties/datebase.properties"));
+				InputStream is = null;
+				
+				is  = getClass().getClassLoader().getResourceAsStream("properties/datebase.properties");
+				
+				if (is == null) {
+					// JAR 내부에서 파일을 찾지 못하면, 예외 발생
+					throw new IOException("database.properties 파일을 클래스패스에서 찾을 수 없습니다.");
+				}
+				
+				prop.load(is);
+				
+				//이미지는 스트림을 별도로 연결하여 읽어 들인다.
+//				prop.load(new FileInputStream(userHome+"/git/team_first_prj/team_first_prj/src/properties/datebase.properties"));
 				
 				File dir = new File(prop.getProperty("savePath"));
 				
@@ -129,7 +141,18 @@ public class ScoreMgrDAO {
 
 				//이미지는 스트림을 별도로 연결하여 읽어 들인다.
 				Properties prop = new Properties();
-				prop.load(new FileInputStream(userHome+"/git/team_first_prj/team_first_prj/src/properties/datebase.properties"));
+				//prop.load(new FileInputStream(userHome+"/git/team_first_prj/team_first_prj/src/properties/datebase.properties"));
+				InputStream is = null;
+				
+				is  = getClass().getClassLoader().getResourceAsStream("properties/datebase.properties");
+				
+				if (is == null) {
+					// JAR 내부에서 파일을 찾지 못하면, 예외 발생
+					throw new IOException("database.properties 파일을 클래스패스에서 찾을 수 없습니다.");
+				}
+				
+				prop.load(is);
+				
 				
 				File dir = new File(prop.getProperty("savePath"));
 				
@@ -224,8 +247,20 @@ public class ScoreMgrDAO {
 				
 
 				//이미지는 스트림을 별도로 연결하여 읽어 들인다.
+				
 				Properties prop = new Properties();
-				prop.load(new FileInputStream(userHome+"/git/team_first_prj/team_first_prj/src/properties/datebase.properties"));
+				InputStream is = null;
+				
+				is  = getClass().getClassLoader().getResourceAsStream("properties/datebase.properties");
+				
+				if (is == null) {
+					// JAR 내부에서 파일을 찾지 못하면, 예외 발생
+					throw new IOException("database.properties 파일을 클래스패스에서 찾을 수 없습니다.");
+				}
+				
+				prop.load(is); // InputStream으로부터 Properties 로드
+				//Properties prop = new Properties();
+				//prop.load(new FileInputStream(userHome+"/git/team_first_prj/team_first_prj/src/properties/datebase.properties"));
 				
 				File dir = new File(prop.getProperty("savePath"));
 				

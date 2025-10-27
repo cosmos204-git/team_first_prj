@@ -49,21 +49,11 @@ public class GetConnection {
 		}
 		prop.load(is); // InputStream으로부터 Properties 로드
 		
-		// try-with-resources: is.close() 자동 처리됨
-		/*
-			String userHome = System.getProperty("user.home");
-			File file = new File(userHome+"/git/team_first_prj/team_first_prj/src/properties/datebase.properties");
-			
-			if(!file.exists()) {
-				throw new IOException("properties가 지정된 위치에 존재하지 않습니다.");
-			}
-			
-			prop.load(new FileInputStream(file));
-		 */
 		String url = prop.getProperty("url");
 		String id = prop.getProperty("id");
 		String pass = prop.getProperty("pass");
 		
+
 		PreparedStatement pstmt = null;
 		//사용이 종료되면 자용사용객체를 끊어준다.
 		Connection con = DriverManager.getConnection(url,id,pass);
