@@ -1,112 +1,95 @@
 package kr.co.sist.stu.view;
 
-import java.awt.Dimension;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
+import javax.swing.*;
 
 import kr.co.sist.stu.controller.StuExamDesignEvt;
+import kr.co.sist.stu.dto.ExamItemDTO;
 
-public class StuExamDesign extends JDialog{
-	
-	
-	private JLabel jlblStuName,jlblSub;
-	private JLabel jlblStuNameData, jlblSubData;
-	private JLabel jlblExamNum, jlblExamQuest;
-	
-	private JRadioButton op1,op2,op3,op4;
-	private List<ButtonGroup> gbSelectButton;
-	
-	private JButton jbtnSubmit;
-	private StuCourseMgrDesign scmd;
-	
-	
-	public StuExamDesign(StuCourseMgrDesign scmd, boolean modal) {
-		super(scmd, "시험지", modal);
-		
-		JPanel jpcenterMain= new JPanel();		
-		JPanel jpNorth = new JPanel();
-		gbSelectButton = new ArrayList<ButtonGroup>();
-		
-		jpcenterMain.setLayout(new BoxLayout(jpcenterMain,BoxLayout.Y_AXIS ));
-		jpcenterMain.setPreferredSize(new Dimension(600, 1500));
-		jlblStuName= new JLabel("이름 : ");
-		jlblSub= new JLabel("과목 : ");
-		jlblStuNameData = new JLabel("하하하");
-		jlblSubData= new JLabel("JAVA");
-		
-		jbtnSubmit= new JButton("제출");
-		
-		for(int i =1; i<=5;i++) {
-			JPanel jpcenterSub= new JPanel();
-			jpcenterSub.setLayout(new BoxLayout(jpcenterSub,BoxLayout.Y_AXIS ));
-			jpcenterSub.setPreferredSize(new Dimension(300, 60));
-			
-			jlblExamQuest = new JLabel(i+"번 문제 다음 중 ~~~~~~~~");
-			op1 = new JRadioButton("1");
-			op2 = new JRadioButton("2");
-			op3 = new JRadioButton("3");
-			op4 = new JRadioButton("4");
-			
-			ButtonGroup bg = new ButtonGroup();
-			bg.add(op1);
-			bg.add(op2);
-			bg.add(op3);
-			bg.add(op4);
-			
-			gbSelectButton.add(bg);
-			
-			jpcenterSub.add(jlblExamQuest);
-			jpcenterSub.add(op1);
-			jpcenterSub.add(op2);
-			jpcenterSub.add(op3);
-			jpcenterSub.add(op4);
-			
-			jpcenterMain.add(jpcenterSub);
-			
-		}//end for 
-		
-		jpcenterMain.add(jbtnSubmit);
-//		jbtnSubmit.addActionListener(this);
-		
-		JScrollPane jsp = new JScrollPane(jpcenterMain);
-		jsp.setAutoscrolls(true);
-		
+public class StuExamDesign extends JDialog {
 
-		jpNorth.add(jlblStuName);
-		jpNorth.add(jlblStuNameData);
-		jpNorth.add(jlblSub);
-		jpNorth.add(jlblSubData);
-		
-		add("North",jpNorth);
-		add("Center",jsp);
-		
-		StuExamDesignEvt sede = new StuExamDesignEvt(this);
-		jbtnSubmit.addActionListener(sede);
-		addWindowListener(sede);
-		
-		setBounds(scmd.getX()+50, scmd.getY()+50, 600, 300);
-		
-		setLocationRelativeTo(null);
-		setVisible(true);
-		
-	}//StuExamDesign
+    private final int stuNum;
+    private final int testCode;
+    private final String stuName;
+    private final String subjectName;
 
+    private final JButton jbtnSubmit = new JButton("제출");
+    private final List<ButtonGroup> groups = new ArrayList<>();
+    private final List<Integer> examCodes = new ArrayList<>();
 
-	public JButton getJbtnSubmit() {
-		return jbtnSubmit;
-	}
+    public StuExamDesign(StuCourseMgrDesign owner,
+                         boolean modal,
+                         int stuNum,
+                         String stuName,
+                         String subjectName,
+                         List<ExamItemDTO> items,
+                         int testCode) {
+        super(owner, "시험지", modal);
+        this.stuNum = stuNum;
+        this.stuName = stuName;
+        this.subjectName = subjectName;
+        this.testCode = testCode;
 
+        JPanel north = new JPanel(new FlowLayout(FlowLayout.LEFT, 12, 8));
+        north.add(new JLabel("이름 : "));
+        north.add(new JLabel(stuName));
+        north.add(Box.createHorizontalStrut(24));
+        north.add(new JLabel("과목 : "));
+        north.add(new JLabel(subjectName));
+        add(north, BorderLayout.NORTH);
 
+        JPanel center = new JPanel();
+        center.setLayout(new BoxLayout(center, BoxLayout.Y_AXIS));
 
-	
+        for (ExamItemDTO it : items) {
+            JPanel qPanel = new JPanel();
+            qPanel.setLayout(new BoxLayout(qPanel, BoxLayout.Y_AXIS));
+            qPanel.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
+
+            JLabel q = new JLabel(it.getExamCode() + ". " + it.getExamQuest());
+            JRadioButton c1 = new JRadioButton("1) " + it.getExamChoice1());
+            JRadioButton c2 = new JRadioButton("2) " + it.getExamChoice2());
+            JRadioButton c3 = new JRadioButton("3) " + it.getExamChoice3());
+            JRadioButton c4 = new JRadioButton("4) " + it.getExamChoice4());
+
+            ButtonGroup bg = new ButtonGroup();
+            bg.add(c1); bg.add(c2); bg.add(c3); bg.add(c4);
+
+            qPanel.add(q);
+            qPanel.add(c1);
+            qPanel.add(c2);
+            qPanel.add(c3);
+            qPanel.add(c4);
+
+            center.add(qPanel);
+
+            groups.add(bg);
+            examCodes.add(it.getExamCode());
+        }
+
+        JScrollPane jsp = new JScrollPane(center);
+        add(jsp, BorderLayout.CENTER);
+
+        JPanel south = new JPanel(new FlowLayout(FlowLayout.CENTER, 12, 8));
+        south.add(jbtnSubmit);
+        add(south, BorderLayout.SOUTH);
+
+        StuExamDesignEvt evt = new StuExamDesignEvt(this);
+        jbtnSubmit.addActionListener(evt);
+        addWindowListener(evt);
+
+        setSize(700, 500);
+        setLocationRelativeTo(owner);
+    }
+
+    // === getters used by Event ===
+    public JButton getJbtnSubmit() { return jbtnSubmit; }
+    public int getStuNum() { return stuNum; }
+    public int getTestCode() { return testCode; }
+    public String getStuName() { return stuName; }
+    public String getSubjectName() { return subjectName; }
+    public List<ButtonGroup> getGroups() { return groups; }
+    public List<Integer> getExamCodes() { return examCodes; }
 }
-
