@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.sql.Date;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -26,10 +27,12 @@ public class CourseSelectDesign extends JDialog {
     private DefaultTableModel dtmSelectCourse;
     private JTable jtSelectCourse;
     private JScrollPane jspSelectCourse;
+    private Date courseStartDate, courseEndDate;
     
     private JLabel jlblStuName, jlblStuNum;
     private JTextField jtfStuNameData, jtfStuNumData;
     private JButton jbtnShowSub, jbtnApplyCourse, jbtnClose;
+    
     
     
     public CourseSelectDesign(StuInfoDesign sid, boolean modal) {
@@ -53,17 +56,13 @@ public class CourseSelectDesign extends JDialog {
 
         jpNorth.add(jlblStuNum);
         jpNorth.add(jtfStuNumData);
-        jpNorth.add(jlblStuName);
+        jpNorth.add(jlblStuName); 
         jpNorth.add(jtfStuNameData);
 
         // Center Panel
         jpCenter = new JPanel(new BorderLayout()); 
         String[] columnsNames = {"신청 여부", "과정명"};
-        String[][] rowData = {
-                {"O", "FullStack"},
-                {"X", "AI"}
-        };
-        dtmSelectCourse = new DefaultTableModel(rowData, columnsNames);
+        dtmSelectCourse = new DefaultTableModel(columnsNames,0);
         jtSelectCourse = new JTable(dtmSelectCourse);
 
         TableColumnModel tcm = jtSelectCourse.getColumnModel();
@@ -71,7 +70,7 @@ public class CourseSelectDesign extends JDialog {
         tcm.getColumn(1).setPreferredWidth(120);
 
         jtSelectCourse.setRowHeight(35);
-        jtSelectCourse.setFont(new Font("맑은고딕", Font.BOLD, 15));
+        jtSelectCourse.setFont(new Font("맑은고딕", Font.PLAIN, 15));
 
         jspSelectCourse = new JScrollPane(jtSelectCourse);
         jpCenter.add(jspSelectCourse, BorderLayout.CENTER);
@@ -94,17 +93,17 @@ public class CourseSelectDesign extends JDialog {
         add(jpBottom, BorderLayout.SOUTH);
         
         CourseSelectDesignEvt csde = new CourseSelectDesignEvt(this);
-        
         jbtnShowSub.addActionListener(csde);
         jbtnApplyCourse.addActionListener(csde);
         jbtnClose.addActionListener(csde);
+        jtSelectCourse.addMouseListener(csde);
         addWindowListener(csde);
         
-        
-        
-        setBounds(600, 300, 600, 350); 
+        setBounds(600, 300, 500, 350); 
+        setResizable(false);
         setVisible(true);
-    }
+        
+    }//CourseSelectDesign
 
 
 
@@ -152,4 +151,31 @@ public class CourseSelectDesign extends JDialog {
 	}
 
 
-}
+
+	public Date getCourseStartDate() {
+		return courseStartDate;
+	}
+
+
+
+	public void setCourseStartDate(Date courseStartDate) {
+		this.courseStartDate = courseStartDate;
+	}
+
+
+
+	public Date getCourseEndDate() {
+		return courseEndDate;
+	}
+
+
+
+	public void setCourseEndDate(Date courseEndDate) {
+		this.courseEndDate = courseEndDate;
+	}
+
+
+	
+	
+	
+}//class

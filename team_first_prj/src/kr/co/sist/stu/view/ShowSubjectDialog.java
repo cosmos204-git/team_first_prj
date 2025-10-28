@@ -28,8 +28,7 @@ public class ShowSubjectDialog extends JDialog {
 		
 		//JTable
 		String[] columnNames = {"상세 과목"};
-		String[][] rowData = {{"java"},{"sql"},{"html5"}};
-		dtmShowSubDialog = new DefaultTableModel(rowData, columnNames);
+		dtmShowSubDialog = new DefaultTableModel(columnNames, 0);
 		jtShowSubDialog = new JTable(dtmShowSubDialog);
 		jtShowSubDialog.setRowHeight(25);
 		

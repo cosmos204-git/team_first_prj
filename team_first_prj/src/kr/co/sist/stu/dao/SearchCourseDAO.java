@@ -1,19 +1,99 @@
 package kr.co.sist.stu.dao;
 
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import kr.co.sist.stu.dto.SearchCourseDTO;
+import kr.co.sist.login.dao.GetConnection;
+import kr.co.sist.login.dto.LoginStudentDTO;
+
 public class SearchCourseDAO {
 
 	private static SearchCourseDAO scDAO;
-	
-	private SearchCourseDAO() {
-		
-	}//SearchCourseDAO
-	
-	
+
+	private SearchCourseDAO() {}
+
 	public static SearchCourseDAO getInstance() {
-		if(scDAO == null ) {
-		   scDAO = new SearchCourseDAO();
-		}//end if
+		if (scDAO == null) {
+			scDAO = new SearchCourseDAO();
+		}
 		return scDAO;
-	}//getInstance
+	}
+
+	public List<SearchCourseDTO> selectCourse(Date startDate, Date endDate, int stuNum) throws SQLException, IOException {
+
+		List<SearchCourseDTO> list = new ArrayList<>();
+		
+		GetConnection gc = GetConnection.getInstance();
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			con = gc.getConn();
+			StringBuilder selectCourse = new StringBuilder();
+		    selectCourse
+	        .append("select c.course_code, c.course_name, c.course_startdate, ")
+	        .append("c.course_enddate, c.course_inputdate, c.course_del_flag ")
+	        .append("from course c inner join student s on c.course_code = s.course_code ")
+	        .append("where s.stu_num = ? ")
+	        .append("and c.course_startdate between TO_DATE(?, 'YYYY-MM-DD') and TO_DATE(?, 'YYYY-MM-DD') ")
+	        .append("order by c.course_startdate desc");
+
+		  
+			pstmt = con.prepareStatement(selectCourse.toString());
+			pstmt.setInt(1, stuNum);
+			pstmt.setDate(2, startDate);
+			pstmt.setDate(3, endDate);
+
+			System.out.println(startDate);
+
+			
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				SearchCourseDTO scDTO = new SearchCourseDTO();
+				scDTO.setCourseCode(rs.getInt("course_code"));
+				scDTO.setCourseName(rs.getString("course_name"));
+				scDTO.setCourseStartDate(rs.getDate("course_startdate"));
+				scDTO.setCourseEndDate(rs.getDate("course_enddate"));
+				scDTO.setCourseInputDate(rs.getDate("course_inputdate"));
+				scDTO.setCourseFlag(rs.getBoolean("course_del_flag"));
+				list.add(scDTO);
+			}//end while
+
+		} finally {
+			gc.dbClose(con, pstmt, rs);
+		}//end finally
+
+		return list;
+	}//selectCourse
+
 	
-}//SearchCourseDAO
+	public int updateCourse(LoginStudentDTO lsDTO) throws SQLException, IOException {
+		int flag = 0;
+		GetConnection gc = GetConnection.getInstance();
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			con = gc.getConn();
+			String updateCourse = "update student set course_code = ? where stu_num = ?";
+			pstmt = con.prepareStatement(updateCourse);
+			pstmt.setInt(1, lsDTO.getStuCourseNum());
+			pstmt.setInt(2, lsDTO.getStuNum());
+			flag = pstmt.executeUpdate();
+		} finally {
+			gc.dbClose(con, pstmt, null);
+		}//end finally
+
+		return flag;
+	}//updateCourse
+	
+}//class
