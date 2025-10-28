@@ -79,6 +79,7 @@ public class LoginDesignEvt extends WindowAdapter implements ActionListener{
 				JOptionPane.showMessageDialog(ld, "아이디를 확인해주세요.");
 				return;
 			}
+			
 			if(logDTO.getStuDelFlag().equals("Y"))
 			{
 				JOptionPane.showMessageDialog(ld, "삭제된 학생의 정보입니다.");

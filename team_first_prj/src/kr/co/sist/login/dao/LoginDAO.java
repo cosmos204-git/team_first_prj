@@ -52,8 +52,9 @@ public class LoginDAO {
 			StringBuilder selectOneMember = new StringBuilder();
 			selectOneMember
 			.append("		SELECT STU_NUM,STU_IMG,STU_NAME,STU_PASS,STU_TEL,STU_EMAIL,STU_ADDR1,STU_ADDR2,STU_REG_INPUTDATE,STUDENT.COURSE_CODE,STU_DEL_FLAG, COURSE.COURSE_NAME")
-			.append("		FROM  STUDENT, COURSE")
-			.append("		WHERE student.course_code = course.course_code and STU_NUM = ? and sysdate < course_enddate");
+			.append("		FROM  STUDENT")
+			.append("		LEFT JOIN COURSE ON Student.course_code = COURSE.course_code")
+			.append("		WHERE STU_NUM = ?");
 
 			pstmt = con.prepareStatement(selectOneMember.toString());
 			
