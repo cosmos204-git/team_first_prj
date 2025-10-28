@@ -21,7 +21,7 @@ public class StuReportService {
 
     public List<String> getCoursesByStuNum(int stuNum) {
         try {
-            return StuReportDAO.getInstance().selectCoursesByStuNum(stuNum);
+            return StuReportDAO.getInstance().selectSubsByStuNum(stuNum);
         } catch (Exception e) {
             e.printStackTrace();
             return Collections.emptyList();

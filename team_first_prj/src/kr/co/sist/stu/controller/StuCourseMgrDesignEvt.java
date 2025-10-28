@@ -99,6 +99,8 @@ public class StuCourseMgrDesignEvt extends WindowAdapter implements ActionListen
         String stuName = CurrentStuData.getStuName();
         new StuReportDesign(scmd, true, stuNum, stuName);
     }
+    
+    
 
     @Override
     public void mouseClicked(MouseEvent me) {

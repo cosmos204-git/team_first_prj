@@ -15,7 +15,7 @@ public class StuExamDAO {
         return instance;
     }
 
-    public Integer findTestCode(String courseName, String subName) throws SQLException, IOException {
+    public Integer searchTestCode(String courseName, String subName) throws SQLException, IOException {
         Integer testCode = null;
         GetConnection gc = GetConnection.getInstance();
         String sql =
@@ -24,7 +24,8 @@ public class StuExamDAO {
             "JOIN course_subject cs ON cs.course_code = c.course_code " +
             "JOIN subject s ON s.sub_code = cs.sub_code " +
             "JOIN exam e ON e.course_code = c.course_code AND e.sub_code = s.sub_code " +
-            "WHERE c.course_name = ? AND s.sub_name = ? AND e.exam_open = '시험가능' " +
+            "WHERE c.course_name = ? AND s.sub_name = ? " +
+            "AND e.exam_open IN ('시험가능', '응시가능') " +
             "FETCH FIRST 1 ROWS ONLY";
         try (Connection con = gc.getConn();
              PreparedStatement ps = con.prepareStatement(sql)) {
@@ -37,7 +38,7 @@ public class StuExamDAO {
         return testCode;
     }
 
-    public List<ExamItemDTO> selectExamItems(int testCode) throws SQLException, IOException {
+    public List<ExamItemDTO> selectExamItem(int testCode) throws SQLException, IOException {
         List<ExamItemDTO> list = new ArrayList<>();
         GetConnection gc = GetConnection.getInstance();
         String sql =
@@ -69,7 +70,7 @@ public class StuExamDAO {
         return list;
     }
 
-    public boolean hasTakenTest(int stuNum, int testCode) throws SQLException, IOException {
+    public boolean stuInsertExam(int stuNum, int testCode) throws SQLException, IOException {
         GetConnection gc = GetConnection.getInstance();
         String sql =
             "SELECT COUNT(*) " +
@@ -87,7 +88,7 @@ public class StuExamDAO {
         }
     }
 
-    public int[] insertExamResults(int stuNum, Map<Integer,Integer> answerByExamCode)
+    public int[] insertExamResult(int stuNum, Map<Integer,Integer> answerByExamCode)
             throws SQLException, IOException {
         if (answerByExamCode == null || answerByExamCode.isEmpty()) return new int[0];
         GetConnection gc = GetConnection.getInstance();
@@ -125,7 +126,7 @@ public class StuExamDAO {
         }
     }
 
-    public Integer findSubCodeByTestCode(int testCode) throws SQLException, IOException {
+    public Integer searchExamCode(int testCode) throws SQLException, IOException {
         GetConnection gc = GetConnection.getInstance();
         String sql = "SELECT sub_code FROM exam WHERE test_code = ?";
         try (Connection con = gc.getConn();
@@ -136,32 +137,16 @@ public class StuExamDAO {
             }
         }
     }
-    
-    public Integer findCourseCodeByTestCode(int testCode) throws SQLException, IOException {
-        GetConnection gc = GetConnection.getInstance();
-        String sql = "SELECT course_code FROM exam WHERE test_code = ?";
-        try (Connection con = gc.getConn();
-             PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, testCode);
-            try (ResultSet rs = ps.executeQuery()) {
-                return rs.next() ? rs.getInt(1) : null;
-            }
-        }
-    }
 
-    
-    public int upsertReportScore(int stuNum, int subCode, int courseCode, int score) throws SQLException, IOException {
+    public int updateReportScore(int stuNum, int subCode, int score) throws SQLException, IOException {
         GetConnection gc = GetConnection.getInstance();
-        String sel = "SELECT COUNT(*) FROM report WHERE stu_num = ? AND sub_code = ? AND course_code = ?";
-        String upd = "UPDATE report SET stu_score = ? WHERE stu_num = ? AND sub_code = ? AND course_code = ?";
-        String ins = "INSERT INTO report (stu_num, sub_code, course_code, stu_score) VALUES (?, ?, ?, ?)";
-
+        String sel = "SELECT COUNT(*) FROM report WHERE stu_num = ? AND sub_code = ?";
+        String upd = "UPDATE report SET stu_score = ? WHERE stu_num = ? AND sub_code = ?";
+        String ins = "INSERT INTO report (stu_num, sub_code, stu_score) VALUES (?, ?, ?)";
         try (Connection con = gc.getConn();
              PreparedStatement ps = con.prepareStatement(sel)) {
             ps.setInt(1, stuNum);
             ps.setInt(2, subCode);
-            ps.setInt(3, courseCode);
-
             try (ResultSet rs = ps.executeQuery()) {
                 rs.next();
                 int cnt = rs.getInt(1);
@@ -170,20 +155,18 @@ public class StuExamDAO {
                         u.setInt(1, score);
                         u.setInt(2, stuNum);
                         u.setInt(3, subCode);
-                        u.setInt(4, courseCode);
                         return u.executeUpdate();
                     }
                 } else {
                     try (PreparedStatement i = con.prepareStatement(ins)) {
                         i.setInt(1, stuNum);
                         i.setInt(2, subCode);
-                        i.setInt(3, courseCode);
-                        i.setInt(4, score);
+                        i.setInt(3, score);
                         return i.executeUpdate();
                     }
                 }
             }
         }
-    }
 
+    }
 }

@@ -57,7 +57,10 @@ public class StuCourseMgrDAO {
                 if ("시험가능".equals(open)) {
                 	stucmDTO.setExamStart(start);
                 	stucmDTO.setExamEnd(end);
-                } else {
+                }else if ("응시가능".equals(open)) {
+                    	stucmDTO.setExamStart(start);
+                    	stucmDTO.setExamEnd(end);
+                    } else {
                 	stucmDTO.setExamStart("시험불가");
                 	stucmDTO.setExamEnd("");
                 }

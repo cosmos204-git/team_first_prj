@@ -48,11 +48,11 @@ public class StuExamDesign extends JDialog {
             qPanel.setLayout(new BoxLayout(qPanel, BoxLayout.Y_AXIS));
             qPanel.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
 
-            JLabel q = new JLabel( it.getExamQuest());
-            JRadioButton c1 = new JRadioButton(it.getExamChoice1());
-            JRadioButton c2 = new JRadioButton(it.getExamChoice2());
-            JRadioButton c3 = new JRadioButton(it.getExamChoice3());
-            JRadioButton c4 = new JRadioButton(it.getExamChoice4());
+            JLabel q = new JLabel(it.getExamQuest());
+            JRadioButton c1 = new JRadioButton("1) " + it.getExamChoice1());
+            JRadioButton c2 = new JRadioButton("2) " + it.getExamChoice2());
+            JRadioButton c3 = new JRadioButton("3) " + it.getExamChoice3());
+            JRadioButton c4 = new JRadioButton("4) " + it.getExamChoice4());
 
             ButtonGroup bg = new ButtonGroup();
             bg.add(c1); bg.add(c2); bg.add(c3); bg.add(c4);
@@ -84,11 +84,32 @@ public class StuExamDesign extends JDialog {
         setLocationRelativeTo(owner);
     }
 
-    public JButton getJbtnSubmit() { return jbtnSubmit; }
-    public int getStuNum() { return stuNum; }
-    public int getTestCode() { return testCode; }
-    public String getStuName() { return stuName; }
-    public String getSubjectName() { return subjectName; }
-    public List<ButtonGroup> getGroups() { return groups; }
-    public List<Integer> getExamCodes() { return examCodes; }
+    public JButton getJbtnSubmit() {
+    	return jbtnSubmit; 
+    	
+    }
+    public int getStuNum() {
+    	return stuNum; 
+    	
+    }
+    public int getTestCode() {
+    	return testCode; 
+    	
+    }
+    public String getStuName() {
+    	return stuName; 
+    	
+    }
+    public String getSubjectName() {
+    	return subjectName; 
+    	
+    }
+    public List<ButtonGroup> getGroups() {
+    	return groups; 
+    	
+    }
+    public List<Integer> getExamCodes() {
+    	return examCodes; 
+    	
+    }
 }

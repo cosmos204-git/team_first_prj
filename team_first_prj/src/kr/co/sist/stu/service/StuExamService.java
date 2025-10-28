@@ -1,5 +1,7 @@
 package kr.co.sist.stu.service;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -11,7 +13,7 @@ public class StuExamService {
 
     public boolean alreadyTaken(int stuNum, int testCode) {
         try {
-            return dao.hasTakenTest(stuNum, testCode);
+            return dao.stuInsertExam(stuNum, testCode);
         } catch (Exception e) {
             e.printStackTrace();
             return true;
@@ -20,7 +22,7 @@ public class StuExamService {
 
     public List<ExamItemDTO> getExamItems(int testCode) {
         try {
-            return dao.selectExamItems(testCode);
+            return dao.selectExamItem(testCode);
         } catch (Exception e) {
             e.printStackTrace();
             return java.util.Collections.emptyList();
@@ -30,21 +32,17 @@ public class StuExamService {
     public int submitAndScore(int stuNum, int testCode, Map<Integer,Integer> answers) {
         try {
             StuExamDAO dao = StuExamDAO.getInstance();
-
-            Integer courseCode = dao.findCourseCodeByTestCode(testCode);
-            Integer subCode = dao.findSubCodeByTestCode(testCode);
-            if (courseCode == null || subCode == null) return -1;
-
-            dao.insertExamResults(stuNum, answers);
-
+            dao.insertExamResult(stuNum, answers);
+       
             int[] res = dao.calcScoreAndTotal(stuNum, testCode);
             int correct = res[0];
             int total = res[1];
-            if (total <= 0) return -1;
+            int score = (int)((correct * 100.0) / total);
 
-            int score = (int)Math.round((correct * 100.0) / total);
-
-            dao.upsertReportScore(stuNum, subCode, courseCode, score);
+            Integer subCode = dao.searchExamCode(testCode);
+            if (subCode != null) {
+                dao.updateReportScore(stuNum, subCode, score);
+            }
 
             return score;
         } catch (Exception e) {
@@ -54,11 +52,9 @@ public class StuExamService {
     }
 
 
-
-
     public Integer findTestCode(String course, String subject) {
         try {
-            return kr.co.sist.stu.dao.StuExamDAO.getInstance().findTestCode(course, subject);
+            return kr.co.sist.stu.dao.StuExamDAO.getInstance().searchTestCode(course, subject);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
