@@ -7,6 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.UIManager;
@@ -62,6 +63,10 @@ public class AdminSubjectMgrDesign extends JDialog {
 		//리스너 추가 
 		AdminSubjectMgrDesignEvt asmde = new AdminSubjectMgrDesignEvt(this);
 		asmde.searchCourseProcess();
+		if(dcbmCourse.getSelectedItem()==null) {
+			JOptionPane.showMessageDialog(jsp, "과정이 존재하지 않습니다\n과정을 먼저 추가해주세요.");
+			return;
+		}
 		asmde.searchSubProcess();
 		asmde.searchCourseSub();
 		jbtnMgrTestExam.addActionListener(asmde);
