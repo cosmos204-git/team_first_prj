@@ -22,17 +22,5 @@ public class stuAddService {
 		return flag;
 	}//AddStudnet
 	
-	public int NextStuNum() {
-		int NewStuNum=-1;
-		stuAddDAO saDAO = stuAddDAO.getInstance();
-		
-		try {
-			NewStuNum=saDAO.selectNextStuNum();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}//end catch
-		return NewStuNum;
-	}//NextStuNum
+
 }//class

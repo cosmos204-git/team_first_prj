@@ -1,0 +1,303 @@
+package kr.co.sist.admin.dao;
+
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import kr.co.sist.admin.dto.CourseMgrDTO;
+import kr.co.sist.login.dao.GetConnection;
+
+public class AdminCourseMgrDesignDAO {
+	private static AdminCourseMgrDesignDAO acmdDAO;
+	
+	public static AdminCourseMgrDesignDAO getInstance() {
+		if(acmdDAO==null) {
+			acmdDAO=new AdminCourseMgrDesignDAO();
+		}//end if
+		return acmdDAO;
+	}//AdminCourseMgrDesignDAO
+
+	public List<CourseMgrDTO> selectAllCourse() throws SQLException,IOException{
+		CourseMgrDTO cmDTO = null;
+		
+		List<CourseMgrDTO> list = new ArrayList<CourseMgrDTO>();
+		
+		Connection con = null;
+		PreparedStatement pstmt= null;
+		ResultSet rs = null;
+		
+		GetConnection gc = GetConnection.getInstance();
+		try {
+			con=gc.getConn();
+			StringBuilder selectCourse= new StringBuilder();
+			selectCourse
+			.append("select c.COURSE_CODE,c.COURSE_NAME||CASE WHEN  c.COURSE_ENDDATE-c.COURSE_STARTDATE >0 THEN '(진행)' ELSE '(종료)'  END as COURSE_NAME")
+			.append(", p.PROF_NUM,p.PROF_NAME, c.COURSE_STARTDATE, c.COURSE_ENDDATE, c.COURSE_INPUTDATE")
+			.append("	from COURSE c,PROFESSOR p		")
+			.append("where (c.PROF_NUM=p.PROF_NUM )and COURSE_DEL_FLAG='N'")
+			.append("order by p.PROF_NAME asc");
+
+			pstmt = con.prepareStatement(selectCourse.toString());
+			
+			rs=pstmt.executeQuery();
+			
+			while(rs.next()) {
+				
+				
+				cmDTO = new CourseMgrDTO();
+				
+
+				cmDTO.setCourseCode(rs.getInt("COURSE_CODE"));
+				cmDTO.setCourseName(rs.getString("COURSE_NAME"));
+				cmDTO.setProfNum(rs.getInt("PROF_NUM"));
+				cmDTO.setProfName(rs.getString("PROF_NAME"));
+				cmDTO.setCourseStartDate(String.valueOf(rs.getDate("COURSE_STARTDATE")));
+				cmDTO.setCourseEndDate(String.valueOf(rs.getDate("COURSE_ENDDATE")));
+				cmDTO.setCourseInputDate(String.valueOf(rs.getDate("COURSE_INPUTDATE")));
+		
+				list.add(cmDTO);
+			}//end while
+		}finally {
+			gc.dbClose(con, pstmt, rs);
+		}//end finally
+				
+		return list;
+	}//selectAllCourse
+	
+	public List<String> selectCombo() throws IOException, SQLException {
+		List<String> List = new ArrayList<String>();
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		GetConnection gc = GetConnection.getInstance();
+
+		try {
+			con = gc.getConn();
+
+			StringBuilder selectCombo = new StringBuilder();
+			selectCombo.append("	select PROF_NUM,PROF_NAME	").append("	from PROFESSOR	")
+					.append("	where PROF_DEL_FLAG='N'	");
+
+			pstmt = con.prepareStatement(selectCombo.toString());
+
+			rs = pstmt.executeQuery();
+			String combo=null;
+			while (rs.next()) {
+				combo=rs.getString("PROF_NAME");
+
+				List.add(combo);
+			} // end while
+		} finally {
+			gc.dbClose(con, pstmt, rs);
+		} // end finally
+
+		return List;
+	}// selectCombo
+	
+	
+	public Map<String, String> selectCombo1() throws IOException, SQLException {
+		Map<String, String> list = new HashMap<String, String>();
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		GetConnection gc = GetConnection.getInstance();
+
+		try {
+			con = gc.getConn();
+
+			StringBuilder selectCombo = new StringBuilder();
+			selectCombo.append("	select PROF_NUM,PROF_NAME	").append("	from PROFESSOR	")
+					.append("	where PROF_DEL_FLAG='N'	");
+
+			pstmt = con.prepareStatement(selectCombo.toString());
+
+			rs = pstmt.executeQuery();
+//			String combo=null;
+			while (rs.next()) {
+				list.put(rs.getString("PROF_NAME"),String.valueOf(rs.getInt("PROF_NUM")));
+			} // end while
+		} finally {
+			gc.dbClose(con, pstmt, rs);
+		} // end finally
+
+		return list;
+	}// selectCombo
+	
+	public List<CourseMgrDTO> selectCourse(String courseName) throws SQLException, IOException {
+
+
+		CourseMgrDTO cmDTO=null;
+		
+		List<CourseMgrDTO> list = new ArrayList<CourseMgrDTO>();
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs= null;
+		
+		GetConnection gc = GetConnection.getInstance();
+		try {
+			con=gc.getConn();
+			StringBuilder selectCourse = new StringBuilder();
+			selectCourse
+			.append("	select c.COURSE_CODE,c.COURSE_NAME||CASE WHEN  c.COURSE_ENDDATE-c.COURSE_STARTDATE >0 THEN '(진행)' ELSE '(종료)'  END as COURSE_NAME	")
+			.append("	, p.PROF_NUM,p.PROF_NAME, to_char(c.COURSE_STARTDATE,'yyyy-MM-dd') COURSE_STARTDATE, 	")
+			.append("	to_char(c.COURSE_ENDDATE,'yyyy-MM-dd') COURSE_ENDDATE, to_char(c.COURSE_INPUTDATE,'yyyy-MM-dd') COURSE_INPUTDATE	")
+			.append("	from COURSE c,PROFESSOR p	")
+			.append("	where (c.PROF_NUM=p.PROF_NUM )and (PROF_DEL_FLAG='N'and COURSE_DEL_FLAG='N') and c.COURSE_NAME=?	");
+			
+
+		
+			pstmt= con.prepareStatement(selectCourse.toString());
+			
+			pstmt.setString(1, courseName);
+			
+			rs=pstmt.executeQuery();
+			
+			while(rs.next()) {
+				cmDTO=new CourseMgrDTO();
+				cmDTO.setCourseCode(rs.getInt("COURSE_CODE"));
+				cmDTO.setCourseName(rs.getString("COURSE_NAME"));
+				cmDTO.setProfNum(rs.getInt("PROF_NUM"));
+				cmDTO.setProfName(rs.getString("PROF_NAME"));
+				cmDTO.setCourseStartDate(String.valueOf(rs.getDate("COURSE_STARTDATE")));
+				cmDTO.setCourseEndDate(String.valueOf(rs.getDate("COURSE_ENDDATE")));
+				cmDTO.setCourseInputDate(String.valueOf(rs.getDate("COURSE_INPUTDATE")));
+				
+				list.add(cmDTO);
+			}//while
+		}finally {
+			gc.dbClose(con, pstmt, rs);
+		}//end finally
+	
+		return list; 
+	}//selectCourse
+	
+	public int updateCourse(CourseMgrDTO cDTO) throws SQLException, IOException {
+		int flag=0;
+		
+		Connection con = null;
+		PreparedStatement pstmt =null;
+		ResultSet rs =null;
+		
+		GetConnection gc = GetConnection.getInstance();
+		try {
+		
+			con=gc.getConn();
+			
+			StringBuilder updateCourse = new StringBuilder();
+			updateCourse
+			.append("   UPDATE COURSE				")
+			.append("	SET COURSE_NAME = ?,COURSE_STARTDATE = ? ,COURSE_ENDDATE  = ?, COURSE_INPUTDATE = sysdate ")
+			.append("	,PROF_NUM=(select PROF_NUM from  PROFESSOR where PROF_NAME=?)")			
+			.append("	WHERE  COURSE_CODE=? AND COURSE_DEL_FLAG = 'N'			");
+			
+			pstmt=con.prepareStatement(updateCourse.toString());
+			
+			System.out.println(cDTO.getCourseName());
+			System.out.println(cDTO.getCourseStartDate());
+			System.out.println(cDTO.getCourseEndDate());
+			System.out.println(cDTO.getProfName());
+			System.out.println(cDTO.getCourseCode());
+			
+			pstmt.setString(1,cDTO.getCourseName());
+			pstmt.setString(2,cDTO.getCourseStartDate());
+			pstmt.setString(3,cDTO.getCourseEndDate());
+			pstmt.setString(4,cDTO.getProfName());
+			pstmt.setInt(5,cDTO.getCourseCode());
+	
+			
+			
+			flag=pstmt.executeUpdate();
+		}finally {
+			
+			gc.dbClose(con, pstmt, rs);
+		}//end finally
+
+		return flag;
+	}//updateCourse
+	
+	public int insertCourse(CourseMgrDTO cmDTO) throws SQLException, IOException {
+		int flag =0;
+		
+		Connection con = null;
+		PreparedStatement pstmt= null;
+		ResultSet rs = null;
+		
+		GetConnection gc = GetConnection.getInstance();
+		
+		try {
+			con=gc.getConn();
+			
+			StringBuilder insertCourse = new StringBuilder();
+			insertCourse
+			.append(" insert into COURSE(COURSE_CODE,COURSE_NAME, PROF_NUM, COURSE_STARTDATE, COURSE_ENDDATE)  ")
+			.append(" values (sequence_course_code.nextval,?,(select PROF_NUM from PROFESSOR where PROF_NAME=?),")
+			.append("	?,?)	");
+			
+			
+			pstmt=con.prepareStatement(insertCourse.toString());
+			
+			pstmt.setString(1, cmDTO.getCourseName());
+			pstmt.setString(2, cmDTO.getProfName());
+			pstmt.setString(3, cmDTO.getCourseStartDate());
+			pstmt.setString(4, cmDTO.getCourseEndDate());
+			
+			flag = pstmt.executeUpdate();
+			
+			
+	
+		}finally {
+			gc.dbClose(con, pstmt, rs);
+		}//end finally
+		
+		
+		
+		
+		return flag;
+	}//insertCourse
+	
+	
+	public int  deleteCourse(int courseCode) throws SQLException, IOException {
+		int flag =0;
+		
+		
+		Connection con = null;
+		PreparedStatement pstmt= null;
+		ResultSet rs = null;
+		
+		GetConnection gc = GetConnection.getInstance();
+		
+		
+		try {
+			con=gc.getConn();
+			StringBuilder deleteCourse = new StringBuilder();
+			deleteCourse
+			.append("	update COURSE		")
+			.append("	set COURSE_DEL_FLAG='Y'		")
+			.append("	where COURSE_CODE=?		");
+			
+			pstmt=con.prepareStatement(deleteCourse.toString());
+			
+			pstmt.setInt(1, courseCode);
+			
+			flag=pstmt.executeUpdate();
+			
+		}finally {
+			gc.dbClose(con, pstmt, rs);
+			
+		}//end finally
+		return flag;
+	}//deleteCourse
+}//class
+
+

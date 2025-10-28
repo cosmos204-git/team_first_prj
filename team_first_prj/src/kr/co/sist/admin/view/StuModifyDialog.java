@@ -5,6 +5,7 @@ import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import kr.co.sist.admin.controller.StuModifyDialogEvt;
@@ -12,9 +13,9 @@ import kr.co.sist.admin.controller.StuModifyDialogEvt;
 public class StuModifyDialog extends JDialog {
 	
 	private JLabel jlbStufNum,jlbStufName,jlbStuTel,jlblStuPass;
-	private JTextField jtfStuNum,jtfStuName,jtfStuTel,jtfStuPass;
+	private JTextField jtfStuNum,jtfStuName,jtfStuTel;
 	private JButton jbtnAdd,jbtnClose;
-//	private StudentDTO sDTO;
+	private JPasswordField jpfStuPass;
 	private AdminStuMgrDesign asmd;
 	
 
@@ -30,7 +31,7 @@ public class StuModifyDialog extends JDialog {
 		jtfStuNum = new JTextField(String.valueOf(StuNum));
 		jtfStuName= new JTextField();
 		jtfStuTel= new JTextField();
-		jtfStuPass= new JTextField();
+		jpfStuPass= new JPasswordField();
 		
 		jbtnAdd= new JButton("변경");
 		jbtnClose= new JButton("닫기");
@@ -49,7 +50,7 @@ public class StuModifyDialog extends JDialog {
 		jtfStuNum.setFont(font);
 		jtfStuName.setFont(font);
 		jtfStuTel.setFont(font);
-		jtfStuPass.setFont(font);
+		jpfStuPass.setFont(font);
 		
 		jbtnAdd.setFont(font);
 		jbtnClose.setFont(font);
@@ -69,7 +70,7 @@ public class StuModifyDialog extends JDialog {
 		jtfStuNum.setBounds(250,40,150,30);
 		jtfStuName.setBounds(250,jtfStuNum.getY()+40,150,30);
 		jtfStuTel.setBounds(250,jtfStuName.getY()+40,150,30);
-		jtfStuPass.setBounds(250,jtfStuTel.getY()+40,150,30);
+		jpfStuPass.setBounds(250,jtfStuTel.getY()+40,150,30);
 		
 		
 		jbtnAdd.setBounds(155,220,100,25);
@@ -79,7 +80,7 @@ public class StuModifyDialog extends JDialog {
 		add(jtfStuName);
 		add(jtfStuTel);
 		
-		add(jtfStuPass);
+		add(jpfStuPass);
 		
 		add(jbtnAdd);
 		add(jbtnClose);
@@ -98,8 +99,8 @@ public class StuModifyDialog extends JDialog {
 		setVisible(true);
 		
 	}//StuModifyDialog
-	
-	
+
+
 	public JLabel getJlbStufNum() {
 		return jlbStufNum;
 	}
@@ -135,11 +136,6 @@ public class StuModifyDialog extends JDialog {
 	}
 
 
-	public JTextField getJtfStuPass() {
-		return jtfStuPass;
-	}
-
-
 	public JButton getJbtnAdd() {
 		return jbtnAdd;
 	}
@@ -149,6 +145,18 @@ public class StuModifyDialog extends JDialog {
 		return jbtnClose;
 	}
 
+
+	public JPasswordField getJpfStuPass() {
+		return jpfStuPass;
+	}
+
+
+	public AdminStuMgrDesign getAsmd() {
+		return asmd;
+	}
+	
+	
+	
 
 
 }//class

@@ -1,6 +1,7 @@
 package kr.co.sist.admin.view;
 
 import java.awt.Font;
+import java.time.LocalDate;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -19,7 +20,7 @@ public class AdminCourseMgrDesign extends JDialog {
 	private DefaultTableModel dtmAdminCouresMgr;
 	private JTable jtAdminCourseMgr;
 	private JLabel jlblCourseName ,jlblCourseCode ,jlblCourseCodeData ,jlblProfName  , 
-	jlblStartdate ,jlblEnddate ,jlblInputdata ,jlblInputdataData;
+	jlblStartdate ,jlblEnddate ,jlblInputdata ,jlblInputdataData,jlblProfNum,jlblProfNumData;
 	
 
 	
@@ -39,20 +40,32 @@ public class AdminCourseMgrDesign extends JDialog {
 	jlblCourseCode = new JLabel("과목코드 :");
 	jlblCourseName = new JLabel("과정명 :");
 	jlblProfName = new JLabel("교수 :");
+	
+	jlblProfNum = new JLabel("교번 :");
+	jlblProfNumData = new JLabel("");
+	
 	jlblStartdate = new JLabel("시작일 :");
 	jlblEnddate = new JLabel("종료일 :");
 	jlblInputdata = new JLabel("등록일 :");
-	jlblInputdataData= new JLabel();
-	jlblCourseCodeData = new JLabel();
+	
+	LocalDate today = LocalDate.now();
+	
+	jlblInputdataData= new JLabel(today.toString());
+	
+	jlblCourseCodeData = new JLabel("");
 	
 	jtfCourseName = new JTextField("");
 	jtfSearchCourse = new JTextField("");
 		
-	String[] years = "2024,2025,2026,2027".split(",");
-	String[] months = "1,2,3,4,5,6,7,8,9,10,11,12".split(",");
+	String[] years = "2025,2026,2027,2028,2029,2030".split(",");
+	String[] months = "01,02,03,04,05,06,07,08,09,10,11,12".split(",");
 	String[] days = new String[31];
 	for(int i = 0; i<31 ; i++) {
 		days[i]= i+1+"";
+		if(days[i].length()==1) {
+			days[i]= "0"+days[i];
+		}//end if
+
 	}//end for 
 	dcbmProfName = new DefaultComboBoxModel<String>();
 	
@@ -77,10 +90,13 @@ public class AdminCourseMgrDesign extends JDialog {
 	jcbEnddateD = new JComboBox<String>(dcbmEnddateD);
 
 	
-	String[] columNames = "과정코드,과정명,교수,시작일,종료일,등록일".split(",");
+	String[] columNames = "과정코드,과정명,교번,교수,시작일,종료일,등록일".split(",");
 	dtmAdminCouresMgr = new DefaultTableModel(columNames,0);
 	jtAdminCourseMgr = new JTable(dtmAdminCouresMgr);
 	JScrollPane jsp = new JScrollPane(jtAdminCourseMgr);
+	
+	
+
 	
 	jbtnModify = new JButton("수정");
 	jbtnAdd = new JButton("과정추가");
@@ -91,25 +107,33 @@ public class AdminCourseMgrDesign extends JDialog {
 	
 	
 	jlblCourseCode.setBounds(30,40,70,20);
-	jlblCourseCodeData.setBounds(100,40,70,20);
+	jlblCourseCodeData.setBounds(105,40,70,20);
 	jlblCourseName.setBounds(30,65,70,20);
-	jlblProfName.setBounds(30,90,70,20);
-	jlblStartdate.setBounds(30,115,70,20);
-	jlblEnddate.setBounds(30,140,70,20);
-	jlblInputdata.setBounds(30,165,70,20);
-	jlblInputdataData.setBounds(100,165,100,20);
+	
+	jlblProfNum.setBounds(30,90,70,20);
+	jlblProfNumData.setBounds(105,90,70,20);
+	
+	jlblProfName.setBounds(30,115,70,20);
+	jlblStartdate.setBounds(30,140,70,20);
+	jlblEnddate.setBounds(30,165,70,20);
+	jlblInputdata.setBounds(30,190,70,20);
+	
+	jlblInputdataData.setBounds(105,190,100,20);
+
 	
 	
-	jtfCourseName.setBounds(100,65,100,20);
+	jtfCourseName.setBounds(105,65,100,20);
 	jtfSearchCourse.setBounds(397,16,100,20);
 	
-	jcbProfName.setBounds(100,90,106,20);
-	jcbStartdateY.setBounds(100,115,60,20);
-	jcbStartdateM.setBounds(165,115,40,20);
-	jcbStartdateD.setBounds(210,115,40,20);
-	jcbEnddateY.setBounds(100,140,60,20);
-	jcbEnddateM.setBounds(165,140,40,20);
-	jcbEnddateD.setBounds(210,140,40,20);
+	jcbProfName.setBounds(105,115,106,20);
+	
+	jcbStartdateY.setBounds(105,140,60,20);
+	jcbStartdateM.setBounds(170,140,40,20);
+	jcbStartdateD.setBounds(215,140,40,20);
+	
+	jcbEnddateY.setBounds(105,165,60,20);
+	jcbEnddateM.setBounds(170,165,40,20);
+	jcbEnddateD.setBounds(215,165,40,20);
 	
 	
 	
@@ -130,6 +154,9 @@ public class AdminCourseMgrDesign extends JDialog {
 	add(jlblCourseCode);
 	add(jlblCourseName);
 	add(jlblProfName);
+	add(jlblProfNum);
+	add(jlblProfNumData);
+	
 	add(jlblStartdate);
 	add(jlblEnddate);
 	add(jlblInputdata);
@@ -154,6 +181,10 @@ public class AdminCourseMgrDesign extends JDialog {
 	jbtnAdd.addActionListener(acmde);
 	jbtnDelete.addActionListener(acmde);
 	jbtnClose.addActionListener(acmde);
+	jtAdminCourseMgr.addMouseListener(acmde);
+	jcbProfName.addItemListener(acmde);
+	jcbStartdateM.addItemListener(acmde);
+	jcbEnddateM.addItemListener(acmde);
 	addWindowListener(acmde);
 	
 	setSize(600,300);
@@ -168,99 +199,139 @@ public class AdminCourseMgrDesign extends JDialog {
 //		new AdminCourseMgrDesign();
 //		
 //	}//main
+
 	public DefaultTableModel getDtmAdminCouresMgr() {
 		return dtmAdminCouresMgr;
 	}
+
 	public JTable getJtAdminCourseMgr() {
 		return jtAdminCourseMgr;
 	}
+
 	public JLabel getJlblCourseName() {
 		return jlblCourseName;
 	}
+
 	public JLabel getJlblCourseCode() {
 		return jlblCourseCode;
 	}
+
 	public JLabel getJlblCourseCodeData() {
 		return jlblCourseCodeData;
 	}
+
 	public JLabel getJlblProfName() {
 		return jlblProfName;
 	}
+
 	public JLabel getJlblStartdate() {
 		return jlblStartdate;
 	}
+
 	public JLabel getJlblEnddate() {
 		return jlblEnddate;
 	}
+
 	public JLabel getJlblInputdata() {
 		return jlblInputdata;
 	}
+
 	public JLabel getJlblInputdataData() {
 		return jlblInputdataData;
 	}
+
+	public JLabel getJlblProfNum() {
+		return jlblProfNum;
+	}
+
+	public JLabel getJlblProfNumData() {
+		return jlblProfNumData;
+	}
+
 	public JTextField getJtfCourseName() {
 		return jtfCourseName;
 	}
+
 	public JTextField getJtfSearchCourse() {
 		return jtfSearchCourse;
 	}
+
 	public DefaultComboBoxModel<String> getDcbmProfName() {
 		return dcbmProfName;
 	}
+
 	public DefaultComboBoxModel<String> getDcbmStartdateY() {
 		return dcbmStartdateY;
 	}
+
 	public DefaultComboBoxModel<String> getDcbmStartdateM() {
 		return dcbmStartdateM;
 	}
+
 	public DefaultComboBoxModel<String> getDcbmStartdateD() {
 		return dcbmStartdateD;
 	}
+
 	public DefaultComboBoxModel<String> getDcbmEnddateY() {
 		return dcbmEnddateY;
 	}
+
 	public DefaultComboBoxModel<String> getDcbmEnddateM() {
 		return dcbmEnddateM;
 	}
+
 	public DefaultComboBoxModel<String> getDcbmEnddateD() {
 		return dcbmEnddateD;
 	}
+
 	public JComboBox<String> getJcbProfName() {
 		return jcbProfName;
 	}
+
 	public JComboBox<String> getJcbStartdateY() {
 		return jcbStartdateY;
 	}
+
 	public JComboBox<String> getJcbStartdateM() {
 		return jcbStartdateM;
 	}
+
 	public JComboBox<String> getJcbStartdateD() {
 		return jcbStartdateD;
 	}
+
 	public JComboBox<String> getJcbEnddateY() {
 		return jcbEnddateY;
 	}
+
 	public JComboBox<String> getJcbEnddateM() {
 		return jcbEnddateM;
 	}
+
 	public JComboBox<String> getJcbEnddateD() {
 		return jcbEnddateD;
 	}
+
 	public JButton getJbtnModify() {
 		return jbtnModify;
 	}
+
 	public JButton getJbtnAdd() {
 		return jbtnAdd;
 	}
+
 	public JButton getJbtnDelete() {
 		return jbtnDelete;
 	}
+
 	public JButton getJbtnClose() {
 		return jbtnClose;
 	}
+
 	public JButton getJbtnSearch() {
 		return jbtnSearch;
 	}
+	
 
 	
 	

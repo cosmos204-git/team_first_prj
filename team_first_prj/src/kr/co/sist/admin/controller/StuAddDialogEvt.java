@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
 
@@ -41,19 +42,32 @@ public class StuAddDialogEvt extends WindowAdapter implements ActionListener{
 		StudentDTO sDTO = new StudentDTO();
 		
 
-		String StuName= sad.getJtfStuName().getText().trim();
-		String StuTel = sad.getJtfStuTel().getText().trim();
+		String stuName= sad.getJtfStuName().getText().trim();
+		String stuTel = sad.getJtfStuTel().getText().trim();
+		
 		
 		//msg Default 
 		String msg = "이름과 전화번호를 모두 입력해주세요!"; 
 		
+		String telRegex = "^010-\\d{4}-\\d{4}$";
 		//이름, 전화번호가 적혀져 있는 내용이 없다면 
-		if(StuName==null||StuName.isEmpty()||StuTel==null||StuTel.isEmpty()) {
+		if(stuName==null||stuName.isEmpty()||stuTel==null||stuTel.isEmpty()) {
 			JOptionPane.showMessageDialog(sad, msg);
 			return;
-		}
-		sDTO.setStuName(StuName);
-		sDTO.setStuTel(StuTel);
+		}else if(stuName.length()<2||stuName.length()>5) {
+			msg="이름을 2~5자 사이로 입력해주세요.";
+			JOptionPane.showMessageDialog(sad, msg);
+			return ;
+		}else if(!Pattern.matches(telRegex, stuTel)) {
+			msg= "전화번호 형식이 올바르지 않습니다.\n ex) 010-xxxx-xxxx";
+			JOptionPane.showMessageDialog(sad, msg);
+			return ;
+		}//end if 
+		
+		
+		
+		sDTO.setStuName(stuName);
+		sDTO.setStuTel(stuTel);
 		
 		boolean flag=sas.AddStudnet(sDTO)==1;//새로운 계정이 문제 없이 생성되었을 경우 true
 		

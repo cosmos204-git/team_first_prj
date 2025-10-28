@@ -27,6 +27,7 @@ public class AdminProfMgrDesignEvt extends WindowAdapter implements ActionListen
 	
 	private List<ProfDTO> listProfData;
 	private int selectedNum =-1;
+	private int maxRow;
 	
 	public AdminProfMgrDesignEvt(AdminProfMgrDesign apmd ) {
 		this.apmd=apmd;
@@ -42,19 +43,21 @@ public class AdminProfMgrDesignEvt extends WindowAdapter implements ActionListen
 				
 				searchProcess();
 			}catch (NumberFormatException ne) {
-//				JOptionPane.showMessageDialog(apmd, "숫자만 입력해주세요.");
-				apmd.getJtfProfNum().setText("");
-				ProfInfoProcess();
+				if (apmd.getJtProfMgr().getRowCount()!=maxRow) {
+					ProfInfoProcess();
+				}else {
+					JOptionPane.showMessageDialog(apmd, "숫자만 입력해주세요.");
+					
+				}//end else
 			
 			}catch (NullPointerException e) {
-				JOptionPane.showMessageDialog(apmd, "존재하지 않는 회원입니다.");
+				JOptionPane.showMessageDialog(apmd, "존재하지 않는 교수입니다.");
 				apmd.getJtfProfNum().setText("");
 				ProfInfoProcess();
 			}//end catch
 			
 		}//end if
 		if(ae.getSource()==apmd.getJbtnModify()) {
-			System.out.println("교수관리 - 수정");
 			modifyProcess();
 			ProfInfoProcess();
 			
@@ -62,18 +65,15 @@ public class AdminProfMgrDesignEvt extends WindowAdapter implements ActionListen
 		}//end if 
 		
 		if(ae.getSource()==apmd.getJbtnAdd()) {
-			System.out.println("교수관리 - 추가");
 			addProcess();
 			ProfInfoProcess();
 		}//end if 
 		
 		if(ae.getSource()==apmd.getJbtnDelete()) {
-//			System.out.println("삭제");
 			deleteProcess();
 		}//end if 
 		
 		if(ae.getSource()==apmd.getJbtnClose()) {
-			System.out.println("꺼질게~");
 			apmd.dispose();
 		}//end if 
 		
@@ -114,7 +114,10 @@ public class AdminProfMgrDesignEvt extends WindowAdapter implements ActionListen
 			
 			dtm.addRow(rowData);
 		}//end for 
+		
+		maxRow=apmd.getJtProfMgr().getRowCount();
 	}//ProfInfoProcess
+	
 	public void searchProcess() throws NumberFormatException,NullPointerException{
 		int ProfNum = Integer.parseInt(apmd.getJtfProfNum().getText().trim());
 		
@@ -143,7 +146,6 @@ public class AdminProfMgrDesignEvt extends WindowAdapter implements ActionListen
 		
 		
 		int newProfNum=listProfData.get(dtmStuMgrlastIndex).getProfNum()+1;
-		System.out.println(newProfNum);
 		
 		
 		new ProfAddDialog(apmd,true,newProfNum);
@@ -158,7 +160,6 @@ public class AdminProfMgrDesignEvt extends WindowAdapter implements ActionListen
 			
 			ProfDTO pDTO = apms.searchAllProfessor().get(selectedNum);
 			int ProfNum =pDTO.getProfNum();
-			System.out.println(ProfNum);
 			
 			new ProfModifyDialog(apmd,true,ProfNum);
 		}//end else

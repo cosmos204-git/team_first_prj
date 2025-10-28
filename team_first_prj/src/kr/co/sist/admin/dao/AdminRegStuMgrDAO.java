@@ -13,7 +13,6 @@ import javax.swing.JTextField;
 
 import kr.co.sist.admin.dto.RegStuMgrDTO;
 import kr.co.sist.login.dao.GetConnection;
-import oracle.jdbc.proxy.annotation.Pre;
 
 public class AdminRegStuMgrDAO {
 

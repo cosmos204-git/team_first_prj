@@ -6,9 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kr.co.sist.admin.dao.AdminProfMgrDAO;
-import kr.co.sist.admin.dao.AdminStuMgrDAO;
 import kr.co.sist.admin.dto.ProfDTO;
-import kr.co.sist.admin.dto.StudentDTO;
 
 public class AdminProfMgrService {
 
@@ -16,7 +14,6 @@ public class AdminProfMgrService {
 		List<ProfDTO> list = new ArrayList<ProfDTO>();
 		AdminProfMgrDAO apDAO = AdminProfMgrDAO.getInstance();
 
-		
 		try {
 			list=apDAO.selectAllProfessor();
 		} catch (SQLException e) {

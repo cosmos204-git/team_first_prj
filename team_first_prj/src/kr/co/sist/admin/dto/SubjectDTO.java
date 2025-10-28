@@ -1,7 +1,7 @@
 package kr.co.sist.admin.dto;
 
 public class SubjectDTO {
-private int subCode; 
+private int sub_code; 
 private String subName,subInputdate;
 
 
@@ -11,7 +11,7 @@ public SubjectDTO() {
 
 public SubjectDTO(int sub_code, String subName, String subInputdate) {
 	super();
-	this.subCode = sub_code;
+	this.sub_code = sub_code;
 	this.subName = subName;
 	this.subInputdate = subInputdate;
 }//SubjectDTO
@@ -20,15 +20,15 @@ public SubjectDTO(int sub_code, String subName, String subInputdate) {
 
 public SubjectDTO(int sub_code, String subName) {
 	super();
-	this.subCode = sub_code;
+	this.sub_code = sub_code;
 	this.subName = subName;
 }
 
-public int getSubCode() {
-	return subCode;
+public int getSubcode() {
+	return sub_code;
 }
-public void setSubCode(int sub_code) {
-	this.subCode = sub_code;
+public void setSubcode(int sub_code) {
+	this.sub_code = sub_code;
 }
 public String getSubName() {
 	return subName;
@@ -44,9 +44,8 @@ public void setSubInputdate(String subInputdate) {
 }
 @Override
 public String toString() {
-	return "SubjectDTO [sub_code=" + subCode + ", subName=" + subName + ", subInputdate=" + subInputdate + "]";
+	return "SubjectDTO [sub_code=" + sub_code + ", subName=" + subName + ", subInputdate=" + subInputdate + "]";
 }
-
 
 
 }

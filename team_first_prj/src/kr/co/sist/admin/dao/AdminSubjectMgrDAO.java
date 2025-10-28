@@ -1,6 +1,5 @@
 package kr.co.sist.admin.dao;
 
-import java.io.IOError;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

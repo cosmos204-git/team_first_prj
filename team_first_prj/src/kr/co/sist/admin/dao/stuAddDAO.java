@@ -3,7 +3,6 @@ package kr.co.sist.admin.dao;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import kr.co.sist.admin.dto.StudentDTO;
@@ -24,25 +23,6 @@ public class stuAddDAO {
 		return saDAO;
 	}//stuAddDAO
 	
-	public int selectNextStuNum() throws SQLException, IOException{
-		int nextval=-1;
-		Connection con = null;
-		PreparedStatement pstmt=null;
-		ResultSet rs = null;
-		GetConnection gc = GetConnection.getInstance();
-		try {
-			con=gc.getConn();
-			String NextStuNum="SELECT STUDENT_SEQ.NEXTVAL FROM DUAL";
-			
-			  if (rs.next()) {
-				  nextval = rs.getInt(1);
-	            }
-		}finally {
-			gc.dbClose(con, pstmt, null);
-		}//end finally
-		
-		return nextval;
-	}//selectNextStuNum
 	
 	
 	public int insertStudent(StudentDTO sDTO) throws SQLException,IOException {

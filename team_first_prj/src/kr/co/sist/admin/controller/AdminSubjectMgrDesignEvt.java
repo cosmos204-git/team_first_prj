@@ -105,7 +105,7 @@ public class AdminSubjectMgrDesignEvt extends WindowAdapter implements ActionLis
 		String[] arr = new String[3];
 		
 		for(SubjectDTO sDTO : courseSubList) {
-			arr[0] = String.valueOf(  sDTO.getSubCode());
+			arr[0] = String.valueOf( sDTO.getSubCode());
 			arr[1] = sDTO.getSubName();
 			arr[2] = sDTO.getSubInputdate();
 			

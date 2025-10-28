@@ -5,6 +5,7 @@ import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import kr.co.sist.admin.controller.ProfModifyDialogEvt;
@@ -14,6 +15,7 @@ public class ProfModifyDialog extends JDialog {
 	private JLabel jlblProfNum,jlblProfName,jlblProfTel,jlblProfPass;
 	private JTextField jtfProfNum,jtfProfName,jtfProfTel,jtfProfPass;
 	private JButton jbtnAdd,jbtnClose;
+	private JPasswordField jpfProfPass; 
 //	private StudentDTO sDTO;
 	
 
@@ -29,7 +31,9 @@ public class ProfModifyDialog extends JDialog {
 		jtfProfNum = new JTextField(String.valueOf(ProfNum));
 		jtfProfName= new JTextField();
 		jtfProfTel= new JTextField();
-		jtfProfPass= new JTextField();
+//		jtfProfPass= new JTextField();
+		jpfProfPass= new JPasswordField();
+		
 		
 		jbtnAdd= new JButton("변경");
 		jbtnClose= new JButton("닫기");
@@ -51,7 +55,7 @@ public class ProfModifyDialog extends JDialog {
 		jtfProfNum.setFont(font);
 		jtfProfName.setFont(font);
 		jtfProfTel.setFont(font);
-		jtfProfPass.setFont(font);
+		jpfProfPass.setFont(font);
 		
 		jbtnAdd.setFont(font);
 		jbtnClose.setFont(font);
@@ -67,7 +71,7 @@ public class ProfModifyDialog extends JDialog {
 		jtfProfNum.setBounds(250,40,150,30);
 		jtfProfName.setBounds(250,jtfProfNum.getY()+40,150,30);
 		jtfProfTel.setBounds(250,jtfProfName.getY()+40,150,30);
-		jtfProfPass.setBounds(250,jtfProfTel.getY()+40,150,30);
+		jpfProfPass.setBounds(250,jtfProfTel.getY()+40,150,30);
 		
 		
 		jbtnAdd.setBounds(155,220,100,25);
@@ -84,7 +88,7 @@ public class ProfModifyDialog extends JDialog {
 		add(jtfProfNum);
 		add(jtfProfName);
 		add(jtfProfTel);
-		add(jtfProfPass);
+		add(jpfProfPass);
 		
 		//리스너 추가 
 		ProfModifyDialogEvt pade =new ProfModifyDialogEvt(this);
@@ -99,8 +103,8 @@ public class ProfModifyDialog extends JDialog {
 		setVisible(true);
 		
 	}//StuModifyDialog
-	
-	
+
+
 	public JLabel getJlblProfNum() {
 		return jlblProfNum;
 	}
@@ -151,5 +155,11 @@ public class ProfModifyDialog extends JDialog {
 	}
 
 
+	public JPasswordField getJpfProfPass() {
+		return jpfProfPass;
+	}
+	
+	
+	
 
 }//class

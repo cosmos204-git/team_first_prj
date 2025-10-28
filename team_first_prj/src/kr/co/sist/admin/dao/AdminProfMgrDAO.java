@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kr.co.sist.admin.dto.ProfDTO;
-import kr.co.sist.admin.dto.StudentDTO;
 import kr.co.sist.login.dao.GetConnection;
 
 public class AdminProfMgrDAO {
