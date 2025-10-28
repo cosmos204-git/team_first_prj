@@ -49,7 +49,7 @@ public class ShowExamDetailDesignDialog extends JDialog {
     public void viewExamDetail(ProfExamMgrDesign pemd2) throws SQLException, IOException {
 
     		// 디자인에 선택과 과정과 과목을 기준으로 시험문제들을 불러온다.
-    		String pCourseName = pemd2.getJtfExamCourseData().getText();
+   		String pCourseName = pemd2.getJtfExamCourseData().getText();
         String pSubName = pemd2.getJtfExamSubjectData().getText();
 
         ShowExamDetailDAO pDAO = ShowExamDetailDAO.getInstance();
@@ -62,7 +62,6 @@ public class ShowExamDetailDesignDialog extends JDialog {
             return;
         }
 
-        int i = 1;
         for (ShowExamItemListDTO dto : list) {
             jtaReport.append(
                 dto.getExamQuest() + "\n" +
