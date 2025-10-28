@@ -16,11 +16,11 @@ public class ShowSubjectDialogEvt extends WindowAdapter implements ActionListene
 
 	private ShowSubjectDialog ssd;
 	private ShowSubjectDialogService ssds;
-	private List<StuSubjectDialogDTO> listStuSubDiaData;
-
+	
 	public ShowSubjectDialogEvt(ShowSubjectDialog ssd) {
 		this.ssd = ssd;
 		this.ssds = new ShowSubjectDialogService();
+		viewAllSubject(ssd.getCourseCode());
 	}
 
 	@Override
@@ -38,18 +38,18 @@ public class ShowSubjectDialogEvt extends WindowAdapter implements ActionListene
 	/**
 	 * 과목 전체 조회
 	 */
+	
 	public void viewAllSubject(int courseCode) {
 		List<StuSubjectDialogDTO> listStuSubjectDialogData = ssds.searchAllSubject(courseCode);
 
-		this.listStuSubDiaData = listStuSubjectDialogData;
 		DefaultTableModel dtm = ssd.getDtmShowSubDialog();
 		
 		dtm.setRowCount(0); 
-		String[] rowData=null;
+		String[] rowData= {""};
 		
 		
-		for (StuSubjectDialogDTO dto : listStuSubjectDialogData) {
-			rowData[0] = dto.getSubName();
+		for (StuSubjectDialogDTO ssdDTO : listStuSubjectDialogData) {
+			rowData[0] = ssdDTO.getSubName();
 			dtm.addRow(rowData);
 		}//end for
 	}// viewAllSubject

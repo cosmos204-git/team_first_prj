@@ -19,11 +19,22 @@ public class ShowSubjectDialog extends JDialog {
 	private JTable jtShowSubDialog;
 	private JButton jbtnClose;
 	
+	private int courseCode;
+	private String courseName;
 	
-	public ShowSubjectDialog( CourseSelectDesign csd, boolean modal ) {
-		
-		super(csd, "상세 과목", modal);
-		
+
+	
+    public ShowSubjectDialog(CourseSelectDesign csd, boolean modal, int courseCode, String courseName) {
+        super(csd, courseName, modal);
+        this.courseCode = courseCode;
+        this.courseName = courseName;
+        initLayout(csd);
+    }
+    
+    
+    
+    private void initLayout(CourseSelectDesign csd) {
+    
 		setLayout(new BorderLayout(10,10));
 		
 		//JTable
@@ -61,6 +72,8 @@ public class ShowSubjectDialog extends JDialog {
 	}//ShowSubjectDialog
 
 
+
+
 	public DefaultTableModel getDtmShowSubDialog() {
 		return dtmShowSubDialog;
 	}
@@ -73,6 +86,18 @@ public class ShowSubjectDialog extends JDialog {
 
 	public JButton getJbtnClose() {
 		return jbtnClose;
+	}
+
+
+
+	public int getCourseCode() {
+		return courseCode;
+	}
+
+
+
+	public String getCourseName() {
+		return courseName;
 	}
 	
 	

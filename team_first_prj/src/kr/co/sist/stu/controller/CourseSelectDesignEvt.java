@@ -15,6 +15,7 @@ import kr.co.sist.login.dao.CurrentStuData;
 import kr.co.sist.stu.dto.SearchCourseDTO;
 import kr.co.sist.stu.service.CourseSelectService;
 import kr.co.sist.stu.view.CourseSelectDesign;
+import kr.co.sist.stu.view.ShowSubjectDialog;
 
 public class CourseSelectDesignEvt extends WindowAdapter implements ActionListener, MouseListener {
 
@@ -22,6 +23,11 @@ public class CourseSelectDesignEvt extends WindowAdapter implements ActionListen
 	private CourseSelectDesign csd;
 	private List<SearchCourseDTO> listCourseData;
 	private int selectedRow = -1;
+	
+	private int courseCode;
+	private String courseName;
+	private ShowSubjectDialog ssd;
+	private ShowSubjectDialogEvt ssde;
 
 	public CourseSelectDesignEvt(CourseSelectDesign csd) {
 		this.csd = csd;
@@ -33,6 +39,7 @@ public class CourseSelectDesignEvt extends WindowAdapter implements ActionListen
 	public void actionPerformed(ActionEvent ae) {
 
 		if (ae.getSource() == csd.getJbtnShowSub()) {
+			showSubProcess();
 		}
 
 		if (ae.getSource() == csd.getJbtnApplyCourse()) {
@@ -93,6 +100,41 @@ public class CourseSelectDesignEvt extends WindowAdapter implements ActionListen
 		}
 	}// showSubProcess
 
+	
+	/**
+	 * 과정 클릭 후 상세 과목보기
+	 */
+	public void showSubProcess() {
+		
+		if (selectedRow == -1) {
+			JOptionPane.showMessageDialog(csd, "상세 과목 볼 과정을 선택해 주세요.");
+			return;
+		}//end if
+		
+		try {
+			courseCode = listCourseData.get(selectedRow).getCourseCode();
+			courseName = listCourseData.get(selectedRow).getCourseName();
+
+			ssd = new ShowSubjectDialog(csd, true, courseCode, courseName);
+//			ssde = new ShowSubjectDialogEvt(ssd);
+
+//			ssd.addWindowListener(ssde);
+//			ssd.getJbtnClose().addActionListener(ssde);
+
+			// 과목 리스트 조회
+//			ssde.viewAllSubject(courseCode);
+
+//			ssd.setVisible(true);
+
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(csd, "과목 조회 중 오류가 발생했습니다.");
+			e.printStackTrace();
+		}
+	}// showSubProcess
+		
+		
+	
+	
 	/**
 	 * 신청 버튼 클릭 시 호출되는 method
 	 */

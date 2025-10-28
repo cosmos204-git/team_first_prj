@@ -32,7 +32,6 @@ public class StuSubjectDialogDAO {
 		List<StuSubjectDialogDTO> list = new ArrayList<>();
 		
 		GetConnection gc=GetConnection.getInstance();
-		
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
