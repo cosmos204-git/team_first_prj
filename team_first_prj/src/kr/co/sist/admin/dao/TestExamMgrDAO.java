@@ -36,14 +36,21 @@ public class TestExamMgrDAO {
 		GetConnection gc = GetConnection.getInstance();
 		
 		try {
+			int testCode= 0;
+			switch(subCode) {
+			case 101: testCode = 1;
+			case 102: testCode = 2;
+			case 103: testCode = 3;
+			case 104: testCode = 4;
+			}
 			con = gc.getConn();
 			
-			String selectAllEI = "select * from exam_item where test_code = (select test_code from exam where sub_code = ? and course_code = ?)";
+//			String selectAllEI = "select * from exam_item where test_code = (select test_code from exam where sub_code = ? and course_code = ?)";
+			String selectAllEI = "select * from exam_item where test_code = ?";
 			
 			pstmt = con.prepareStatement(selectAllEI);
 			
-			pstmt.setInt(1, subCode);
-			pstmt.setInt(2,	courseCode);
+			pstmt.setInt(1, testCode);
 			rs = pstmt.executeQuery();
 			
 			examItemDTO eiDTO = null;
@@ -55,7 +62,7 @@ public class TestExamMgrDAO {
 			String examChoice3 = "";
 			String examChoice4 = "";
 			String examQuest = "";
-			int testCode =0;
+			
 			while(rs.next()) {
 			 	examCode =  rs.getInt("exam_code");
 				examCorrectTChoice= rs.getInt("exam_correct_tchoice");

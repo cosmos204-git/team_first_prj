@@ -3,7 +3,6 @@ package kr.co.sist.admin.view;
 import java.awt.Font;
 
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 
 import kr.co.sist.admin.controller.AdminInfoDesignEvt;

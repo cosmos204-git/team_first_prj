@@ -27,11 +27,9 @@ public class TestExamMgrDesignEvt extends WindowAdapter implements ActionListene
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		if(ae.getSource()==temd.getJbtnReset()) {
-			System.out.println("시험지보기/추가 - 초기화");
 			resetProcess();
 		}//end if 
 		if(ae.getSource()==temd.getJbtnModify()) {
-			System.out.println("시험지보기/추가 - 추가");
 			addProcess();
 			searchEiListProcess();
 			resetProcess();

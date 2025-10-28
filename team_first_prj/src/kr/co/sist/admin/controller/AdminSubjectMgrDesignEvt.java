@@ -36,18 +36,15 @@ public class AdminSubjectMgrDesignEvt extends WindowAdapter implements ActionLis
 			
 		}//end if 
 		if(e.getSource() == asmd.getJbtnAdd()) {
-			System.out.println("추가버튼");
 			addProcess();
 			searchCourseSub();
 		}//end if 
 		if(e.getSource() == asmd.getJbtnDelete()) {
-			System.out.println("삭제버튼");
 			deleteProcess();
 			searchCourseSub();
 
 		}//end if 
 		if(e.getSource() == asmd.getJbtnClose()) {
-			System.out.println("닫기");
 			closeProcess();
 		}//end if 
 		if(e.getSource() == asmd.getJcbCourse()) {
