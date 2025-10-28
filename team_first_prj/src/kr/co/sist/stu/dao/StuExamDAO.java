@@ -136,16 +136,32 @@ public class StuExamDAO {
             }
         }
     }
-
-    public int upsertReportScore(int stuNum, int subCode, int score) throws SQLException, IOException {
+    
+    public Integer findCourseCodeByTestCode(int testCode) throws SQLException, IOException {
         GetConnection gc = GetConnection.getInstance();
-        String sel = "SELECT COUNT(*) FROM report WHERE stu_num = ? AND sub_code = ?";
-        String upd = "UPDATE report SET stu_score = ? WHERE stu_num = ? AND sub_code = ?";
-        String ins = "INSERT INTO report (stu_num, sub_code, stu_score) VALUES (?, ?, ?)";
+        String sql = "SELECT course_code FROM exam WHERE test_code = ?";
+        try (Connection con = gc.getConn();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, testCode);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next() ? rs.getInt(1) : null;
+            }
+        }
+    }
+
+    
+    public int upsertReportScore(int stuNum, int subCode, int courseCode, int score) throws SQLException, IOException {
+        GetConnection gc = GetConnection.getInstance();
+        String sel = "SELECT COUNT(*) FROM report WHERE stu_num = ? AND sub_code = ? AND course_code = ?";
+        String upd = "UPDATE report SET stu_score = ? WHERE stu_num = ? AND sub_code = ? AND course_code = ?";
+        String ins = "INSERT INTO report (stu_num, sub_code, course_code, stu_score) VALUES (?, ?, ?, ?)";
+
         try (Connection con = gc.getConn();
              PreparedStatement ps = con.prepareStatement(sel)) {
             ps.setInt(1, stuNum);
             ps.setInt(2, subCode);
+            ps.setInt(3, courseCode);
+
             try (ResultSet rs = ps.executeQuery()) {
                 rs.next();
                 int cnt = rs.getInt(1);
@@ -154,18 +170,20 @@ public class StuExamDAO {
                         u.setInt(1, score);
                         u.setInt(2, stuNum);
                         u.setInt(3, subCode);
+                        u.setInt(4, courseCode);
                         return u.executeUpdate();
                     }
                 } else {
                     try (PreparedStatement i = con.prepareStatement(ins)) {
                         i.setInt(1, stuNum);
                         i.setInt(2, subCode);
-                        i.setInt(3, score);
+                        i.setInt(3, courseCode);
+                        i.setInt(4, score);
                         return i.executeUpdate();
                     }
                 }
             }
         }
-
     }
+
 }

@@ -82,7 +82,6 @@ public class StuReportDAO {
         }
         return list;
     }
- // StuReportDAO.java
     public List<String> selectCoursesByStuNum(int stuNum) throws SQLException, IOException {
         List<String> courses = new ArrayList<>();
         String sql =

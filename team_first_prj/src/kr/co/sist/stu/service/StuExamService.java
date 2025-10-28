@@ -1,7 +1,5 @@
 package kr.co.sist.stu.service;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -32,17 +30,21 @@ public class StuExamService {
     public int submitAndScore(int stuNum, int testCode, Map<Integer,Integer> answers) {
         try {
             StuExamDAO dao = StuExamDAO.getInstance();
+
+            Integer courseCode = dao.findCourseCodeByTestCode(testCode);
+            Integer subCode = dao.findSubCodeByTestCode(testCode);
+            if (courseCode == null || subCode == null) return -1;
+
             dao.insertExamResults(stuNum, answers);
-       
+
             int[] res = dao.calcScoreAndTotal(stuNum, testCode);
             int correct = res[0];
             int total = res[1];
-            int score = (int)((correct * 100.0) / total);
+            if (total <= 0) return -1;
 
-            Integer subCode = dao.findSubCodeByTestCode(testCode);
-            if (subCode != null) {
-                dao.upsertReportScore(stuNum, subCode, score);
-            }
+            int score = (int)Math.round((correct * 100.0) / total);
+
+            dao.upsertReportScore(stuNum, subCode, courseCode, score);
 
             return score;
         } catch (Exception e) {
@@ -50,6 +52,8 @@ public class StuExamService {
             return -1;
         }
     }
+
+
 
 
     public Integer findTestCode(String course, String subject) {

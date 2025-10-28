@@ -13,14 +13,17 @@ public class StuReportDesignEvt extends WindowAdapter implements ActionListener 
     private final StuReportDesign view;
     private final StuReportService svc = new StuReportService();
 
-    public StuReportDesignEvt(StuReportDesign view) { this.view = view; }
+    public StuReportDesignEvt(StuReportDesign view) { 
+    	this.view = view; 
+    	
+    }
 
     @Override
     public void windowOpened(WindowEvent e) {
         DefaultTableModel dtm = view.getDtmStuReport();
         dtm.setRowCount(0);
 
-        int stuNum = view.getStuNum();                     // ← 전달받은 학생번호 사용
+        int stuNum = view.getStuNum();                 
         List<StuReportDTO> list = svc.searchScoreByStuNum(stuNum);
         if (list == null) return;
 
@@ -39,5 +42,8 @@ public class StuReportDesignEvt extends WindowAdapter implements ActionListener 
     }
 
     @Override
-    public void windowClosing(WindowEvent e) { view.dispose(); }
+    public void windowClosing(WindowEvent e) { 
+    	view.dispose(); 
+    	
+    }
 }
