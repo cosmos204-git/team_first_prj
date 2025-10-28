@@ -24,10 +24,10 @@ public SubjectDTO(int sub_code, String subName) {
 	this.subName = subName;
 }
 
-public int getSubcode() {
+public int getSubCode() {
 	return sub_code;
 }
-public void setSubcode(int sub_code) {
+public void setSubCode(int sub_code) {
 	this.sub_code = sub_code;
 }
 public String getSubName() {
