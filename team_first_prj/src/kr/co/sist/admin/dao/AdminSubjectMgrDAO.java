@@ -156,14 +156,18 @@ public class AdminSubjectMgrDAO {
 		
 		return sDTOList;
 	}//selectCourseSub
-	
+	private Connection con;
+	private GetConnection gc;
 	public int insertCourseSub(int courseCode, int SubjectCode) throws IOException, SQLException {
 		int rowCnt =0;
+		int rowCnt2 =0;
+		int totalCnt =0;
 		Connection con = null;
 		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 =null;
 		
-		GetConnection gc = GetConnection.getInstance();
-		try {
+		gc = GetConnection.getInstance();
+		
 			con = gc.getConn();
 			
 			String insertCourseSub = "	insert into course_subject values(?,?)	 ";
@@ -175,11 +179,18 @@ public class AdminSubjectMgrDAO {
 			
 			rowCnt = pstmt.executeUpdate();
 			
-		}finally {
-			gc.dbClose(con, pstmt, null);
-		}//end finally
+			String insertExam = "	insert into exam(test_code,exam_open,course_code, sub_code) values(sequence_test_code.nextval,'시험불가',?,?)	 ";
+			
+			pstmt2 = con.prepareStatement(insertExam);
+			
+			pstmt2.setInt(1, courseCode);
+			pstmt2.setInt(2, SubjectCode);
+			
+			rowCnt = pstmt2.executeUpdate();
 		
-		return rowCnt;
+			totalCnt=rowCnt + rowCnt2;
+		
+		return totalCnt;
 	}//insertCouseSub
 	
 	public int deleteCourseSub(int courseCode, int SubjectCode) throws IOException, SQLException {
@@ -206,6 +217,14 @@ public class AdminSubjectMgrDAO {
 		
 		return rowCnt;
 	}//deleteCouseSub
+
+	public Connection getCon() {
+		return con;
+	}
+
+	public GetConnection getGc() {
+		return gc;
+	}
 	
 	
 }//class

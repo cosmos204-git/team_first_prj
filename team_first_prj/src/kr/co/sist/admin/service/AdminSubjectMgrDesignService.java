@@ -60,21 +60,36 @@ public class AdminSubjectMgrDesignService {
 	}//searchCourseSub
 	
 	public int addCourseSub(int courseCode, int subCode) {
-		int rowCnt =0;
+		int totalCnt =0;
 		AdminSubjectMgrDAO asmDAO = AdminSubjectMgrDAO.getinstance();
 		try {
-			rowCnt = asmDAO.insertCourseSub(courseCode, subCode);
+			totalCnt = asmDAO.insertCourseSub(courseCode, subCode);
+			if(totalCnt == 2) {
+				asmDAO.getCon().commit();
+			}//end if
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
+			try {
+				asmDAO.getCon().rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}//end catch
 			int errorCode = e.getErrorCode();
 			if(errorCode==1) {
-				rowCnt=-1;
+				totalCnt=-1;
 			}
 			e.printStackTrace();
+		}finally {
+			try {
+				asmDAO.getGc().dbClose(asmDAO.getCon(), null, null);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
-		return rowCnt;
+		return totalCnt;
 	}//addCourseSub
 	
 	
