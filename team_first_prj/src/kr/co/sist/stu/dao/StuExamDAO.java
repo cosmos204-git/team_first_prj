@@ -138,6 +138,19 @@ public class StuExamDAO {
         }
     }
 
+    public Integer findCourseCodeByTestCode(int testCode) throws SQLException, IOException {
+        String sql = "SELECT course_code FROM exam WHERE test_code = ?";
+        GetConnection gc = GetConnection.getInstance();
+        try (Connection con = gc.getConn();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, testCode);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next() ? rs.getInt(1) : null;
+            }
+        }
+    }
+
+    
     public int updateReportScore(int stuNum, int subCode, int score) throws SQLException, IOException {
         GetConnection gc = GetConnection.getInstance();
         String sel = "SELECT COUNT(*) FROM report WHERE stu_num = ? AND sub_code = ?";
@@ -167,6 +180,6 @@ public class StuExamDAO {
                 }
             }
         }
-
+        
     }
 }

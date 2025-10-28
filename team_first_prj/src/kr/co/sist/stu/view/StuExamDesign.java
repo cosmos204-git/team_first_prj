@@ -49,10 +49,10 @@ public class StuExamDesign extends JDialog {
             qPanel.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
 
             JLabel q = new JLabel(it.getExamQuest());
-            JRadioButton c1 = new JRadioButton("1) " + it.getExamChoice1());
-            JRadioButton c2 = new JRadioButton("2) " + it.getExamChoice2());
-            JRadioButton c3 = new JRadioButton("3) " + it.getExamChoice3());
-            JRadioButton c4 = new JRadioButton("4) " + it.getExamChoice4());
+            JRadioButton c1 = new JRadioButton(it.getExamChoice1());
+            JRadioButton c2 = new JRadioButton(it.getExamChoice2());
+            JRadioButton c3 = new JRadioButton(it.getExamChoice3());
+            JRadioButton c4 = new JRadioButton(it.getExamChoice4());
 
             ButtonGroup bg = new ButtonGroup();
             bg.add(c1); bg.add(c2); bg.add(c3); bg.add(c4);
