@@ -27,7 +27,7 @@ public class LoginDAO {
 	}
 	
 	public static LoginDAO getInstance() {
-		
+		 
 		if(logDAO==null) {
 			logDAO = new LoginDAO();
 		}
@@ -129,12 +129,9 @@ public class LoginDAO {
 				    }
 				}
 				File file = new File(dir.getAbsolutePath()+File.separator+logStuDTO.getStuNum()+"s."+logStuDTO.getExt()); 
-
 				
 				fos = new FileOutputStream(file); //파일이 존재하면 덮어쓰고, 존재하지 않으면 생성
 						
-				
-				
     
 				if (isl!=null) {
 					try {
@@ -180,8 +177,8 @@ public class LoginDAO {
 						}
 					}
 				}//end if
-						
-			}	
+					
+			}				
 				
 		}finally {
 			//5. 연결 끊기.
@@ -367,7 +364,6 @@ public class LoginDAO {
 //					fos.flush();
 //				}
 //				
-				
 				list.add(logProfDTO);
 				
 			}//end while			
