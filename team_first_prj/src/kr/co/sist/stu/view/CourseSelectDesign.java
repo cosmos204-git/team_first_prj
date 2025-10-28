@@ -18,6 +18,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
+import kr.co.sist.login.dao.CurrentStuData;
 import kr.co.sist.stu.controller.CourseSelectDesignEvt;
 
 public class CourseSelectDesign extends JDialog { 
@@ -39,6 +40,11 @@ public class CourseSelectDesign extends JDialog {
         super(sid,"수강 신청",modal); 
         setLayout(new BorderLayout());
         
+        CurrentStuData csd = CurrentStuData.getInstance();
+        
+        int stuNum=csd.getStuNum();
+    	String stuName =csd.getStuName();
+        
         // North Panel
         jpNorth = new JPanel(new GridLayout(1, 4, 10, 10)); 
         jpNorth.setBorder(new EmptyBorder(15, 30, 15, 30)); 
@@ -46,11 +52,13 @@ public class CourseSelectDesign extends JDialog {
         jlblStuNum = new JLabel("학번", JLabel.CENTER);
         jtfStuNumData = new JTextField(10);
         jtfStuNumData.setEditable(false);
-
+        jtfStuNumData.setText(String.valueOf(stuNum));
+        
         jlblStuName = new JLabel("이름", JLabel.CENTER);
         jtfStuNameData = new JTextField(10);
         jtfStuNameData.setEditable(false);
-
+        jtfStuNameData.setText(stuName);
+        
         jlblStuNum.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         jlblStuName.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 
