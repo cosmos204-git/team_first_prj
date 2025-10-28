@@ -9,9 +9,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import kr.co.sist.stu.dto.SearchCourseDTO;
 import kr.co.sist.login.dao.GetConnection;
 import kr.co.sist.login.dto.LoginStudentDTO;
+import kr.co.sist.stu.dto.SearchCourseDTO;
 
 public class SearchCourseDAO {
 
@@ -26,7 +26,7 @@ public class SearchCourseDAO {
 		return scDAO;
 	}
 
-	public List<SearchCourseDTO> selectCourse(Date startDate, Date endDate, int stuNum) throws SQLException, IOException {
+	public List<SearchCourseDTO> selectCourse(int stuNum) throws SQLException, IOException {
 
 		List<SearchCourseDTO> list = new ArrayList<>();
 		
@@ -43,16 +43,13 @@ public class SearchCourseDAO {
 	        .append("c.course_enddate, c.course_inputdate, c.course_del_flag ")
 	        .append("from course c inner join student s on c.course_code = s.course_code ")
 	        .append("where s.stu_num = ? ")
-	        .append("and c.course_startdate between TO_DATE(?, 'YYYY-MM-DD') and TO_DATE(?, 'YYYY-MM-DD') ")
+	        .append("AND course_startdate < sysdate AND course_enddate > sysdate ")
 	        .append("order by c.course_startdate desc");
 
 		  
 			pstmt = con.prepareStatement(selectCourse.toString());
 			pstmt.setInt(1, stuNum);
-			pstmt.setDate(2, startDate);
-			pstmt.setDate(3, endDate);
 
-			System.out.println(startDate);
 
 			
 			rs = pstmt.executeQuery();

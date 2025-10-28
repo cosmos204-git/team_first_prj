@@ -2,7 +2,6 @@ package kr.co.sist.stu.service;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.List;
 
 import kr.co.sist.stu.dao.SearchCourseDAO;
@@ -16,12 +15,12 @@ public class CourseSelectService {
 		scDAO = SearchCourseDAO.getInstance();
 	}//CourseSelectService
 
-	public List<SearchCourseDTO> searchCourse(Date startDate, Date endDate, int stuNum) {
+	public List<SearchCourseDTO> searchCourse(int stuNum) {
 		
 		List<SearchCourseDTO> list = null;
 		
 		try {
-			list = scDAO.selectCourse(startDate, endDate, stuNum);
+			list = scDAO.selectCourse(stuNum);
 			
 		} catch (IOException ie) {
 			ie.printStackTrace();

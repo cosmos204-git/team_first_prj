@@ -6,12 +6,12 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.sql.Date;
 import java.util.List;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
+import kr.co.sist.login.dao.CurrentStuData;
 import kr.co.sist.stu.dto.SearchCourseDTO;
 import kr.co.sist.stu.service.CourseSelectService;
 import kr.co.sist.stu.view.CourseSelectDesign;
@@ -26,13 +26,13 @@ public class CourseSelectDesignEvt extends WindowAdapter implements ActionListen
 	public CourseSelectDesignEvt(CourseSelectDesign csd) {
 		this.csd = csd;
 		this.css = new CourseSelectService();
+		showCourseProcess();
 	}//CourseSelectDesignEvt
 
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 
 		if (ae.getSource() == csd.getJbtnShowSub()) {
-			showSubProcess();
 		}
 
 		if (ae.getSource() == csd.getJbtnApplyCourse()) {
@@ -59,23 +59,33 @@ public class CourseSelectDesignEvt extends WindowAdapter implements ActionListen
 	/**
 	 * 선택된 기간과 학생번호를 기반 과정 리스트를 보여주는 method
 	 */
-	public void showSubProcess() {
+	public void showCourseProcess() {
 		try {
-			Date startDate = csd.getCourseStartDate();
-			Date endDate = csd.getCourseEndDate();
-			int stuNum = Integer.parseInt(csd.getJtfStuNumData().getText().trim());
+			CurrentStuData crsd = CurrentStuData.getInstance();
+			
+			int stuNum = crsd.getStuNum();
 
-			listCourseData = css.searchCourse(startDate, endDate, stuNum);
+			
+			listCourseData = css.searchCourse(stuNum);
+			
 
 			DefaultTableModel dtm = csd.getDtmSelectCourse();
 			dtm.setRowCount(0);
 
-			for (SearchCourseDTO scDTO : listCourseData) {
-				String[] row = new String[2];
-				row[0] = scDTO.isCourseFlag() ? "수강중" : "종료";
-				row[1] = scDTO.getCourseName();
-				dtm.addRow(row);
+			for(int i = 0; i< listCourseData.size();i++) {
+				String[] data = {"",""};
+				data[0]="X";
+				data[1]=listCourseData.get(i).getCourseName();
+				
+				dtm.addRow(data);
 			}
+			
+			
+//			for (SearchCourseDTO scDTO : listCourseData) {
+//				System.out.println(scDTO);
+////				row[0] = scDTO.isCourseFlag() ? "수강중" : "종료";
+////				row[1] = scDTO.getCourseName();
+//			}
 
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(csd, "조회 중 오류가 발생했습니다.");

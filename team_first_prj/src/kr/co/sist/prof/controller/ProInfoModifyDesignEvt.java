@@ -10,7 +10,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.util.Properties;
 import java.util.regex.Pattern;
 
@@ -142,9 +141,6 @@ public class ProInfoModifyDesignEvt extends WindowAdapter implements ActionListe
 	                // c) 임시 파일을 setProfImg가 요구하는 FileInputStream으로 읽어옴
 	                fisImg = new FileInputStream(tempResizedFile); 
 
-	                // -------------------------------------------------------------
-	                // 3. [기존 로직 수정] DTO에 데이터 전달 및 DB 저장
-	                // -------------------------------------------------------------
 	                CurrentProfData cpd = CurrentProfData.getInstance();
 	                
 	                // 원본 파일 객체를 setFile에 전달 (경로 참조용)
@@ -259,22 +255,56 @@ public class ProInfoModifyDesignEvt extends WindowAdapter implements ActionListe
 	
 		Properties prop = new Properties();
 		InputStream is = null;
-		//String userHome = System.getProperty("user.home");
+		
+		ImageIcon ii = null;
+		
 		try {
-			is = getClass().getClassLoader().getResourceAsStream("properties/database.properties");
-			//prop.load(new FileInputStream(userHome+"/git/team_first_prj/team_first_prj/src/properties/datebase.properties"));
+			is = getClass().getClassLoader().getResourceAsStream("properties/datebase.properties");
 			if (is == null) {
-	            throw new IOException("database.properties 파일을 클래스패스에서 찾을 수 없습니다.");
+	            throw new IOException("datebase.properties 파일을 클래스패스에서 찾을 수 없습니다.");
 	        }
 			prop.load(is);
 			
+			
+			File imageFile = cpd.getLogProfDTO().getFile();
+			
+			boolean imageLoaded = false;
+			
+			if (imageFile != null && imageFile.exists()) {
+		        String imagePath = imageFile.getAbsolutePath();
+		        ii = new ImageIcon(imagePath);
+		        
+		        if (ii.getImageLoadStatus() == MediaTracker.COMPLETE) {
+		            imageLoaded = true; // 이미지 로드 성공
+		        }
+		    }
+			
+			if (!imageLoaded) {
+		        try (InputStream defaultIs = getClass().getResourceAsStream("/images/default_img.png")) {
+		            if (defaultIs != null) {
+		                // InputStream에서 바이트 배열을 읽어와 ImageIcon 생성 (URL 사용 안함)
+		                byte[] imageBytes = defaultIs.readAllBytes();
+		                ii = new ImageIcon(imageBytes);
+		            } else {
+		                // 기본 이미지마저 찾을 수 없는 경우 경고를 출력합니다.
+		                System.err.println("경고: 기본 이미지 파일을 클래스패스에서 찾을 수 없습니다.");
+		            }
+		        } // try-with-resources에 의해 defaultIs는 자동으로 닫힙니다.
+		    }
+		
+			// 3. 최종 로드된 이미지를 컴포넌트에 설정
+		    if (ii != null) {
+		        pimd.getJlblProfImg().setIcon(ii);
+		    }
+			
+		    /*
 			String saveDir = prop.getProperty("savePath");
 	        int profNum = cpd.getLogProfDTO().getProfNum();
 	        String ext = cpd.getLogProfDTO().getExt();
 			
-	        String imagePath = saveDir + File.separator + profNum + "s." + ext;
+	        String imagePath = saveDir + File.separator + profNum + "p." + ext;
 			
-			ImageIcon ii = new ImageIcon(imagePath);
+	        ii = new ImageIcon(imagePath);
 			
 			if (ii.getImageLoadStatus() != MediaTracker.COMPLETE || !(new File(imagePath).exists())) {
 	             // 기본 이미지는 JAR 내부 리소스(/images/default_profile.png)에서 불러옵니다.
@@ -288,6 +318,7 @@ public class ProInfoModifyDesignEvt extends WindowAdapter implements ActionListe
 	        }
 			
 			pimd.getJlblProfImg().setIcon(ii);
+			*/
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
