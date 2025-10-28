@@ -18,10 +18,11 @@ public class StuReportService {
             return Collections.emptyList();
         }
     }
+    
 
     public List<String> getCoursesByStuNum(int stuNum) {
         try {
-            return StuReportDAO.getInstance().selectSubsByStuNum(stuNum);
+            return StuReportDAO.getInstance().selectCoursesByStuNum(stuNum);
         } catch (Exception e) {
             e.printStackTrace();
             return Collections.emptyList();

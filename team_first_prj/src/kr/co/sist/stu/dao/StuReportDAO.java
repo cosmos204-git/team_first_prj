@@ -83,6 +83,28 @@ public class StuReportDAO {
         return list;
     }
     
+    public List<String> selectCoursesByStuNum(int stuNum) throws SQLException, IOException {
+        List<String> courses = new ArrayList<>();
+        String sql =
+            "SELECT DISTINCT c.course_name " +
+            "FROM report r " +
+            "JOIN course c ON r.course_code = c.course_code " +
+            "WHERE r.stu_num = ?";
+        
+        GetConnection gc = GetConnection.getInstance();
+        try (Connection con = gc.getConn();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, stuNum);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    courses.add(rs.getString("course_name"));
+                }
+            }
+        }
+        return courses;
+    }
+
+    
     public List<String> selectSubsByStuNum(int stuNum) throws SQLException, IOException {
         List<String> subs = new ArrayList<>();
         String sql =

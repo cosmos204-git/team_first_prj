@@ -14,7 +14,7 @@ public class StuReportDesign extends JDialog {
     private JTable jtStuReport;
     private JButton jbtnClose;
     private JLabel jlblStuName;
-    private JComboBox<String> jcbSub;
+    private JLabel jlblCourseName; 
     private int stuNum;
 
     public StuReportDesign(StuCourseMgrDesign scmd, boolean modal, int stuNum, String stuName) {
@@ -27,22 +27,20 @@ public class StuReportDesign extends JDialog {
         JLabel jlblName = new JLabel("이름", JLabel.CENTER);
         jlblStuName = new JLabel(stuName, JLabel.CENTER);
         JLabel jlblCourse = new JLabel("과정", JLabel.CENTER);
-        jcbSub = new JComboBox<>(new DefaultComboBoxModel<>(new String[]{"---과목선택---"}));
 
-        List<String> subs = new StuReportService().getCoursesByStuNum(stuNum);
-        if (subs != null) {
-            for (String s : subs) jcbSub.addItem(s);
-        }
+        List<String> courses = new StuReportService().getCoursesByStuNum(stuNum);
+        String courseName = (courses != null && !courses.isEmpty()) ? courses.get(0) : "과정 미등록";
+        jlblCourseName = new JLabel(courseName, JLabel.CENTER);
 
         jlblName.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         jlblStuName.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         jlblCourse.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-        jcbSub.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+        jlblCourseName.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 
         north.add(jlblName);
         north.add(jlblStuName);
         north.add(jlblCourse);
-        north.add(jcbSub);
+        north.add(jlblCourseName);
 
         String[] columns = {"이름", "과목", "점수", "등수"};
         dtmStuReport = new DefaultTableModel(columns, 0);
@@ -57,7 +55,7 @@ public class StuReportDesign extends JDialog {
         jlblName.setFont(font);
         jlblStuName.setFont(font);
         jlblCourse.setFont(font);
-        jcbSub.setFont(font);
+        jlblCourseName.setFont(font);
         jbtnClose.setFont(font);
         jtStuReport.setFont(font);
 
@@ -76,20 +74,8 @@ public class StuReportDesign extends JDialog {
         setVisible(true);
     }
 
-    public DefaultTableModel getDtmStuReport() {
-    	return dtmStuReport; 
-    	
-    }
-    public JButton getJbtnClose() {
-    	return jbtnClose; 
-    	
-    }
-    public JComboBox<String> getJcbStuSub() {
-    	return jcbSub; 
-    	
-    }
-    public int getStuNum() {
-    	return stuNum; 
-    	
-    }
+    public DefaultTableModel getDtmStuReport() { return dtmStuReport; }
+    public JButton getJbtnClose() { return jbtnClose; }
+    public int getStuNum() { return stuNum; }
+    public JLabel getJlblCourseName() { return jlblCourseName; }
 }
