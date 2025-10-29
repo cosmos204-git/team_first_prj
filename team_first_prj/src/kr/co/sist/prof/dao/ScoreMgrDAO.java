@@ -138,6 +138,7 @@ public class ScoreMgrDAO {
 				csjDTO=new ProfCourseSubjectDTO();
 				csjDTO.setSubCode(rs.getInt("sub_code"));
 				csjDTO.setSubName(rs.getString("sub_name"));
+				
 
 				//이미지는 스트림을 별도로 연결하여 읽어 들인다.
 				Properties prop = new Properties();

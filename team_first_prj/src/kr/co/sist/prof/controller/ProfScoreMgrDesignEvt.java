@@ -55,7 +55,9 @@ public class ProfScoreMgrDesignEvt extends WindowAdapter implements ActionListen
 		if(e.getSource()==psmd.getJcbProfCourse()) {
 			courseIdx = psmd.getJcbProfCourse().getSelectedIndex();
 			courseName = psmd.getJcbProfCourse().getItemAt(courseIdx);
-			
+			if(courseName.contains("(종료됨)")){
+			    courseName = courseName.replace("(종료됨)", "");
+			}
 			
 			if(courseName != null && !courseName.equals("---과정선택---")) {
 				courseCode = psmd.getCourseMap().get(courseName);
@@ -67,8 +69,11 @@ public class ProfScoreMgrDesignEvt extends WindowAdapter implements ActionListen
 			
 			psmd.getDcbmProfSub().addElement("---과목선택---");
 	
+			
+			
 			if(courseIdx!=0) {
 				for(int i = 0; i<showAllSubject().size(); i++ ) {
+
 					psmd.getDcbmProfSub().addElement(showAllSubject().get(i).getSubName());
 					subMap.put(showAllSubject().get(i).getSubName(), showAllSubject().get(i).getSubCode());
 				}

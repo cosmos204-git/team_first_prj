@@ -3,6 +3,9 @@ package kr.co.sist.prof.view;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,6 +19,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+import kr.co.sist.login.dao.CurrentProfData;
 import kr.co.sist.prof.controller.ProfScoreMgrDesignEvt;
 
 public class ProfScoreMgrDesign extends JDialog{
@@ -84,11 +88,34 @@ public class ProfScoreMgrDesign extends JDialog{
 		
 		ProfScoreMgrDesignEvt psmde = new ProfScoreMgrDesignEvt(this);
 		
-		
+		CurrentProfData cpd = CurrentProfData.getInstance();
 		dcbmProfCourse.addElement("---과정선택---");
 		dcbmProfSub.addElement("---과목선택---");
 		for(int i=0;i<psmde.showAllCourse().size();i++) {
-			dcbmProfCourse.addElement(psmde.showAllCourse().get(i).getCourseName());
+			String msg = null;
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			
+			
+			String[] strArr=cpd.getLogProfDTO().getCourseName().split(",");
+			
+			
+			
+		
+			for(String str : strArr) {
+				if(str.equals(psmde.showAllCourse().get(i).getCourseName())){
+					msg="";
+					break;
+				}
+			}
+			
+			if(msg==null) {
+				msg="(종료됨)";
+			}
+
+		
+			
+			dcbmProfCourse.addElement(psmde.showAllCourse().get(i).getCourseName()+msg);
+			
 			courseMap.put(psmde.showAllCourse().get(i).getCourseName(), psmde.showAllCourse().get(i).getCourseCode());
 		}
 		

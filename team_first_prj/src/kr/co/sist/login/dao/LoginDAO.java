@@ -9,7 +9,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
@@ -77,6 +80,7 @@ public class LoginDAO {
 				logStuDTO.setStuCourseNum(rs.getInt("course_code"));
 				logStuDTO.setStuCourseName(rs.getString("course_name"));
 				logStuDTO.setStuDelFlag(rs.getString("stu_del_flag"));
+				
 				
 				//이미지는 스트림을 별도로 연결하여 읽어 들인다.
 				Properties prop = new Properties();
@@ -210,7 +214,7 @@ public class LoginDAO {
 			//3.쿼리문 생성 객체 얻기
 			StringBuilder selectOneMember = new StringBuilder();
 			selectOneMember
-			.append("		SELECT professor.prof_NUM,prof_IMG,prof_NAME,prof_PASS,prof_TEL,prof_EMAIL,prof_INPUTDATE,course.COURSE_CODE,prof_DEL_FLAG, COURSE.COURSE_NAME")
+			.append("		SELECT professor.prof_NUM,prof_IMG,prof_NAME,prof_PASS,prof_TEL,prof_EMAIL,prof_INPUTDATE,course.COURSE_CODE,prof_DEL_FLAG, COURSE.COURSE_NAME, COURSE.COURSE_STARTDATE, COURSE.COURSE_ENDDATE")
 			.append("		FROM  professor")
 			.append("		LEFT JOIN COURSE ON professor.prof_num = COURSE.prof_num			")
 			.append("		WHERE professor.prof_NUM = ? ");
@@ -233,7 +237,24 @@ public class LoginDAO {
 				logProfDTO.setProfEmail(rs.getString("prof_email"));
 				logProfDTO.setProfInputDate(rs.getDate("prof_inputdate"));
 				logProfDTO.setProfDelFlag(rs.getString("prof_del_flag"));
-				logProfDTO.setCourseName(rs.getString("course_name"));
+				
+				logProfDTO.setCourseStrDate(rs.getDate("course_startdate"));
+				logProfDTO.setCourseEndDate(rs.getDate("course_enddate"));
+				
+				
+		
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				try {
+					Date today = sdf.parse(sdf.format(new Date()));
+					if(logProfDTO.getCourseEndDate().after(today) || logProfDTO.getCourseEndDate().equals(today) && 
+				    (logProfDTO.getCourseStrDate().before(today) || logProfDTO.getCourseStrDate().equals(today))) {
+						logProfDTO.setCourseName(rs.getString("course_name"));
+					}
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+				
+				
 				
 				//이미지는 스트림을 별도로 연결하여 읽어 들인다.
 				Properties prop = new Properties();

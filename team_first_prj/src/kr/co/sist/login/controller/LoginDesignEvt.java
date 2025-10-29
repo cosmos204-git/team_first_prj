@@ -151,7 +151,9 @@ public class LoginDesignEvt extends WindowAdapter implements ActionListener{
 			int i = 0;
 			if(list.size()!=-1) {
 				for(i = 0; i< list.size()-1;i++) {
-					CourseName.append(list.get(i).getCourseName()).append(", ");
+					if(list.get(i).getCourseName()!=null) {
+						CourseName.append(list.get(i).getCourseName()).append(",");
+					}
 				}
 			}
 			CourseName.append(list.get(i).getCourseName());

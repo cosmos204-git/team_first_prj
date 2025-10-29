@@ -14,10 +14,12 @@ public class LoginProfDTO {
 	private String profTel;
 	private String profEmail;
 	private Date profInputDate;
-	private int CourseNum;
-	private String CourseName;
+	private int courseNum;
+	private String courseName;
 	private String profDelFlag;
 	private String ext;
+	private Date courseEndDate;
+	private Date courseStrDate;
 	
 	public LoginProfDTO() {
 		
@@ -27,7 +29,7 @@ public class LoginProfDTO {
 
 	public LoginProfDTO(int profNum, FileInputStream profImg, File file, String profName, String profPass,
 			String profNewPass, String profTel, String profEmail, Date profInputDate, int courseNum, String courseName,
-			String profDelFlag, String ext) {
+			String profDelFlag, String ext, Date courseEndDate, Date courseStrDate) {
 		super();
 		this.profNum = profNum;
 		this.profImg = profImg;
@@ -38,11 +40,88 @@ public class LoginProfDTO {
 		this.profTel = profTel;
 		this.profEmail = profEmail;
 		this.profInputDate = profInputDate;
-		CourseNum = courseNum;
-		CourseName = courseName;
+		this.courseNum = courseNum;
+		this.courseName = courseName;
 		this.profDelFlag = profDelFlag;
 		this.ext = ext;
+		this.courseEndDate = courseEndDate;
+		this.courseStrDate = courseStrDate;
 	}
+
+
+
+
+
+
+	public int getCourseNum() {
+		return courseNum;
+	}
+
+
+
+
+
+
+	public void setCourseNum(int courseNum) {
+		this.courseNum = courseNum;
+	}
+
+
+
+
+
+
+	public String getCourseName() {
+		return courseName;
+	}
+
+
+
+
+
+
+	public void setCourseName(String courseName) {
+		this.courseName = courseName;
+	}
+
+
+
+
+
+
+	public Date getCourseEndDate() {
+		return courseEndDate;
+	}
+
+
+
+
+
+
+	public void setCourseEndDate(Date courseEndDate) {
+		this.courseEndDate = courseEndDate;
+	}
+
+
+
+
+
+
+	public Date getCourseStrDate() {
+		return courseStrDate;
+	}
+
+
+
+
+
+
+	public void setCourseStrDate(Date courseStrDate) {
+		this.courseStrDate = courseStrDate;
+	}
+
+
+
 
 
 
@@ -50,9 +129,13 @@ public class LoginProfDTO {
 	public String toString() {
 		return "LoginProfDTO [profNum=" + profNum + ", profImg=" + profImg + ", file=" + file + ", profName=" + profName
 				+ ", profPass=" + profPass + ", profNewPass=" + profNewPass + ", profTel=" + profTel + ", profEmail="
-				+ profEmail + ", profInputDate=" + profInputDate + ", CourseNum=" + CourseNum + ", CourseName="
-				+ CourseName + ", profDelFlag=" + profDelFlag + ", ext=" + ext + "]";
+				+ profEmail + ", profInputDate=" + profInputDate + ", courseNum=" + courseNum + ", courseName="
+				+ courseName + ", profDelFlag=" + profDelFlag + ", ext=" + ext + ", courseEndDate=" + courseEndDate
+				+ ", courseStrDate=" + courseStrDate + "]";
 	}
+
+
+
 
 
 
@@ -138,22 +221,6 @@ public class LoginProfDTO {
 
 	public void setProfInputDate(Date profInputDate) {
 		this.profInputDate = profInputDate;
-	}
-
-	public int getCourseNum() {
-		return CourseNum;
-	}
-
-	public void setCourseNum(int courseNum) {
-		this.CourseNum = courseNum;
-	}
-
-	public String getCourseName() {
-		return CourseName;
-	}
-
-	public void setCourseName(String courseName) {
-		this.CourseName = courseName;
 	}
 
 	public String getProfDelFlag() {
