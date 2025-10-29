@@ -32,7 +32,6 @@ public class ProfScoreMgrService {
 		List<ProfCourseSubjectDTO> list = null;		
 		try {
 			ScoreMgrDAO smDAO = ScoreMgrDAO.getInstance();
-			
 			list = smDAO.selectAllSubject(num, courseCode);
 			
 		} catch (Exception e) {

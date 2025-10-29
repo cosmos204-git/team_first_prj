@@ -105,7 +105,6 @@ public class ScoreMgrDAO {
 	public List<ProfCourseSubjectDTO> selectAllSubject(int memberNum, int courseCode) throws SQLException, IOException {
 		
 
-		
 		List<ProfCourseSubjectDTO> list = new ArrayList<ProfCourseSubjectDTO>();
 		
 		ProfCourseSubjectDTO csjDTO = null;
@@ -120,9 +119,11 @@ public class ScoreMgrDAO {
 			//3.쿼리문 생성 객체 얻기
 			StringBuilder selectOneMember = new StringBuilder();
 			selectOneMember
-			.append("		SELECT PROF_NUM, SUB_CODE, SUB_NAME")
-			.append("		FROM  COURSE, SUBJECT")
-			.append("		WHERE PROF_NUM = ?  and course_code = ? and course_del_flag='N' ");
+			.append("		SELECT PROF_NUM, course_subject.SUB_CODE, SUB_NAME				")
+			.append("		FROM  course						")
+			.append("		left join course_subject on course.course_code = course_subject.course_code						")
+			.append("		left join subject on course_subject.sub_code = subject.sub_code						")
+			.append("		WHERE PROF_NUM = ?  and course_subject.course_code = ? and course_del_flag='N' ");
 			
 			pstmt = con.prepareStatement(selectOneMember.toString());
 			

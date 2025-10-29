@@ -73,7 +73,6 @@ public class ProfScoreMgrDesignEvt extends WindowAdapter implements ActionListen
 			
 			if(courseIdx!=0) {
 				for(int i = 0; i<showAllSubject().size(); i++ ) {
-
 					psmd.getDcbmProfSub().addElement(showAllSubject().get(i).getSubName());
 					subMap.put(showAllSubject().get(i).getSubName(), showAllSubject().get(i).getSubCode());
 				}
