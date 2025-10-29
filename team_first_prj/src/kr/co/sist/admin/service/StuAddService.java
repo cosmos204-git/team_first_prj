@@ -4,15 +4,16 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import kr.co.sist.admin.dao.ProfAddDAO;
-import kr.co.sist.admin.dto.ProfDTO;
+import kr.co.sist.admin.dao.StuAddDAO;
+import kr.co.sist.admin.dto.StudentDTO;
 
-public class ProfAddService {
-	public int AddProfessor(ProfDTO pDTO) {
+public class StuAddService {
+	public int AddStudnet(StudentDTO sDTO) {
 		int flag=0;
-		ProfAddDAO paDAO = ProfAddDAO.getInstance();
+		StuAddDAO saDAO = StuAddDAO.getInstance();
 		
 		try {
-			flag=paDAO.insertProfessor(pDTO);
+			flag=saDAO.insertStudent(sDTO);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -22,18 +23,17 @@ public class ProfAddService {
 		return flag;
 	}//AddStudnet
 	
-	public int AddProfNum(){
-		ProfAddDAO paDAO= ProfAddDAO.getInstance();
-		int profNum=0;
+	public int AddStuNum(){
+		StuAddDAO saDAO= StuAddDAO.getInstance();
+		int stuNum=0;
 		try {
-			profNum=paDAO.nextProfNum();
+			stuNum=saDAO.nextStuNum();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}//end catch
-		return profNum;
+		return stuNum;
 	}//AddProfNum
-	
-	
+
 }//class

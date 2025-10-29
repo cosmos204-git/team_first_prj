@@ -53,19 +53,22 @@ public class StuModifyDialogEvt extends WindowAdapter implements ActionListener{
 		String telRegex = "^010-\\d{4}-\\d{4}$";
 		
 		String msg="이름,비밀번호,전화번호를 모두 입력해주세요!";
-		if(stuName==null||stuName.isEmpty()||stuTel==null||stuTel.isEmpty()
-				||stuPass==null||stuPass.isEmpty()) {
+//		if(stuName==null||stuName.isEmpty()||stuTel==null||stuTel.isEmpty()
+//				||stuPass==null||stuPass.isEmpty()) {
+		if(stuName.isEmpty()||stuTel.isEmpty()||stuPass.isEmpty()) {
 			JOptionPane.showMessageDialog(smd, msg);
 			return;
-		}else if(stuName.length()<2||stuName.length()>5) {
-			System.out.println();
+		}
+		if(stuName.length()<2||stuName.length()>5) {
 			msg="이름을 2~5자 사이로 입력해주세요.";
 			JOptionPane.showMessageDialog(smd, msg);
 			return ;
-		}else if(!Pattern.matches(telRegex, stuTel)) {
+		}
+		if(!Pattern.matches(telRegex, stuTel)) {
 			JOptionPane.showMessageDialog(smd, "전화번호 형식이 올바르지 않습니다.\n 010-xxxx-xxxx");
 			return ;
-		}else if(stuPass.length()<4||stuPass.length()>20) {
+		}
+		if(stuPass.length()<4||stuPass.length()>20) {
 			JOptionPane.showMessageDialog(smd, "비밀번호 4~20자 사이로 설정해주세요." );
 			return;
 		}//end if 
@@ -77,16 +80,19 @@ public class StuModifyDialogEvt extends WindowAdapter implements ActionListener{
 		
 			
 		boolean flag = smfs.modifyStudent(sDTO)==1;
+		System.out.println(flag);
 		
 		
 		if(flag) {
 			msg=sDTO.getStuName()+"의 학생 정보가 수정되었습니다.";
+			
 		}//end if
 
-		
 		JOptionPane.showMessageDialog(smd, msg);
-	
 		smd.dispose();
+		
+		
+		
 		
 	}//ModifyProcess
 

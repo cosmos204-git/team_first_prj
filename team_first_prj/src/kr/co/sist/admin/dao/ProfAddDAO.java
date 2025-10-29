@@ -3,6 +3,7 @@ package kr.co.sist.admin.dao;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import kr.co.sist.admin.dto.ProfDTO;
@@ -22,6 +23,82 @@ public class ProfAddDAO {
 		}//end if 
 		return paDAO;
 	}//stuAddDAO
+	
+	public int nextProfNum() throws SQLException, IOException {
+		int ProNum=0;
+		
+		Connection con = null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		
+		GetConnection gc = GetConnection.getInstance();
+		
+		try {
+			con=gc.getConn();
+			String nextProfNum = "select NVL(max(PROF_NUM),0)+1 max from PROFESSOR";
+			pstmt = con.prepareStatement(nextProfNum);
+			
+			rs=pstmt.executeQuery();
+			
+			if(rs.next()){
+				
+				ProNum=rs.getInt("max");
+			}//end if 
+			 
+		}finally {
+			gc.dbClose(con, pstmt, rs);
+		}//end finally
+		
+		return ProNum;
+	}//nextProfNum
+	
+//	public int nextProfNum() throws SQLException, IOException {
+//		int ProNum=0;
+//		
+//		Connection con = null;
+//		PreparedStatement pstmt=null;
+//		ResultSet rs=null;
+//		
+//		GetConnection gc = GetConnection.getInstance();
+//		
+//		try {
+//			con=gc.getConn();
+//			try {
+//				
+//				
+//				String nextProfNum = "select sequence_stu_num.CURRVAL AS max from dual";
+//				pstmt = con.prepareStatement(nextProfNum);
+//				rs=pstmt.executeQuery();
+////				
+////				if(rs.next()){
+////					
+////					ProNum=rs.getInt("max");
+////				}//end if 
+//			}catch (SQLException se) {
+////				con=gc.getConn();
+//				String nextProfNum = "select sequence_stu_num.nextval AS max from dual";
+//				pstmt = con.prepareStatement(nextProfNum);
+//				rs=pstmt.executeQuery();
+////				
+////				if(rs.next()){
+////					
+////					ProNum=rs.getInt("max");
+////				}//end if 
+//				
+//			}//end catch
+//			
+//			
+//			if(rs.next()){
+//				
+//				ProNum=rs.getInt("max");
+//			}//end if
+//			
+//		}finally {
+//			gc.dbClose(con, pstmt, rs);
+//		}//end finally
+//		
+//		return ProNum;
+//	}//nextProfNum
 	
 
 	
@@ -49,6 +126,7 @@ public class ProfAddDAO {
 		
 		return flag;
 	}//insertStudent
+
 
 
 }//class

@@ -3,25 +3,55 @@ package kr.co.sist.admin.dao;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import kr.co.sist.admin.dto.StudentDTO;
 import kr.co.sist.login.dao.GetConnection;
 
-public class stuAddDAO {
+public class StuAddDAO {
 
-	private static stuAddDAO saDAO;
+	private static StuAddDAO saDAO;
 	
-	private stuAddDAO() {
+	private StuAddDAO() {
 		
 	}//stuAddDAO
 	
-	public static stuAddDAO getInstance() {
+	public static StuAddDAO getInstance() {
 		if(saDAO==null) {
-			saDAO=new stuAddDAO();
+			saDAO=new StuAddDAO();
 		}//end if 
 		return saDAO;
 	}//stuAddDAO
+	
+
+	public int nextStuNum() throws SQLException, IOException {
+		int StuNum=0;
+		
+		Connection con = null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		
+		GetConnection gc = GetConnection.getInstance();
+		
+		try {
+			con=gc.getConn();
+			String nextProfNum = "select NVL(max(stu_num),0)+1 max from student";
+			pstmt = con.prepareStatement(nextProfNum);
+			
+			rs=pstmt.executeQuery();
+			
+			if(rs.next()){
+				
+				StuNum=rs.getInt("max");
+			}//end if 
+			 
+		}finally {
+			gc.dbClose(con, pstmt, rs);
+		}//end finally
+		
+		return StuNum;
+	}//nextProfNum
 	
 	
 	

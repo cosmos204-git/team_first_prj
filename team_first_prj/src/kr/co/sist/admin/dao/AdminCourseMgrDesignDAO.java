@@ -22,6 +22,35 @@ public class AdminCourseMgrDesignDAO {
 		}//end if
 		return acmdDAO;
 	}//AdminCourseMgrDesignDAO
+	
+	public int nextCourseNum() throws SQLException, IOException {
+		int CourseNum=0;
+		
+		Connection con = null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		
+		GetConnection gc = GetConnection.getInstance();
+		
+		try {
+			con=gc.getConn();
+			String nextProfNum = "select NVL(max(COURSE_CODE),0)+1000 max from COURSE";
+			pstmt = con.prepareStatement(nextProfNum);
+			
+			rs=pstmt.executeQuery();
+			
+			if(rs.next()){
+				
+				CourseNum=rs.getInt("max");
+			}//end if 
+			 
+		}finally {
+			gc.dbClose(con, pstmt, rs);
+		}//end finally
+		
+		return CourseNum;
+	}//nextProfNum
+	
 
 	public List<CourseMgrDTO> selectAllCourse() throws SQLException,IOException{
 		CourseMgrDTO cmDTO = null;
@@ -41,7 +70,7 @@ public class AdminCourseMgrDesignDAO {
 			.append(", p.PROF_NUM,p.PROF_NAME, c.COURSE_STARTDATE, c.COURSE_ENDDATE, c.COURSE_INPUTDATE")
 			.append("	from COURSE c,PROFESSOR p		")
 			.append("where (c.PROF_NUM=p.PROF_NUM )and COURSE_DEL_FLAG='N'")
-			.append("order by p.PROF_NAME asc");
+			.append("order by c.COURSE_CODE asc");
 
 			pstmt = con.prepareStatement(selectCourse.toString());
 			
@@ -70,40 +99,40 @@ public class AdminCourseMgrDesignDAO {
 		return list;
 	}//selectAllCourse
 	
-	public List<String> selectCombo() throws IOException, SQLException {
-		List<String> List = new ArrayList<String>();
-
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-
-		GetConnection gc = GetConnection.getInstance();
-
-		try {
-			con = gc.getConn();
-
-			StringBuilder selectCombo = new StringBuilder();
-			selectCombo.append("	select PROF_NUM,PROF_NAME	").append("	from PROFESSOR	")
-					.append("	where PROF_DEL_FLAG='N'	");
-
-			pstmt = con.prepareStatement(selectCombo.toString());
-
-			rs = pstmt.executeQuery();
-			String combo=null;
-			while (rs.next()) {
-				combo=rs.getString("PROF_NAME");
-
-				List.add(combo);
-			} // end while
-		} finally {
-			gc.dbClose(con, pstmt, rs);
-		} // end finally
-
-		return List;
-	}// selectCombo
+//	public List<String> selectCombo() throws IOException, SQLException {
+//		List<String> List = new ArrayList<String>();
+//
+//		Connection con = null;
+//		PreparedStatement pstmt = null;
+//		ResultSet rs = null;
+//
+//		GetConnection gc = GetConnection.getInstance();
+//
+//		try {
+//			con = gc.getConn();
+//
+//			StringBuilder selectCombo = new StringBuilder();
+//			selectCombo.append("	select PROF_NUM,PROF_NAME	").append("	from PROFESSOR	")
+//					.append("	where PROF_DEL_FLAG='N'	");
+//
+//			pstmt = con.prepareStatement(selectCombo.toString());
+//
+//			rs = pstmt.executeQuery();
+//			String combo=null;
+//			while (rs.next()) {
+//				combo=rs.getString("PROF_NAME");
+//
+//				List.add(combo);
+//			} // end while
+//		} finally {
+//			gc.dbClose(con, pstmt, rs);
+//		} // end finally
+//
+//		return List;
+//	}// selectCombo
 	
 	
-	public Map<String, String> selectCombo1() throws IOException, SQLException {
+	public Map<String, String> selectCombo() throws IOException, SQLException {
 		Map<String, String> list = new HashMap<String, String>();
 
 		Connection con = null;
@@ -153,7 +182,8 @@ public class AdminCourseMgrDesignDAO {
 			.append("	, p.PROF_NUM,p.PROF_NAME, to_char(c.COURSE_STARTDATE,'yyyy-MM-dd') COURSE_STARTDATE, 	")
 			.append("	to_char(c.COURSE_ENDDATE,'yyyy-MM-dd') COURSE_ENDDATE, to_char(c.COURSE_INPUTDATE,'yyyy-MM-dd') COURSE_INPUTDATE	")
 			.append("	from COURSE c,PROFESSOR p	")
-			.append("	where (c.PROF_NUM=p.PROF_NUM )and (PROF_DEL_FLAG='N'and COURSE_DEL_FLAG='N') and c.COURSE_NAME=?	");
+			.append("	where (c.PROF_NUM=p.PROF_NUM )and (PROF_DEL_FLAG='N'and COURSE_DEL_FLAG='N') and c.COURSE_NAME=?	")
+			.append("	order by c.COURSE_CODE asc	");
 			
 
 		

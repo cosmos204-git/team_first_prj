@@ -60,6 +60,7 @@ public class AdminProfMgrDesign extends JDialog {
 		jbtnClose.addActionListener(asde);
 		jtProfMgr.addMouseListener(asde);
 		
+		
 
 		// columns(열)의 넓이 설정
 		TableColumnModel tcm = jtProfMgr.getColumnModel();

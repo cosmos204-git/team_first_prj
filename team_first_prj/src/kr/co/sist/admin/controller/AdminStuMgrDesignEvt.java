@@ -1,7 +1,10 @@
 package kr.co.sist.admin.controller;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
@@ -23,11 +26,14 @@ public class AdminStuMgrDesignEvt extends WindowAdapter implements ActionListene
 	private AdminStuMgrService asms;
 	private List<StudentDTO> listStuData;
 	private int selectedNum =-1;
+	private int maxRow;
+	
 	
 	public AdminStuMgrDesignEvt(AdminStuMgrDesign asmd) {
 		this.asmd=asmd;
 		asms=new AdminStuMgrService();
 		searchAllStu();
+//		maxRow=asmd.getJtStuMgr().getRowCount();
 	}//AdminStuMgrDesign
 
 	@Override
@@ -38,9 +44,11 @@ public class AdminStuMgrDesignEvt extends WindowAdapter implements ActionListene
 			
 				searchProcess();
 			}catch (NumberFormatException ne) {
-//				JOptionPane.showMessageDialog(asmd, "숫자만 입력해주세요.");
-				asmd.getJtfStuNum().setText("");
-				searchAllStu();
+				if (asmd.getJtStuMgr().getRowCount()!=maxRow) {
+					searchAllStu();
+				}else {
+					JOptionPane.showMessageDialog(asmd, "숫자만 입력해주세요.");
+				}//end else
 			
 			}catch (NullPointerException e) {
 				JOptionPane.showMessageDialog(asmd, "존재하지 않는 회원입니다.");
@@ -91,6 +99,8 @@ public class AdminStuMgrDesignEvt extends WindowAdapter implements ActionListene
 		asmd.dispose();
 	}//windowClosing
 	
+	
+
 	public void ModifyProcess() throws IndexOutOfBoundsException{
 		
 		if(selectedNum == -1) {
@@ -122,24 +132,23 @@ public class AdminStuMgrDesignEvt extends WindowAdapter implements ActionListene
 			
 			dtm.addRow(rowData);
 		}//end for 
-
+		maxRow=asmd.getJtStuMgr().getRowCount();
 		
 	}//searchAllStu
 	
 	public void addProcess() {
 		
-		DefaultTableModel dtmStuMgr = asmd.getDtmStuMgr();
+//		DefaultTableModel dtmStuMgr = asmd.getDtmStuMgr();
+//		
+//		int dtmStuMgrlastIndex= dtmStuMgr.getRowCount()-1;
+//		System.out.println(dtmStuMgrlastIndex);
+////		StudentDTO sDTO= asms.searchStudent(dtmStuMgrlastIndex);
+//		
+//		
+//		int newStuNum=listStuData.get(dtmStuMgrlastIndex).getStuNum()+1;
 		
-		int dtmStuMgrlastIndex= dtmStuMgr.getRowCount()-1;
-		System.out.println(dtmStuMgrlastIndex);
-//		StudentDTO sDTO= asms.searchStudent(dtmStuMgrlastIndex);
 		
-		
-		int newStuNum=listStuData.get(dtmStuMgrlastIndex).getStuNum()+1;
-		System.out.println(newStuNum);
-		
-		
-		new StuAddDialog(asmd,true,newStuNum);
+		new StuAddDialog(asmd,true);
 	}//end addProcess
 	
 	
@@ -170,7 +179,7 @@ public class AdminStuMgrDesignEvt extends WindowAdapter implements ActionListene
 			
 			if(selectedNum==-1) {
 				JOptionPane.showMessageDialog(asmd, "삭제할 학생을 선택해주세요.");
-				
+				return;
 			}//end if
 			
 			

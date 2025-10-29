@@ -46,7 +46,7 @@ public class AdminProfMgrDAO {
 			con=gc.getConn();
 			StringBuilder selectProfessor= new StringBuilder();
 			selectProfessor
-			.append("	select PROF_NUM, PROF_NAME, PROF_TEL, PROF_INPUTDATE,PROF_DEL_FLAG	")
+			.append("	select PROF_NUM, PROF_NAME, PROF_TEL, PROF_INPUTDATE	")
 			.append("	from PROFESSOR												")
 			.append("	where PROF_DEL_FLAG='N' 								 	")
 			.append("	order by PROF_NUM asc								 		");
@@ -62,7 +62,11 @@ public class AdminProfMgrDAO {
 				pDTO.setProfTel(rs.getString("PROF_TEL"));
 				pDTO.setProfInputDate (rs.getDate("PROF_INPUTDATE"));
 		
+		
+
+				
 				list.add(pDTO);
+			
 			}//end if 
 		}finally {
 			gc.dbClose(con, pstmt, rs);

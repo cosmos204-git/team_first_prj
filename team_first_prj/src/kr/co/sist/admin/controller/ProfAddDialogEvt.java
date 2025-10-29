@@ -20,6 +20,7 @@ public class ProfAddDialogEvt extends WindowAdapter implements ActionListener{
 	public ProfAddDialogEvt(ProfAddDialog pad) {
 		this.pad=pad;
 		pas= new ProfAddService();
+		pad.getJtfProNum().setText(String.valueOf(pas.AddProfNum()));
 	}//StuAddDialogEvt
 
 	@Override
@@ -53,11 +54,13 @@ public class ProfAddDialogEvt extends WindowAdapter implements ActionListener{
 		if(profName==null||profName.isEmpty()||profTel==null||profTel.isEmpty()) {
 			JOptionPane.showMessageDialog(pad, msg);
 			return;
-		}else if(profName.length()<2||profName.length()>5) {
+		}
+		if(profName.length()<2||profName.length()>5) {
 			msg="이름을 2~5자 사이로 입력해주세요.";
 			JOptionPane.showMessageDialog(pad, msg);
 			return ;
-		}else if(!Pattern.matches(telRegex, profTel)) {
+		}
+		if(!Pattern.matches(telRegex, profTel)) {
 			msg= "전화번호 형식이 올바르지 않습니다.\n 010-xxxx-xxxx";
 			JOptionPane.showMessageDialog(pad, msg);
 			return;

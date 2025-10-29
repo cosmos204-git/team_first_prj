@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import kr.co.sist.admin.dao.AdminCourseMgrDesignDAO;
+import kr.co.sist.admin.dao.ProfAddDAO;
 import kr.co.sist.admin.dto.CourseMgrDTO;
 import kr.co.sist.admin.dto.ProfDTO;
 
@@ -30,25 +31,13 @@ public class AdminCourseMgrDesignService {
 	}//searchAllCourse
 	
 	
-//	public List<String> searchCombo(){
-//		List<String> list = new ArrayList<String>();
-//		AdminCourseMgrDesignDAO acmdDAO =AdminCourseMgrDesignDAO.getInstance();
-//		try {
-//			list = acmdDAO.selectCombo();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		
-//		return list;
-//	}//searchCombo
+
 	
-	public Map<String,String> searchCombo1(){
+	public Map<String,String> searchCombo(){
 		 Map<String,String> list = new HashMap<String,String>();
 		AdminCourseMgrDesignDAO acmdDAO =AdminCourseMgrDesignDAO.getInstance();
 		try {
-			list = acmdDAO.selectCombo1();
+			list = acmdDAO.selectCombo();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
@@ -128,5 +117,18 @@ public class AdminCourseMgrDesignService {
 		
 		
 	}//removeCourse
+	
+	public int AddCourseNum(){
+		int courseNum=0;
+		AdminCourseMgrDesignDAO acmdDAO= AdminCourseMgrDesignDAO.getInstance();
+		try {
+			courseNum=acmdDAO.nextCourseNum();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}//end catch
+		return courseNum;
+	}//AddCourseNum
 	
 }//class

@@ -19,7 +19,6 @@ public class AdminInfoDesign extends JFrame {
 		jbtnSubjectMgr = new JButton("과목관리");
 		jbtnAllStuMgr = new JButton("입과관리");
 		jbtnScoreMgr = new JButton("성적관리");
-
 		Font font = new Font("맑은 고딕", Font.BOLD, 20);
 		jbtnStuMgr.setFont(font);
 		jbtnProfMgr.setFont(font);

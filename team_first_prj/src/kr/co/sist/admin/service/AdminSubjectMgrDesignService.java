@@ -81,7 +81,8 @@ public class AdminSubjectMgrDesignService {
 				totalCnt=-1;
 			}
 			e.printStackTrace();
-		}finally {
+		}
+		finally {
 			try {
 				asmDAO.getGc().dbClose(asmDAO.getCon(), null, null);
 			} catch (SQLException e) {

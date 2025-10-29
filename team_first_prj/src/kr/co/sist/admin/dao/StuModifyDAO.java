@@ -14,7 +14,7 @@ public class StuModifyDAO {
 	private  static StuModifyDAO smDAO;
 	
 	private StuModifyDAO() {
-		
+	
 	}//StuModifyDAO
 	
 	public static StuModifyDAO getInstance() {

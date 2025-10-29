@@ -2,8 +2,6 @@ package kr.co.sist.admin.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
@@ -41,6 +39,7 @@ public class AdminCourseMgrDesignEvt extends WindowAdapter implements ActionList
 		acmds= new AdminCourseMgrDesignService();
 		searchAllProcess();
 		searchProfProcess();
+		acmd.getJlblCourseCodeData().setText(String.valueOf(acmds.AddCourseNum()));
 	}//AdminCourseMgrDesignEvt
 	
 	@Override
@@ -90,7 +89,7 @@ public class AdminCourseMgrDesignEvt extends WindowAdapter implements ActionList
 			
 			if(ie.getSource() == acmd.getJcbProfName() ){
 				String ProfName = (String)ie.getItem();
-				Map<String, String> list = acmds.searchCombo1();
+				Map<String, String> list = acmds.searchCombo();
 				
 				acmd.getJlblProfNumData().setText(list.get(ProfName));
 				}//end if 
@@ -127,7 +126,7 @@ public class AdminCourseMgrDesignEvt extends WindowAdapter implements ActionList
 	public void searchProfProcess() {
 		DefaultComboBoxModel<String> dcbm = acmd.getDcbmProfName();
 		dcbm.addElement("");
-		Map<String, String> list = acmds.searchCombo1();
+		Map<String, String> list = acmds.searchCombo();
 		for( String profName : list.keySet()) {
 			dcbm.addElement(profName);
 		}//end for 
@@ -168,6 +167,7 @@ public class AdminCourseMgrDesignEvt extends WindowAdapter implements ActionList
 	
 	
 	public void searchAllProcess() {
+		
 		List<CourseMgrDTO> listCourseData = acmds.searchAllCourse();
 		
 		
@@ -201,8 +201,10 @@ public class AdminCourseMgrDesignEvt extends WindowAdapter implements ActionList
 		if("".equals(acmd.getJtfSearchCourse().getText())) {
 			JOptionPane.showMessageDialog(acmd, "검색할 과정명을 입력해주세요!");	
 			searchAllProcess();
+			resetInputField();
+			acmd.getJlblCourseCodeData().setText(String.valueOf(acmds.AddCourseNum()));
 			return;
-			}//end if 
+			}
 		String courseName = acmd.getJtfSearchCourse().getText().trim();
 		
 		DefaultTableModel dtm = acmd.getDtmAdminCouresMgr();
@@ -259,22 +261,29 @@ public class AdminCourseMgrDesignEvt extends WindowAdapter implements ActionList
 		String courseName=acmd.getJtfCourseName().getText();
 		String profName = (String)acmd.getJcbProfName().getSelectedItem();
 
-		String courseRegex="[a-zA-Zㄱ-힣_-]+"; 
+		String courseRegex="[0-9a-zA-Zㄱ-힣_-]+"; 
 
 		String msg = "과정명,교수, 시작일, 종료일이 알맞게 들어갔는지 확인해주세요";
 		if(startDate==null||startDate.isEmpty()||endDate==null||endDate.isEmpty()
 			||courseName==null||courseName.isEmpty()||profName==null||profName.isEmpty()) {
 				JOptionPane.showMessageDialog(acmd, msg);
 				return;
-		}else if(validDate(endDate,startDate)) {
-			msg="종료일이 시작일보다 작습니다. 다시 설정해주세요 ";
+		}//end if
+		if(courseName.length()<2||courseName.length()>10) {
+			msg="과정명을 2~10자 사이로 입력해주세요.";
+			JOptionPane.showMessageDialog(acmd, msg);
+			return ;
+		}//end if 
+		if(validDate(endDate,startDate)) {
+			msg="시작일이 종료일보다 작습니다. 다시 설정해주세요 ";
 			JOptionPane.showMessageDialog(acmd, msg);
 			return;
-		}else if(!Pattern.matches(courseRegex, courseName)) {
-			msg="과정명의 특수문자 사용불가능합니다. \n _ -은 사용가능";
+		}//end if
+		if(!Pattern.matches(courseRegex, courseName)) {
+			msg="과정명의 특수문자 사용 불가능합니다. \n _ -은 사용가능";
 			JOptionPane.showMessageDialog(acmd, msg);
 			return;
-		}//end elseif 
+		}//end if 
 		
 		cmDTO.setCourseName(courseName);
 		cmDTO.setProfName(profName);
@@ -288,9 +297,17 @@ public class AdminCourseMgrDesignEvt extends WindowAdapter implements ActionList
 		
 		if(flag) {
 			msg="과정이 성공적으로 추가되었습니다.";
+			resetInputField();
 		}//end if 
 		JOptionPane.showMessageDialog(acmd, msg);
+		acmd.getJlblCourseCodeData().setText(String.valueOf(acmds.AddCourseNum()));
 		searchAllProcess();
+		
+		
+		
+		
+		
+		
 	}//addProcess
 	
 	public void modifyProcess(){
@@ -308,19 +325,25 @@ public class AdminCourseMgrDesignEvt extends WindowAdapter implements ActionList
 		String courseName=acmd.getJtfCourseName().getText();
 		String profName = (String)acmd.getJcbProfName().getSelectedItem();
 		
-		String courseRegex="[a-zA-Zㄱ-힣_-]+"; 
+		String courseRegex="[0-9a-zA-Zㄱ-힣_-]+"; 
 		
 		String msg = "과정명,교수, 시작일, 종료일 모두 입력되었는지 확인해주세요";
 		if(startDate==null||startDate.isEmpty()||endDate==null||endDate.isEmpty()
 		||courseName==null||courseName.isEmpty()||profName==null||profName.isEmpty()) {
 			JOptionPane.showMessageDialog(acmd, msg);
 			return;
-		}else if(validDate(endDate,startDate)) {
+		}
+		if(courseName.length()<2||courseName.length()>5) {
+			msg="과정명을 2~10자 사이로 입력해주세요.";
+			JOptionPane.showMessageDialog(acmd, msg);
+			return ;
+		}//end if 
+		if(validDate(endDate,startDate)) {
 			msg="시작일이 종료일보다 작습니다. 다시 설정해주세요 ";
 			JOptionPane.showMessageDialog(acmd, msg);
 			return;
-		}else if(!Pattern.matches(courseRegex, courseName)) {
-			msg="과정명의 특수문자 사용불가능합니다. \n _ -은 사용가능";
+		}if(!Pattern.matches(courseRegex, courseName)) {
+			msg="과정명의 특수문자 사용 불가능합니다. \n _ -은 사용가능";
 			JOptionPane.showMessageDialog(acmd, msg);
 			return;
 		}//end elseif 
@@ -339,6 +362,7 @@ public class AdminCourseMgrDesignEvt extends WindowAdapter implements ActionList
 			resetInputField();
 		}//end if 
 		JOptionPane.showMessageDialog(acmd, msg);
+		acmd.getJlblCourseCodeData().setText(String.valueOf(acmds.AddCourseNum()));
 		searchAllProcess();
 		
 	}//modifyProcess
@@ -407,6 +431,7 @@ public class AdminCourseMgrDesignEvt extends WindowAdapter implements ActionList
 		
 		
 		acmd.getJlblInputdataData().setText(today.toString());
+		
 		
 		
 	}//resetInputField

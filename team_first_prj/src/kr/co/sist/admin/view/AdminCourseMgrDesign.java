@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -176,6 +177,10 @@ public class AdminCourseMgrDesign extends JDialog {
 	
 	//리스너 추가 
 	AdminCourseMgrDesignEvt acmde= new AdminCourseMgrDesignEvt(this);
+	if(dcbmProfName.getSize()<2) {
+		JOptionPane.showMessageDialog(this, "교수가 존재하지 않습니다\n교수를 먼저 추가해주세요.");
+		return;
+	}//end if 
 	jbtnSearch.addActionListener(acmde);
 	jbtnModify.addActionListener(acmde);
 	jbtnAdd.addActionListener(acmde);

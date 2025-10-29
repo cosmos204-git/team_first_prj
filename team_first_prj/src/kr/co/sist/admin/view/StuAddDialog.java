@@ -19,7 +19,7 @@ public class StuAddDialog extends JDialog {
 
 
 
-	public StuAddDialog(AdminStuMgrDesign asmd, boolean modal, int newStuNum) {
+	public StuAddDialog(AdminStuMgrDesign asmd, boolean modal) {
 		super(asmd,"관리자 - 학생관리(추가)",modal);
 		
 
@@ -30,7 +30,8 @@ public class StuAddDialog extends JDialog {
 		jbtnAdd= new JButton("추가완료");
 		jbtnClose= new JButton("닫기");
 		
-		jtfStuNum = new JTextField(String.valueOf(newStuNum));
+//		jtfStuNum = new JTextField(String.valueOf(newStuNum));
+		jtfStuNum = new JTextField();
 		jtfStuName= new JTextField();
 		jtfStuTel= new JTextField();
 

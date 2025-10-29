@@ -16,6 +16,7 @@ public class AdminProfMgrService {
 
 		try {
 			list=apDAO.selectAllProfessor();
+			list.toString();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

@@ -9,16 +9,17 @@ import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 
 import kr.co.sist.admin.dto.StudentDTO;
-import kr.co.sist.admin.service.stuAddService;
+import kr.co.sist.admin.service.StuAddService;
 import kr.co.sist.admin.view.StuAddDialog;
 
 public class StuAddDialogEvt extends WindowAdapter implements ActionListener{
 	private StuAddDialog sad;
-	private stuAddService sas;
+	private StuAddService sas;
 	
 	public StuAddDialogEvt(StuAddDialog sad) {
 		this.sad=sad;
-		sas= new stuAddService();
+		sas= new StuAddService();
+		sad.getJtfStuNum().setText(String.valueOf(sas.AddStuNum())); //
 
 	}//StuAddDialogEvt
 
@@ -54,11 +55,13 @@ public class StuAddDialogEvt extends WindowAdapter implements ActionListener{
 		if(stuName==null||stuName.isEmpty()||stuTel==null||stuTel.isEmpty()) {
 			JOptionPane.showMessageDialog(sad, msg);
 			return;
-		}else if(stuName.length()<2||stuName.length()>5) {
+		}
+		if(stuName.length()<2||stuName.length()>5) {
 			msg="이름을 2~5자 사이로 입력해주세요.";
 			JOptionPane.showMessageDialog(sad, msg);
 			return ;
-		}else if(!Pattern.matches(telRegex, stuTel)) {
+		}
+		if(!Pattern.matches(telRegex, stuTel)) {
 			msg= "전화번호 형식이 올바르지 않습니다.\n ex) 010-xxxx-xxxx";
 			JOptionPane.showMessageDialog(sad, msg);
 			return ;
