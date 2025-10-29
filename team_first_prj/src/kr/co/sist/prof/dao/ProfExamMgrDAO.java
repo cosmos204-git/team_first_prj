@@ -114,9 +114,27 @@ public class ProfExamMgrDAO {
 			pstmt = con.prepareStatement(updateExamState.toString());
 			
 			// 4. 바인드변수에 값 설정
-			pstmt.setString(1, uDTO.getExamOpen().toString());
-			pstmt.setString(2, uDTO.getExamStart().toString());
-			pstmt.setString(3, uDTO.getExamEnd().toString());
+			// 시험오픈, 시작시간, 종료시간 의 값이 없으면 ""로 넣는다.
+			if( uDTO.getExamOpen().isEmpty() ) { 
+				pstmt.setString(1,"");
+			} else {
+				pstmt.setString(1, uDTO.getExamOpen().toString());
+			}
+
+			if( uDTO.getExamStart().isEmpty() ) { 
+				pstmt.setString(1,"");
+			} else {
+				pstmt.setString(2, uDTO.getExamStart().toString());
+			}
+			
+			if( uDTO.getExamEnd().isEmpty() ) { 
+				pstmt.setString(1,"");
+			} else {
+				pstmt.setString(3, uDTO.getExamEnd().toString());
+			}
+
+			
+			// 과정과 과목명 
 			pstmt.setString(4, uDTO.getCourseName().toString());
 			pstmt.setString(5, uDTO.getSubName().toString());
 			

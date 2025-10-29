@@ -110,14 +110,31 @@ public class ProfExamMgrDesignEvt extends WindowAdapter implements ActionListene
 	   private void viewExamSelect() throws SQLException, IOException {
 			
 		    int row = pemd.getJtCourseTable().getSelectedRow();
-	        if (row == -1) return;
+		    
+		    if (row == -1) {
+		        return; // 선택된 행이 없으면 종료
+		    }
 
+		    // 시험오픈, 시험시작, 시험끝 시간이 비어 있을 경우 리턴 
+		    Object val2 = pemd.getJtCourseTable().getValueAt(row, 2);
+		    Object val3 = pemd.getJtCourseTable().getValueAt(row, 3);
+		    Object val4 = pemd.getJtCourseTable().getValueAt(row, 4);
+
+		    // 값이 null이거나 빈 문자열인 경우 체크
+		    if (val2 == null || val3 == null || val4 == null ||
+		        val2.toString().trim().isEmpty() ||
+		        val3.toString().trim().isEmpty() ||
+		        val4.toString().trim().isEmpty()) {
+		        return;
+		    }
+		    
+		    
 	        pemd.getJtfExamCourseData().setText(pemd.getJtCourseTable().getValueAt(row, 0).toString());
 	        pemd.getJtfExamSubjectData().setText(pemd.getJtCourseTable().getValueAt(row, 1).toString());
 	        pemd.getJcbExamState().setSelectedItem(pemd.getJtCourseTable().getValueAt(row, 2).toString());
 	        pemd.getJcbExamStart().setSelectedItem(pemd.getJtCourseTable().getValueAt(row, 3).toString());
 	        pemd.getJcbExamEnd().setSelectedItem(pemd.getJtCourseTable().getValueAt(row, 4).toString());	        
-			
+	        
 		}//updateExam
 	   
 	   
