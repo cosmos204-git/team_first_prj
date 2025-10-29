@@ -241,19 +241,19 @@ public class LoginDAO {
 				logProfDTO.setCourseStrDate(rs.getDate("course_startdate"));
 				logProfDTO.setCourseEndDate(rs.getDate("course_enddate"));
 				
-				
+				if(logProfDTO.getCourseEndDate()!=null) {
 		
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-				try {
-					Date today = sdf.parse(sdf.format(new Date()));
-					if(logProfDTO.getCourseEndDate().after(today) || logProfDTO.getCourseEndDate().equals(today) && 
-				    (logProfDTO.getCourseStrDate().before(today) || logProfDTO.getCourseStrDate().equals(today))) {
-						logProfDTO.setCourseName(rs.getString("course_name"));
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+					try {
+						Date today = sdf.parse(sdf.format(new Date()));
+						if(logProfDTO.getCourseEndDate().after(today) || logProfDTO.getCourseEndDate().equals(today) && 
+					    (logProfDTO.getCourseStrDate().before(today) || logProfDTO.getCourseStrDate().equals(today))) {
+							logProfDTO.setCourseName(rs.getString("course_name"));
+						}
+					} catch (ParseException e) {
+						e.printStackTrace();
 					}
-				} catch (ParseException e) {
-					e.printStackTrace();
 				}
-				
 				
 				
 				//이미지는 스트림을 별도로 연결하여 읽어 들인다.

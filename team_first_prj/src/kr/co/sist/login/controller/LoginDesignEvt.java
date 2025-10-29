@@ -132,6 +132,7 @@ public class LoginDesignEvt extends WindowAdapter implements ActionListener{
 		int profNum = Integer.parseInt(ld.getJtfNum().getText());
 		String profPass = ld.getJtfPw().getText();
 		
+		
 		if(profNum>9999) {
 			JOptionPane.showMessageDialog(ld, "아이디를 확인해주세요.");
 			return;
