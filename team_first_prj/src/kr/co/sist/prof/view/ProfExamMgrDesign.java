@@ -67,12 +67,14 @@ public class ProfExamMgrDesign extends JDialog{
 		      dcbmExamState = new DefaultComboBoxModel<String>();
 		      jcbExamState = new JComboBox<String>(dcbmExamState);
 		      
+		      jcbExamState.addItem(" ");
 		      jcbExamState.addItem("응시가능");
 		      jcbExamState.addItem("응시불가");
 		      
 		      dcbmExamStart = new DefaultComboBoxModel<String>();
 		      jcbExamStart = new JComboBox<String>(dcbmExamStart);
 		      
+		      jcbExamStart.addItem(" ");
 		      jcbExamStart.addItem("08:00");
 		      jcbExamStart.addItem("09:00");
 		      jcbExamStart.addItem("10:00");
@@ -88,6 +90,7 @@ public class ProfExamMgrDesign extends JDialog{
 		      dcbmExamEnd = new DefaultComboBoxModel<String>();
 		      jcbExamEnd = new JComboBox<String>(dcbmExamEnd);
 
+		      jcbExamEnd.addItem(" ");
 		      jcbExamEnd.addItem("09:00");
 		      jcbExamEnd.addItem("10:00");
 		      jcbExamEnd.addItem("11:00");
