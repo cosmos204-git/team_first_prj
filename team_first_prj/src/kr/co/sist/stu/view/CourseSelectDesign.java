@@ -33,18 +33,20 @@ public class CourseSelectDesign extends JDialog {
     private JLabel jlblStuName, jlblStuNum;
     private JTextField jtfStuNameData, jtfStuNumData;
     private JButton jbtnShowSub, jbtnApplyCourse, jbtnClose;
-    
+    private StuInfoDesign sid;
     
     
     public CourseSelectDesign(StuInfoDesign sid, boolean modal) {
         super(sid,"수강 신청",modal); 
         setLayout(new BorderLayout());
         
+        this.sid=sid;
+        
         CurrentStuData csd = CurrentStuData.getInstance();
         
         int stuNum=csd.getStuNum();
     	String stuName =csd.getStuName();
-        
+     
         // North Panel
         jpNorth = new JPanel(new GridLayout(1, 4, 10, 10)); 
         jpNorth.setBorder(new EmptyBorder(15, 30, 15, 30)); 
@@ -181,6 +183,14 @@ public class CourseSelectDesign extends JDialog {
 	public void setCourseEndDate(Date courseEndDate) {
 		this.courseEndDate = courseEndDate;
 	}
+
+
+
+	public StuInfoDesign getSid() {
+		return sid;
+	}
+
+
 
 
 	

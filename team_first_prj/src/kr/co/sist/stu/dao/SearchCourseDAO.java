@@ -2,7 +2,6 @@ package kr.co.sist.stu.dao;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -44,6 +43,7 @@ public class SearchCourseDAO {
 	        .append("CASE WHEN s.course_code = c.course_code THEN 1 ELSE 0 END AS check_course ")
 	        .append("FROM course c ")
 	        .append("LEFT JOIN student s ON s.stu_num = ? ")
+	        .append("where c.course_del_flag='N'													")
 	        .append("ORDER BY c.course_startdate DESC");
 		    
 		    

@@ -23,12 +23,15 @@ public class CourseSelectDesignEvt extends WindowAdapter implements ActionListen
    private CourseSelectDesign csd;
    private List<SearchCourseDTO> listCourseData;
    private int selectedRow = -1;
+   private int setflag;
    
    private int courseCode;
    private String courseName;
+   private String courseState;
    private ShowSubjectDialog ssd;
-   private ShowSubjectDialogEvt ssde;
-
+   private ShowSubjectDialogEvt ssde;   
+  
+   
    public CourseSelectDesignEvt(CourseSelectDesign csd) {
       this.csd = csd;
       this.css = new CourseSelectService();
@@ -44,6 +47,9 @@ public class CourseSelectDesignEvt extends WindowAdapter implements ActionListen
 
       if (ae.getSource() == csd.getJbtnApplyCourse()) {
          applyProcess();
+         if(setflag==1) {
+        	 csd.getSid().getJtfStuCourseData().setText(courseState);
+         }
       }
 
       if (ae.getSource() == csd.getJbtnClose()) {
@@ -154,18 +160,35 @@ public class CourseSelectDesignEvt extends WindowAdapter implements ActionListen
           JOptionPane.showMessageDialog(csd, "이미 신청한 과정입니다.");
           return;
       }
+      
+      
+      for (SearchCourseDTO scDTO1 : listCourseData ) {
+    	  if (scDTO1.isCheckCourse()) {
+    		  JOptionPane.showMessageDialog(csd, "이미 신청한 과정이 있습니다.\n과정을 변경하고 싶다면 따로 문의해주세요.");
+    		  return;
+    	  }
+      }
+      
 
       boolean result = css.applyCourse(scDTO);
 
       if (result) {
           scDTO.setCheckCourse(true);
          
-          showCourseProcess();
+          CurrentStuData crsd = CurrentStuData.getInstance();
+          crsd.getLogStuDTO().setStuCourseNum(scDTO.getCourseCode());
+          crsd.getLogStuDTO().setStuCourseName(scDTO.getCourseName());
+          
+          setflag=1;
+          courseState= crsd.getLogStuDTO().getStuCourseName();
+          csd.getSid().getJtfStuCourseData().setText(courseState);
           
           JOptionPane.showMessageDialog(csd, scDTO.getCourseName() + " 과정을 신청했습니다.");
       } else {
           JOptionPane.showMessageDialog(csd, "신청 중 오류가 발생했습니다.");
       }
+      
+      
       
    }// applyProcess
 
