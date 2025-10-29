@@ -237,6 +237,8 @@ public class ProInfoModifyDesignEvt extends WindowAdapter implements ActionListe
 	        emailField.selectAll(); 
 	        return;
 	    }
+	    
+	    cpd.getLogProfDTO().setProfEmail(trimmedEmail);
 		
 		if(pims.modifyProfInfo(cpd)==1) {
 			JOptionPane.showMessageDialog(pimd, "개인정보를 변경하였습니다.");

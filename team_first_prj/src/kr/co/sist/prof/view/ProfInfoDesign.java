@@ -2,6 +2,7 @@ package kr.co.sist.prof.view;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.io.IOException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -126,7 +127,7 @@ public class ProfInfoDesign extends JFrame{
 		this.jbtnMgrProfScore = jbtnMgrProfScore;
 	}
 	
-	public ProfInfoDesign() {
+	public ProfInfoDesign() throws IOException {
 		super("교수 기본 화면");
 		
 		JLabel jlblProfNum = new JLabel("교번");

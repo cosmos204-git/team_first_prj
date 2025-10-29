@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -48,11 +49,19 @@ public class LoginDesignEvt extends WindowAdapter implements ActionListener{
 			switch(ld.getLoginFlag()) {
 			case STUDENT_FLAG:
 	
-				loginStuProcess();
+				try {
+					loginStuProcess();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
 				//로그인 성공시 학생 화면으로 넘어감.
 				break;
 			case PROF_FLAG:
-				loginProfProcess();
+				try {
+					loginProfProcess();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
 				//로그인 성공시 교수 화면으로 넘어감.
 				break;
 			case ADMIN_FLAG:
@@ -66,7 +75,7 @@ public class LoginDesignEvt extends WindowAdapter implements ActionListener{
 	
 	
 	
-	public void loginStuProcess() {
+	public void loginStuProcess() throws IOException {
 		
 		try {
 			int stuNum = Integer.parseInt(ld.getJtfNum().getText());
@@ -97,7 +106,7 @@ public class LoginDesignEvt extends WindowAdapter implements ActionListener{
 					if(logDTO.getStuPass().equals(stuPass)){
 						CurrentStuData.getInstance().setLogStuDTO(logDTO);
 						JOptionPane.showMessageDialog(ld, logDTO.getStuName() + "학생님 환영합니다.");
-						new StuInfoDesign();
+							new StuInfoDesign();
 						ld.dispose();
 						
 					}else {
@@ -117,7 +126,7 @@ public class LoginDesignEvt extends WindowAdapter implements ActionListener{
 		
 	}
 	
-	public void loginProfProcess() {
+	public void loginProfProcess() throws IOException {
 		
 		
 		int profNum = Integer.parseInt(ld.getJtfNum().getText());
@@ -161,6 +170,14 @@ public class LoginDesignEvt extends WindowAdapter implements ActionListener{
 			if(logDTO.getProfNum() == profNum)
 			{
 				if(logDTO.getProfPass().equals(profPass)){
+					
+					
+					if(logDTO.getCourseName().equals("null")) {
+						
+						JOptionPane.showMessageDialog(ld, "배정된 과목이 없습니다. 관리자에게 문의 하세요.");
+						return;
+					}
+					
 					CurrentProfData.getInstance().setLogProfDTO(logDTO);
 					JOptionPane.showMessageDialog(ld, logDTO.getProfName() + "교수님 환영합니다.");
 					new ProfInfoDesign();

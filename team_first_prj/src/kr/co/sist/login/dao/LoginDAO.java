@@ -210,9 +210,10 @@ public class LoginDAO {
 			//3.쿼리문 생성 객체 얻기
 			StringBuilder selectOneMember = new StringBuilder();
 			selectOneMember
-			.append("		SELECT PROFESSOR.PROF_NUM,PROF_IMG,PROF_NAME,PROF_PASS,PROF_TEL,PROF_EMAIL,PROF_INPUTDATE,PROF_DEL_FLAG, COURSE.COURSE_NAME")
-			.append("		FROM  PROFESSOR,COURSE")
-			.append("		WHERE PROFESSOR.PROF_NUM = COURSE.PROF_NUM and PROFESSOR.PROF_NUM = ? and course_del_flag='N'");
+			.append("		SELECT professor.prof_NUM,prof_IMG,prof_NAME,prof_PASS,prof_TEL,prof_EMAIL,prof_INPUTDATE,course.COURSE_CODE,prof_DEL_FLAG, COURSE.COURSE_NAME")
+			.append("		FROM  professor")
+			.append("		LEFT JOIN COURSE ON professor.prof_num = COURSE.prof_num			")
+			.append("		WHERE professor.prof_NUM = ? ");
 			
 			pstmt = con.prepareStatement(selectOneMember.toString());
 			

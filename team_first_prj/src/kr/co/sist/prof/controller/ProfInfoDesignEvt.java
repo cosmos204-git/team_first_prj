@@ -6,6 +6,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 import javax.swing.ImageIcon;
@@ -21,7 +22,7 @@ public class ProfInfoDesignEvt extends WindowAdapter implements ActionListener{
 
 	private ProfInfoDesign pid;
 	
-	public ProfInfoDesignEvt(ProfInfoDesign pid) {
+	public ProfInfoDesignEvt(ProfInfoDesign pid) throws IOException {
 		this.pid = pid;
 		viewProfInfo();
 	}
@@ -50,7 +51,7 @@ public class ProfInfoDesignEvt extends WindowAdapter implements ActionListener{
 		}
 	}
 	
-	public void viewProfInfo() {
+	public void viewProfInfo() throws IOException {
 		CurrentProfData cpd = CurrentProfData.getInstance();
 		
 		pid.getJtfProfNameData().setText(cpd.getLogProfDTO().getProfName());
@@ -59,14 +60,20 @@ public class ProfInfoDesignEvt extends WindowAdapter implements ActionListener{
 		pid.getJtfProfCourseData().setText(cpd.getLogProfDTO().getCourseName());
 		
 		Properties prop = new Properties();
-		String userHome = System.getProperty("user.home");
-		try {
-			prop.load(new FileInputStream(userHome+"/git/team_first_prj/team_first_prj/src/properties/datebase.properties"));
-			ImageIcon ii = new ImageIcon(prop.getProperty("savePath")+cpd.getLogProfDTO().getProfNum()+"p."+cpd.getLogProfDTO().getExt());
-			pid.getJlblProfImg().setIcon(ii);
-		} catch (IOException e) {
-			e.printStackTrace();
+		try (InputStream is = getClass().getClassLoader().getResourceAsStream("properties/datebase.properties")) {
+		    if (is == null) {
+		        throw new IOException("database.properties 파일을 클래스패스에서 찾을 수 없습니다.");
+		    }
+		    prop.load(is);
 		}
+		ImageIcon ii = new ImageIcon(prop.getProperty("savePath")+cpd.getLogProfDTO().getProfNum()+"p."+cpd.getLogProfDTO().getExt());
+		pid.getJlblProfImg().setIcon(ii);
+//		String userHome = System.getProperty("user.home");
+//		try {
+//			prop.load(new FileInputStream(userHome+"/git/team_first_prj/team_first_prj/src/properties/datebase.properties"));
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 		
 		
 		

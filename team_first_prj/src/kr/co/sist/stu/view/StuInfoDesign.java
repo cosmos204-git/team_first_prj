@@ -2,6 +2,7 @@ package kr.co.sist.stu.view;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.io.IOException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -17,7 +18,7 @@ public class StuInfoDesign extends JFrame {
 	private JTextField jtfStuNumData,jtfStuNameData,jtfStuTelData,jtfStuCourseData;
 	private JButton jbtnModifyStuInfo, jbtnSelectCourse, jbtnMgrCourse;
 
-	public StuInfoDesign() {
+	public StuInfoDesign() throws IOException {
 		super("학생 기본 화면");
 		
 		JLabel jlblStuNum = new JLabel("학번");

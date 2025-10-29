@@ -6,6 +6,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 import javax.swing.ImageIcon;
@@ -20,7 +21,7 @@ public class StuInfoDesignEvt extends WindowAdapter implements ActionListener{
 	
 	private StuInfoDesign sd;
 	
-	public StuInfoDesignEvt(StuInfoDesign sd) {
+	public StuInfoDesignEvt(StuInfoDesign sd) throws IOException {
 		this.sd = sd;
 		viewStuInfo();
 	}
@@ -47,7 +48,7 @@ public class StuInfoDesignEvt extends WindowAdapter implements ActionListener{
 		sd.dispose();
 	}
 	
-	public void viewStuInfo() {
+	public void viewStuInfo() throws IOException {
 		
 		CurrentStuData csd = CurrentStuData.getInstance();
 		
@@ -57,14 +58,21 @@ public class StuInfoDesignEvt extends WindowAdapter implements ActionListener{
 		sd.getJtfStuNumData().setText(String.valueOf(csd.getLogStuDTO().getStuNum()));
 		
 		Properties prop = new Properties();
-		String userHome = System.getProperty("user.home");
-		try {
-			prop.load(new FileInputStream(userHome+"/git/team_first_prj/team_first_prj/src/properties/datebase.properties"));
+		
+		try (InputStream is = getClass().getClassLoader().getResourceAsStream("properties/datebase.properties")) {
+		    if (is == null) {
+		        throw new IOException("database.properties 파일을 클래스패스에서 찾을 수 없습니다.");
+		    }
+		    prop.load(is);
+		}
+		
+		//String userHome = System.getProperty("user.home");
+		//try {
 			ImageIcon ii = new ImageIcon(prop.getProperty("savePath")+csd.getLogStuDTO().getStuNum()+"s."+csd.getLogStuDTO().getExt());
 			sd.getJlblStuImg().setIcon(ii);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		//} catch (IOException e) {
+		//	e.printStackTrace();
+		//}
 		
 		
 	}
