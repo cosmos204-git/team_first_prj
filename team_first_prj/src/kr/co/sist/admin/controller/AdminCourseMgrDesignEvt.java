@@ -29,7 +29,7 @@ public class AdminCourseMgrDesignEvt extends WindowAdapter implements ActionList
 	private List<CourseMgrDTO> listCourseData;
 	private int selectedNum =-1;
 	private int maxRow;
-
+  
 
 	
 	
