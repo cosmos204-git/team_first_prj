@@ -87,9 +87,9 @@ public class StuReportDAO {
         List<String> courses = new ArrayList<>();
         String sql =
             "SELECT DISTINCT c.course_name " +
-            "FROM report r " +
-            "JOIN course c ON r.course_code = c.course_code " +
-            "WHERE r.stu_num = ?";
+            "FROM student s " +
+            "JOIN course c ON s.course_code = c.course_code " +
+            "WHERE s.stu_num = ?";
         
         GetConnection gc = GetConnection.getInstance();
         try (Connection con = gc.getConn();
