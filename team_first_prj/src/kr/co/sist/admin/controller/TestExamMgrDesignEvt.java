@@ -84,7 +84,12 @@ public class TestExamMgrDesignEvt extends WindowAdapter implements ActionListene
 //			}
 			if(temd.getJtfCorrect().getText() != null && !temd.getJtfCorrect().getText().isEmpty()) {
 				correct = Integer.parseInt(temd.getJtfCorrect().getText().trim());
-			}
+				if(correct<1||correct>4) {
+					JOptionPane.showMessageDialog(temd, "정답을 1~4 사이의 값으로 적으세요.");
+					return;
+				}//end if 
+			}//end if 
+		
 			TestExamMgrService tems = new TestExamMgrService();
 			int row =  temd.getJtExamList().getSelectedRow();
 			int eiCode = examItemList.get(row).getExamCode();

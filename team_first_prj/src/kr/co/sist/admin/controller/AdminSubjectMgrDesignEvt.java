@@ -144,7 +144,14 @@ public class AdminSubjectMgrDesignEvt extends WindowAdapter implements ActionLis
 		
 		int courseNum = asmd.getJcbCourse().getSelectedIndex();
 		int subNum =  asmd.getJtAdminSubMgr().getSelectedRow();
+		
+		if(subNum==-1) {
+			JOptionPane.showMessageDialog(asmd, "삭제할 과목을 설정해주세요.");
+			return;
+		}//end if 
+		
 		int rowCnt = asmds.removeCourseSub(cDTOList.get(courseNum).getCourseCode(),courseSubList.get(subNum).getSubCode());
+		
 	} //deleteProcess
 	public void mgrTestExamProcess() {
 		int row =asmd.getJtAdminSubMgr().getSelectedRow();
