@@ -111,8 +111,6 @@ public class StuReportDAO {
         "SELECT s.sub_name "+
         "FROM report r JOIN subject s ON s.sub_code = r.sub_code "+
         "WHERE r.stu_num = ?";
-        
-        
         GetConnection gc = GetConnection.getInstance();
         try (Connection con = gc.getConn();
              PreparedStatement ps = con.prepareStatement(sql)) {

@@ -31,17 +31,22 @@ public class StuExamService {
 
     public int submitAndScore(int stuNum, int testCode, Map<Integer,Integer> answers) {
         try {
-            StuExamDAO dao = StuExamDAO.getInstance();
+            // 1) 제출 저장
             dao.insertExamResult(stuNum, answers);
-       
+
+            // 2) 채점
             int[] res = dao.calcScoreAndTotal(stuNum, testCode);
             int correct = res[0];
-            int total = res[1];
-            int score = (int)((correct * 100.0) / total);
+            int total   = res[1];
+            int score   = (total > 0) ? (int)((correct * 100.0) / total) : 0;
 
-            Integer subCode = dao.searchExamCode(testCode);
-            if (subCode != null) {
-                dao.updateReportScore(stuNum, subCode, score);
+            // 3) testCode -> sub_code, course_code 조회
+            Integer subCode    = dao.searchExamCode(testCode);
+            Integer courseCode = dao.findCourseCodeByTestCode(testCode);
+
+            // 4) report upsert (course_code 포함)
+            if (subCode != null && courseCode != null) {
+                dao.updateReportScore(stuNum, courseCode, subCode, score);
             }
 
             return score;
@@ -50,6 +55,7 @@ public class StuExamService {
             return -1;
         }
     }
+
 
 
     public Integer findTestCode(String course, String subject) {

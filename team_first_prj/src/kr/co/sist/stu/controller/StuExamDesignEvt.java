@@ -33,7 +33,6 @@ public class StuExamDesignEvt extends WindowAdapter implements ActionListener {
                 return;
             }
 
-            // 과정 일치 검사
             try {
                 Integer testCourseCode = kr.co.sist.stu.dao.StuExamDAO.getInstance().findCourseCodeByTestCode(testCode);
                 int stuCourseCode = kr.co.sist.login.dao.CurrentStuData.getCourseCode();
@@ -43,6 +42,7 @@ public class StuExamDesignEvt extends WindowAdapter implements ActionListener {
                         "과정 불일치", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
+                
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(view, "시험 과정 확인 중 오류가 발생했습니다.");
                 ex.printStackTrace();

@@ -43,9 +43,9 @@ public class StuExamDAO {
         GetConnection gc = GetConnection.getInstance();
         String sql =
             "SELECT exam_code, test_code, exam_quest, exam_choice1, exam_choice2, " +
-            "       exam_choice3, exam_choice4, exam_correct_tchoice, ei_del_flag, exam_inputdate " +
+            "       exam_choice3, exam_choice4, exam_correct_tchoice, exam_inputdate " +
             "FROM exam_item " +
-            "WHERE test_code = ? AND NVL(ei_del_flag,'N') <> 'Y' " +
+            "WHERE test_code = ? " +
             "ORDER BY exam_code";
         try (Connection con = gc.getConn();
              PreparedStatement ps = con.prepareStatement(sql)) {
@@ -61,7 +61,6 @@ public class StuExamDAO {
                     d.setExamChoice3(rs.getString("exam_choice3"));
                     d.setExamChoice4(rs.getString("exam_choice4"));
                     d.setExamCorrectTchoice(rs.getInt("exam_correct_tchoice"));
-                    d.setDelFlag(rs.getString("ei_del_flag"));
                     d.setInputDate(rs.getDate("exam_inputdate"));
                     list.add(d);
                 }
@@ -151,35 +150,44 @@ public class StuExamDAO {
     }
 
     
-    public int updateReportScore(int stuNum, int subCode, int score) throws SQLException, IOException {
+    public int updateReportScore(int stuNum, int courseCode, int subCode, int score)
+            throws SQLException, IOException {
         GetConnection gc = GetConnection.getInstance();
-        String sel = "SELECT COUNT(*) FROM report WHERE stu_num = ? AND sub_code = ?";
-        String upd = "UPDATE report SET stu_score = ? WHERE stu_num = ? AND sub_code = ?";
-        String ins = "INSERT INTO report (stu_num, sub_code, stu_score) VALUES (?, ?, ?)";
+
+        String sel = "SELECT COUNT(*) FROM report WHERE stu_num = ? AND course_code = ? AND sub_code = ?";
+        String upd = "UPDATE report SET stu_score = ? WHERE stu_num = ? AND course_code = ? AND sub_code = ?";
+        String ins = "INSERT INTO report (stu_num, course_code, sub_code, stu_score) VALUES (?, ?, ?, ?)";
+
         try (Connection con = gc.getConn();
              PreparedStatement ps = con.prepareStatement(sel)) {
+
             ps.setInt(1, stuNum);
-            ps.setInt(2, subCode);
+            ps.setInt(2, courseCode);
+            ps.setInt(3, subCode);
+
             try (ResultSet rs = ps.executeQuery()) {
                 rs.next();
                 int cnt = rs.getInt(1);
-                if (cnt > 0) {
+
+                if (cnt > 0) { // update
                     try (PreparedStatement u = con.prepareStatement(upd)) {
                         u.setInt(1, score);
                         u.setInt(2, stuNum);
-                        u.setInt(3, subCode);
+                        u.setInt(3, courseCode);
+                        u.setInt(4, subCode);
                         return u.executeUpdate();
                     }
-                } else {
+                } else { // insert
                     try (PreparedStatement i = con.prepareStatement(ins)) {
                         i.setInt(1, stuNum);
-                        i.setInt(2, subCode);
-                        i.setInt(3, score);
+                        i.setInt(2, courseCode);
+                        i.setInt(3, subCode);
+                        i.setInt(4, score);
                         return i.executeUpdate();
                     }
                 }
             }
         }
-        
     }
+
 }
