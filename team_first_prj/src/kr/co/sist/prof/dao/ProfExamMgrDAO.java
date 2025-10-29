@@ -64,10 +64,7 @@ public class ProfExamMgrDAO {
 			//4. 바인드 변수에 값 설정
 			p_profNum=CurrentProfData.getInstance().getLogProfDTO().getProfNum();
 			
-//			System.out.println(strSelectExamList + "  교번은 "+ p_profNum +" 입니다.");
-			
 			pstmt.setInt(1, p_profNum);
-
 			rs=pstmt.executeQuery();
 			
 			while(rs.next()) {

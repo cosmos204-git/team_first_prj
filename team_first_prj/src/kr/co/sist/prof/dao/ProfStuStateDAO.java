@@ -55,7 +55,7 @@ public class ProfStuStateDAO {
 			.append(" FROM course c left JOIN professor p ON p.prof_num = c.prof_num ")
 			.append("               left JOIN student_course sc ON c.course_code = sc.course_code ")
 			.append("               left JOIN student s ON sc.stu_num = s.stu_num ")
-			.append(" where c.course_del_flag='N' and p.prof_num=? ")                                      
+			.append(" where c.course_del_flag='N' and s.stu_num is not null and p.prof_num=? ")                                      
 			.append(" ORDER BY  p.prof_name, c.course_name, s.stu_num ");			
 			
 			
@@ -65,7 +65,7 @@ public class ProfStuStateDAO {
 			//4. 바인드 변수에 값 설정
 			p_profNum=CurrentProfData.getInstance().getLogProfDTO().getProfNum();
 			
-			System.out.println(selectStuState + "  교번은 "+ p_profNum +" 입니다.");
+//			System.out.println(selectStuState + "  교번은 "+ p_profNum +" 입니다.");
 			
 			pstmt.setInt(1, p_profNum);
 
@@ -111,7 +111,7 @@ public class ProfStuStateDAO {
 			.append(" FROM course c left JOIN professor p ON p.prof_num = c.prof_num ")
 			.append("               left JOIN student_course sc ON c.course_code = sc.course_code ")
 			.append("               left JOIN student s ON sc.stu_num = s.stu_num ")
-			.append(" where c.course_del_flag='N' and c.course_name=? ")                                      
+			.append(" where c.course_del_flag='N' and s.stu_num is not null and c.course_name=? ")                                      
 			.append(" ORDER BY  p.prof_name, c.course_name, s.stu_num ");		
 
 			
