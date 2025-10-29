@@ -44,6 +44,7 @@ public class SearchCourseDAO {
 	        .append("FROM course c ")
 	        .append("LEFT JOIN student s ON s.stu_num = ? ")
 	        .append("where c.course_del_flag='N'													")
+	        .append("AND course_startdate < sysdate AND course_enddate > sysdate ")
 	        .append("ORDER BY c.course_startdate DESC");
 		    
 		    

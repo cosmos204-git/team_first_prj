@@ -47,6 +47,7 @@ public class CourseSelectDesignEvt extends WindowAdapter implements ActionListen
 
       if (ae.getSource() == csd.getJbtnApplyCourse()) {
          applyProcess();
+         showCourseProcess();
          if(setflag==1) {
         	 csd.getSid().getJtfStuCourseData().setText(courseState);
          }
