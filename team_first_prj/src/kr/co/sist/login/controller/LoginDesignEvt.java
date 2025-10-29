@@ -80,32 +80,35 @@ public class LoginDesignEvt extends WindowAdapter implements ActionListener{
 				return;
 			}
 			
-			if(logDTO.getStuDelFlag().equals("Y"))
-			{
-				JOptionPane.showMessageDialog(ld, "삭제된 학생의 정보입니다.");
-				return;
-			}
 			
-			
-			if(logDTO.getStuNum() == stuNum)
-			{
-				if(logDTO.getStuPass().length()>20) {
-					JOptionPane.showMessageDialog(ld, "비밀번호는 20자 내로 입력하세요.");
-					return;
-				}
-				if(logDTO.getStuPass().equals(stuPass)){
-					CurrentStuData.getInstance().setLogStuDTO(logDTO);
-					JOptionPane.showMessageDialog(ld, logDTO.getStuName() + "학생님 환영합니다.");
-					new StuInfoDesign();
-					ld.dispose();
-					
-				}else {
-					JOptionPane.showMessageDialog(ld, "비밀번호를 확인해주세요");
+			if(logDTO!=null) {
+				if(logDTO.getStuNum() == stuNum)
+				{
+					if(logDTO.getStuDelFlag().equals("Y"))
+					{
+						JOptionPane.showMessageDialog(ld, "삭제된 학생의 정보입니다.");
+						return;
+					}
+	
+					if(logDTO.getStuPass().length()>20) {
+						JOptionPane.showMessageDialog(ld, "비밀번호는 20자 내로 입력하세요.");
+						return;
+					}
+					if(logDTO.getStuPass().equals(stuPass)){
+						CurrentStuData.getInstance().setLogStuDTO(logDTO);
+						JOptionPane.showMessageDialog(ld, logDTO.getStuName() + "학생님 환영합니다.");
+						new StuInfoDesign();
+						ld.dispose();
+						
+					}else {
+						JOptionPane.showMessageDialog(ld, "비밀번호를 확인해주세요");
+					}
+				}else{
+					JOptionPane.showMessageDialog(ld, "아이디를 확인해주세요");
 				}
 			}else{
-				JOptionPane.showMessageDialog(ld, "아이디를 확인해주세요");
+				JOptionPane.showMessageDialog(ld, "계정이 없습니다.");
 			}
-			
 		
 		}catch(NumberFormatException nfe) {
 			JOptionPane.showMessageDialog(ld, "숫자만 입력이 가능합니다");
@@ -116,21 +119,26 @@ public class LoginDesignEvt extends WindowAdapter implements ActionListener{
 	
 	public void loginProfProcess() {
 		
-		try {
-			int profNum = Integer.parseInt(ld.getJtfNum().getText());
-			String profPass = ld.getJtfPw().getText();
-			
-			if(profNum>9999) {
-				JOptionPane.showMessageDialog(ld, "아이디를 확인해주세요.");
-				return;
-			}
-			
-			
-			List<LoginProfDTO> list = ls.searchProfOneMember(profNum);			
-			
-			
-			StringBuilder CourseName = new StringBuilder();
-			
+		
+		int profNum = Integer.parseInt(ld.getJtfNum().getText());
+		String profPass = ld.getJtfPw().getText();
+		
+		if(profNum>9999) {
+			JOptionPane.showMessageDialog(ld, "아이디를 확인해주세요.");
+			return;
+		}
+		
+		
+		List<LoginProfDTO> list = ls.searchProfOneMember(profNum);			
+		
+		if(list.isEmpty()) {
+			JOptionPane.showMessageDialog(ld, "계정이 없습니다.");
+			return;
+		}
+		
+		StringBuilder CourseName = new StringBuilder();
+		
+		try {	
 			int i = 0;
 			if(list.size()!=-1) {
 				for(i = 0; i< list.size()-1;i++) {
@@ -142,7 +150,6 @@ public class LoginDesignEvt extends WindowAdapter implements ActionListener{
 			logDTO = list.get(0);
 			logDTO.setCourseName(CourseName.toString());
 			
-
 			
 			if(logDTO.getProfDelFlag().equals("Y"))
 			{
@@ -169,9 +176,9 @@ public class LoginDesignEvt extends WindowAdapter implements ActionListener{
 			JOptionPane.showMessageDialog(ld, "숫자만 입력이 가능합니다");
 			return;
 		}catch(IndexOutOfBoundsException iobe) {
+			
 			JOptionPane.showMessageDialog(ld, "배정된 과목이 없습니다. 관리자에게 문의 하세요.");
 		}
-		
 	}
 	
 	

@@ -7,7 +7,7 @@ public class MainLoginRun {
 	public static void main(String[] args) {
 
 		new MainLoginDesign();
-		
 	}
+	
 
 } 
