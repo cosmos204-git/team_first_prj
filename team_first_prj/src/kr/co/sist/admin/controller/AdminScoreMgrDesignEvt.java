@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
@@ -18,7 +19,6 @@ import kr.co.sist.admin.view.AdminScoreMgrDesign;
 
 public class AdminScoreMgrDesignEvt extends WindowAdapter implements ActionListener{
 	private  AdminScoreMgrDesign asmd;
-	private AdminScoreMgrService asms; 
 	
 	public AdminScoreMgrDesignEvt(AdminScoreMgrDesign asmd){
 		this.asmd=asmd;
@@ -64,10 +64,23 @@ public class AdminScoreMgrDesignEvt extends WindowAdapter implements ActionListe
 		DefaultComboBoxModel<String> dcbm = asmd.getDcbmCourse();
 		dcbm.addElement("");
 		List<CourseDTO> cDTOList =  asms.searchCourse();
+		LocalDate currentDate = LocalDate.now();
+		LocalDate startDate = LocalDate.now();
+		LocalDate endDate = LocalDate.now();
+		String rowData= "";
+		String isIng ="";
 		for(CourseDTO cDTO : cDTOList){
-			String rowData= null;
+			startDate = LocalDate.parse(cDTO.getCourseStartDate());
+			endDate = LocalDate.parse(cDTO.getCourseEndDate());
+			if(!currentDate.isBefore(startDate) && !currentDate.isAfter(endDate)) {
+				isIng = "(진행 중)";
+			}else if(currentDate.isBefore(startDate)) {
+				isIng = "(시작 전)";
+			}else {
+				isIng = "(종료)";
+			}//end else
 			rowData = cDTO.getCourseName();
-			dcbm.addElement(rowData);
+			dcbm.addElement(rowData+isIng);
 		}//end for
 	}//searchCourseProcess
 	public void searchsubjectProcess() {

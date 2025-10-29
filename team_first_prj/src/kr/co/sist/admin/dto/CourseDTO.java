@@ -21,7 +21,15 @@ public class CourseDTO {
 		this.courseInputDate = courseInputDate;
 		this.courseEndDate = courseEndDate;
 	}
+
 	
+	public CourseDTO(int courseCode, String courseName, String courseStartDate, String courseEndDate) {
+		super();
+		this.courseCode = courseCode;
+		this.courseName = courseName;
+		this.courseStartDate = courseStartDate;
+		this.courseEndDate = courseEndDate;
+	}
 
 	public CourseDTO(int courseCode, String courseName) {
 		super();

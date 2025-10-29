@@ -11,6 +11,7 @@ import java.util.List;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 
+import kr.co.sist.admin.dto.CourseDTO;
 import kr.co.sist.admin.dto.RegStuMgrDTO;
 import kr.co.sist.login.dao.GetConnection;
 
@@ -73,45 +74,58 @@ public class AdminRegStuMgrDAO {
 		return rsmDTOList;
 	}// selectAllStu
 
-	public List<String> selectCombo() throws IOException, SQLException {
-		List<String> cList = new ArrayList<String>();
-
-		Connection con = null;
+	public List<CourseDTO> selectCourse() throws IOException, SQLException{
+		List<CourseDTO> courseList = new ArrayList<CourseDTO>();
+		
+		Connection con =null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-
+		
 		GetConnection gc = GetConnection.getInstance();
-
+		
 		try {
 			con = gc.getConn();
-
-			StringBuilder selectCombo = new StringBuilder();
-			selectCombo.append("	select course_name	").append("	from course	")
-					.append("	where course_del_flag='N'	");
-
-			pstmt = con.prepareStatement(selectCombo.toString());
-
-			rs = pstmt.executeQuery();
-
-			String combo = null;
-			while (rs.next()) {
-				combo = rs.getString("course_name");
-
-				cList.add(combo);
-			} // end while
-		} finally {
+			
+			StringBuilder selectCourse = new StringBuilder();
+			selectCourse
+			.append("	select course_code, course_name, to_char(course_startdate, 'yyyy-MM-dd') course_startdate, to_char(course_enddate, 'yyyy-MM-dd') course_enddate ")
+			.append("	from Course	")
+			.append("	where course_del_flag='N'	");
+			pstmt = con.prepareStatement(selectCourse.toString());
+			
+			rs=pstmt.executeQuery();
+			
+			int courseCode = 0 ;
+			String courseName = "";
+			String courseStart = "";
+			String courseEnd="";
+			
+			while(rs.next()) {
+				courseCode = rs.getInt("course_code");
+				courseName = rs.getString("course_name");
+				courseStart = rs.getString("course_startdate");
+				courseEnd = rs.getString("course_enddate");
+				
+				CourseDTO cDTO = new CourseDTO(courseCode, courseName, courseStart, courseEnd);
+				
+				courseList.add(cDTO);
+			}
+		
+		}finally {
 			gc.dbClose(con, pstmt, rs);
-		} // end finally
-
-		return cList;
-	}// selectCombo
+		}
+		 
+		
+		return courseList;
+	}//selectCourse
 
 	public List<RegStuMgrDTO> selectStu(JComboBox<String> jc, JTextField jtfStuNum) throws SQLException,IOException{
 		List<RegStuMgrDTO> cList = new ArrayList<RegStuMgrDTO>();
 
 		//콤보 박스 값 얻기
-		String jcCourseName = jc.getSelectedItem().toString();
-		
+//		String jcCourseName = jc.getSelectedItem().toString();
+		String jcCourseName = jc.getSelectedItem().toString().replaceAll("\\(.*", "");
+
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;

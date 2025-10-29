@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
@@ -11,6 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+import kr.co.sist.admin.dto.CourseDTO;
 import kr.co.sist.admin.dto.RegStuMgrDTO;
 import kr.co.sist.admin.service.AdminRegStuMgrService;
 import kr.co.sist.admin.view.AdminRegStuMgrDesign;
@@ -60,12 +62,25 @@ public class AdminRegStuMgrDesignEvt extends WindowAdapter implements ActionList
 		AdminRegStuMgrService arsms = new AdminRegStuMgrService();
 		DefaultComboBoxModel<String> dcbm = aamd.getDcbmCoure();
 		dcbm.addElement("");
-		List<String> list = arsms.searchCombo();
-		String courseName = null;
-		for( String element : list) {
-			courseName = element;
+		List<CourseDTO> list = arsms.searchCourse();
+		String courseName = "";
+		LocalDate currentDate = LocalDate.now();
+		LocalDate startDate = LocalDate.now();
+		LocalDate endDate = LocalDate.now();
+		String isIng = "";
+		for( CourseDTO element : list) {
+			startDate = LocalDate.parse(element.getCourseStartDate());
+			endDate = LocalDate.parse(element.getCourseEndDate());
+			if(!currentDate.isBefore(startDate) && !currentDate.isAfter(endDate)) {
+				isIng = "(진행 중)";
+			}else if(currentDate.isBefore(startDate)) {
+				isIng = "(시작 전)";
+			}else {
+				isIng = "(종료)";
+			}//end else
+			courseName = element.getCourseName();
 			
-			dcbm.addElement(courseName);
+			dcbm.addElement(courseName+isIng);
 		}
 	}//searchAllCourseProcess\
 	public void searchProcess(){
@@ -73,6 +88,10 @@ public class AdminRegStuMgrDesignEvt extends WindowAdapter implements ActionList
 		DefaultTableModel dtm = aamd.getDtmStudent();
 		dtm.setRowCount(0);
 		List<RegStuMgrDTO> list =arsms.searchStu(aamd.getJcbCourse(), aamd.getJtfStuNum());
+		if(list.size()==0) {
+			JOptionPane.showMessageDialog(aamd, "검색 결과가 없습니다.");
+			return;
+		}
 		String[] rowData = new String[5];
 
 		for(RegStuMgrDTO rsmDTO : list) {

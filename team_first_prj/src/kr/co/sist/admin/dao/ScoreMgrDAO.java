@@ -32,43 +32,57 @@ public class ScoreMgrDAO {
 	}
 
 	public List<CourseDTO> selectCourse() throws IOException, SQLException {
-		List<CourseDTO> smDTOL = new ArrayList<CourseDTO>();
-
-		Connection con = null;
+List<CourseDTO> courseList = new ArrayList<CourseDTO>();
+		
+		Connection con =null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-
+		
 		GetConnection gc = GetConnection.getInstance();
+		
 		try {
 			con = gc.getConn();
-
-			String selectCourse = "select course_code,course_name from course where course_del_flag='N'";
-
-			pstmt = con.prepareStatement(selectCourse);
-
-			rs = pstmt.executeQuery();
-
-			String courseName = null;
-			int courseCode = 0;
-			while (rs.next()) {
-				courseName = rs.getString("course_name");
+			
+			StringBuilder selectCourse = new StringBuilder();
+			selectCourse
+			.append("	select course_code, course_name, to_char(course_startdate, 'yyyy-MM-dd') course_startdate, to_char(course_enddate, 'yyyy-MM-dd') course_enddate ")
+			.append("	from Course	")
+			.append("	where course_del_flag='N'	");
+			pstmt = con.prepareStatement(selectCourse.toString());
+			
+			rs=pstmt.executeQuery();
+			
+			int courseCode = 0 ;
+			String courseName = "";
+			String courseStart = "";
+			String courseEnd="";
+			
+			while(rs.next()) {
 				courseCode = rs.getInt("course_code");
-//			CourseDTO cDTO= new CourseDTO(courseCode, null, courseName, null, null, null);
-				CourseDTO cDTO = new CourseDTO(courseCode, courseName);
-				smDTOL.add(cDTO);
-			} // end while
-
-		} finally {
+				courseName = rs.getString("course_name");
+				courseStart = rs.getString("course_startdate");
+				courseEnd = rs.getString("course_enddate");
+				
+				CourseDTO cDTO = new CourseDTO(courseCode, courseName, courseStart, courseEnd);
+				
+				courseList.add(cDTO);
+			}
+		
+		}finally {
 			gc.dbClose(con, pstmt, rs);
-		} // end finally
-		return smDTOL;
+		}
+		 
+		
+		return courseList;
 	}// selectCourse
 
 	public List<SubjectDTO> selectSubject(JComboBox<String> jc) throws SQLException, IOException {
 		List<SubjectDTO> sDTOList = new ArrayList<SubjectDTO>();
 
 		// 콤보 박스의 과정명 가져오기
-		String scName = jc.getSelectedItem().toString();
+		String scName = jc.getSelectedItem().toString().replaceAll("\\(.*", "");
+//		String scName = jc.getSelectedItem().toString().substring(0,jc.getSelectedItem().toString().indexOf('('));
+
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -112,8 +126,9 @@ public class ScoreMgrDAO {
 
 		try {
 			con = gc.getConn();
+			String jcCourse = cjc.getSelectedItem().toString().replaceAll("\\(.*", "");
 
-			String jcCourse = cjc.getSelectedItem().toString();
+//			String jcCourse = cjc.getSelectedItem().toString();
 			String jcSub = sjc.getSelectedItem().toString();
 
 			StringBuilder selectScore = new StringBuilder();

@@ -8,10 +8,9 @@ import java.util.List;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 
-import kr.co.sist.admin.controller.AdminRegStuMgrDesignEvt;
 import kr.co.sist.admin.dao.AdminRegStuMgrDAO;
+import kr.co.sist.admin.dto.CourseDTO;
 import kr.co.sist.admin.dto.RegStuMgrDTO;
-import kr.co.sist.admin.view.AdminProfMgrDesign;
 
 public class AdminRegStuMgrService {
 	public List<RegStuMgrDTO> searchAllstu(){
@@ -29,19 +28,18 @@ public class AdminRegStuMgrService {
 		return list;
 	}//searchAllstu
 	
-	public List<String> searchCombo(){
-		List<String> list = new ArrayList<String>();
-		AdminRegStuMgrDAO arsmDAO =AdminRegStuMgrDAO.getinstance();
+	public List<CourseDTO> searchCourse() {
+		List<CourseDTO> list = new ArrayList<CourseDTO>();
+		AdminRegStuMgrDAO arsmDAO = AdminRegStuMgrDAO.getinstance();
 		try {
-			list = arsmDAO.selectCombo();
+			list = arsmDAO.selectCourse();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 		return list;
-	}//searchCombo
+	}//searchCourse
 	
 	public List<RegStuMgrDTO> searchStu(JComboBox<String> jc , JTextField jtfStuNum){
 		List<RegStuMgrDTO> rsmDTOList = new ArrayList<RegStuMgrDTO>();

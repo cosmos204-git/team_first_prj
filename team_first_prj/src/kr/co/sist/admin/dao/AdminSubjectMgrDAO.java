@@ -81,7 +81,7 @@ public class AdminSubjectMgrDAO {
 			
 			StringBuilder selectCourse = new StringBuilder();
 			selectCourse
-			.append("	select course_code, course_name	")
+			.append("	select course_code, course_name, to_char(course_startdate, 'yyyy-MM-dd') course_startdate, to_char(course_enddate, 'yyyy-MM-dd') course_enddate ")
 			.append("	from Course	")
 			.append("	where course_del_flag='N'	");
 			pstmt = con.prepareStatement(selectCourse.toString());
@@ -90,12 +90,16 @@ public class AdminSubjectMgrDAO {
 			
 			int courseCode = 0 ;
 			String courseName = "";
+			String courseStart = "";
+			String courseEnd="";
 			
 			while(rs.next()) {
 				courseCode = rs.getInt("course_code");
 				courseName = rs.getString("course_name");
+				courseStart = rs.getString("course_startdate");
+				courseEnd = rs.getString("course_enddate");
 				
-				CourseDTO cDTO = new CourseDTO(courseCode, courseName);
+				CourseDTO cDTO = new CourseDTO(courseCode, courseName, courseStart, courseEnd);
 				
 				courseList.add(cDTO);
 			}
@@ -111,7 +115,8 @@ public class AdminSubjectMgrDAO {
 	public List<SubjectDTO> selectCourseSub(JComboBox<String> jc) throws IOException, SQLException{
 		List<SubjectDTO> sDTOList = new ArrayList<SubjectDTO>();
 		
-		String courseName = jc.getSelectedItem().toString();
+		String courseName = jc.getSelectedItem().toString().replaceAll("\\(.*", "");
+		
 		
 		Connection con =null;
 		PreparedStatement pstmt = null;
@@ -156,8 +161,10 @@ public class AdminSubjectMgrDAO {
 		
 		return sDTOList;
 	}//selectCourseSub
+	
 	private Connection con;
 	private GetConnection gc;
+	
 	public int insertCourseSub(int courseCode, int SubjectCode) throws IOException, SQLException {
 		
 		int totalCnt =0;
