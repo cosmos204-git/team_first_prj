@@ -124,10 +124,10 @@ public class AdminSubjectMgrDAO {
 			
 			StringBuilder selectCourse = new StringBuilder();
 			selectCourse
-			.append("	 select s.sub_code, sub_name, to_char(sub_inputdate,'yyyy-mm-dd') sub_inputdate	")
-			.append("	 from subject s , course_subject cs	")
-			.append("	 where s.sub_code = cs.sub_code	")
-			.append("	and cs.course_code = (select course_code from course where course_name = ?)");
+			.append("	 	select s.sub_code, sub_name, to_char(sub_inputdate,'yyyy-mm-dd') sub_inputdate		")
+			.append("		 from subject s , course_subject cs		")
+			.append("	 	where s.sub_code = cs.sub_code		")
+			.append("		and cs.course_code = (select course_code from course where course_name = ? and COURSE_DEL_FLAG='N')	"	);
 		
 			
 			pstmt = con.prepareStatement(selectCourse.toString());

@@ -29,7 +29,7 @@ public class AdminCourseMgrDesignEvt extends WindowAdapter implements ActionList
 	private List<CourseMgrDTO> listCourseData;
 	private int selectedNum =-1;
 	private int maxRow;
-  
+
 
 	
 	
@@ -267,6 +267,23 @@ public class AdminCourseMgrDesignEvt extends WindowAdapter implements ActionList
 		return flag;
 	}//validCourseName
 	
+	public boolean modifiyCourseName(String CourseName, int courseCode) {
+		boolean flag=false;
+		
+		List<CourseMgrDTO> cmDTO = acmds.searchAllCourse();
+		
+		for(CourseMgrDTO cDTO:cmDTO) {
+			String dtoCourseName=cDTO.getCourseName().substring(0, cDTO.getCourseName().indexOf("("));
+			
+			if(dtoCourseName.equals(CourseName)&&cDTO.getCourseCode()!=courseCode) {
+				flag=true;
+				break;
+			}//end if 	
+		}//end for 
+		return flag;
+	}//validCourseName
+	
+	
 	
 	
 	
@@ -333,11 +350,6 @@ public class AdminCourseMgrDesignEvt extends WindowAdapter implements ActionList
 		acmd.getJlblCourseCodeData().setText(String.valueOf(acmds.AddCourseNum()));
 		searchAllProcess();
 		
-		
-		
-		
-		
-		
 	}//addProcess
 	
 	public void modifyProcess(){
@@ -357,6 +369,8 @@ public class AdminCourseMgrDesignEvt extends WindowAdapter implements ActionList
 		
 		String courseRegex="[0-9a-zA-Zㄱ-힣_-]+"; 
 		
+		int courseCode =Integer.parseInt(acmd.getJlblCourseCodeData().getText()); 
+		
 		String msg = "과정명,교수, 시작일, 종료일 모두 입력되었는지 확인해주세요";
 		if(startDate==null||startDate.isEmpty()||endDate==null||endDate.isEmpty()
 		||courseName==null||courseName.isEmpty()||profName==null||profName.isEmpty()) {
@@ -368,7 +382,7 @@ public class AdminCourseMgrDesignEvt extends WindowAdapter implements ActionList
 			JOptionPane.showMessageDialog(acmd, msg);
 			return ;
 		}//end if 
-		if(validCourseName(courseName)) {
+		if(modifiyCourseName(courseName,courseCode)) {
 			msg="과정명이 이미 존재합니다.";
 			JOptionPane.showMessageDialog(acmd, msg);
 			return ;
@@ -381,7 +395,7 @@ public class AdminCourseMgrDesignEvt extends WindowAdapter implements ActionList
 			msg="과정명의 특수문자 사용 불가능합니다. \n _ -은 사용가능";
 			JOptionPane.showMessageDialog(acmd, msg);
 			return;
-		}//end elseif 
+		}//end if 
 		
 		cmDTO.setCourseCode(Integer.parseInt(acmd.getJlblCourseCodeData().getText()));
 		cmDTO.setCourseName(courseName);
