@@ -204,7 +204,13 @@ public class AdminCourseMgrDesignEvt extends WindowAdapter implements ActionList
 			resetInputField();
 			acmd.getJlblCourseCodeData().setText(String.valueOf(acmds.AddCourseNum()));
 			return;
-			}
+		}if(!validCourseName(acmd.getJtfSearchCourse().getText())) {
+				JOptionPane.showMessageDialog(acmd, "존재하지 않는 과정명입니다.");
+				searchAllProcess();
+				resetInputField();
+				acmd.getJlblCourseCodeData().setText(String.valueOf(acmds.AddCourseNum()));
+				return ;
+			}//end if
 		String courseName = acmd.getJtfSearchCourse().getText().trim();
 		
 		DefaultTableModel dtm = acmd.getDtmAdminCouresMgr();
@@ -244,7 +250,25 @@ public class AdminCourseMgrDesignEvt extends WindowAdapter implements ActionList
 		
 		return flag;
 	
-	}//dateCurrent
+	}//validDate
+	
+	public boolean validCourseName(String CourseName) {
+		boolean flag=false;
+		
+		List<CourseMgrDTO> cmDTO = acmds.searchAllCourse();
+		
+		for(CourseMgrDTO cDTO:cmDTO) {
+			String dtoCourseName=cDTO.getCourseName().substring(0, cDTO.getCourseName().indexOf("("));
+			
+			if(dtoCourseName.equals(CourseName)) {
+				flag=true;
+			}//end if 	
+		}//end for 
+		return flag;
+	}//validCourseName
+	
+	
+	
 	
 	public void addProcess() {
 		CourseMgrDTO cmDTO=new CourseMgrDTO();
@@ -269,11 +293,17 @@ public class AdminCourseMgrDesignEvt extends WindowAdapter implements ActionList
 				JOptionPane.showMessageDialog(acmd, msg);
 				return;
 		}//end if
+		
 		if(courseName.length()<2||courseName.length()>10) {
 			msg="과정명을 2~10자 사이로 입력해주세요.";
 			JOptionPane.showMessageDialog(acmd, msg);
 			return ;
 		}//end if 
+		if(validCourseName(courseName)) {
+			msg="과정명이 이미 존재합니다.";
+			JOptionPane.showMessageDialog(acmd, msg);
+			return ;
+		}
 		if(validDate(endDate,startDate)) {
 			msg="시작일이 종료일보다 작습니다. 다시 설정해주세요 ";
 			JOptionPane.showMessageDialog(acmd, msg);
@@ -333,11 +363,16 @@ public class AdminCourseMgrDesignEvt extends WindowAdapter implements ActionList
 			JOptionPane.showMessageDialog(acmd, msg);
 			return;
 		}
-		if(courseName.length()<2||courseName.length()>5) {
+		if(courseName.length()<2||courseName.length()>10) {
 			msg="과정명을 2~10자 사이로 입력해주세요.";
 			JOptionPane.showMessageDialog(acmd, msg);
 			return ;
 		}//end if 
+		if(validCourseName(courseName)) {
+			msg="과정명이 이미 존재합니다.";
+			JOptionPane.showMessageDialog(acmd, msg);
+			return ;
+		}//end if
 		if(validDate(endDate,startDate)) {
 			msg="시작일이 종료일보다 작습니다. 다시 설정해주세요 ";
 			JOptionPane.showMessageDialog(acmd, msg);

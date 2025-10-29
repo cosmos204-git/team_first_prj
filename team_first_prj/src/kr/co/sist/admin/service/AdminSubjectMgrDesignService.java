@@ -64,7 +64,6 @@ public class AdminSubjectMgrDesignService {
 		AdminSubjectMgrDAO asmDAO = AdminSubjectMgrDAO.getinstance();
 		try {
 			totalCnt = asmDAO.insertCourseSub(courseCode, subCode);
-			System.out.println(totalCnt);
 			if(totalCnt == 7) {
 				asmDAO.getCon().commit();
 			}//end if
@@ -79,6 +78,7 @@ public class AdminSubjectMgrDesignService {
 			int errorCode = e.getErrorCode();
 			if(errorCode==1) {
 				totalCnt=-1;
+				return totalCnt;
 			}
 			e.printStackTrace();
 		}

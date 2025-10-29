@@ -24,7 +24,6 @@ public class ProfModifyDialogEvt extends WindowAdapter implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		if(ae.getSource() == pmd.getJbtnAdd()) {
-			System.out.println("수정완료 메소드");
 			ModifyProcess();
 		}//end if 
 		if(ae.getSource() == pmd.getJbtnClose()) {

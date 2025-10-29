@@ -138,15 +138,6 @@ public class AdminStuMgrDesignEvt extends WindowAdapter implements ActionListene
 	
 	public void addProcess() {
 		
-//		DefaultTableModel dtmStuMgr = asmd.getDtmStuMgr();
-//		
-//		int dtmStuMgrlastIndex= dtmStuMgr.getRowCount()-1;
-//		System.out.println(dtmStuMgrlastIndex);
-////		StudentDTO sDTO= asms.searchStudent(dtmStuMgrlastIndex);
-//		
-//		
-//		int newStuNum=listStuData.get(dtmStuMgrlastIndex).getStuNum()+1;
-		
 		
 		new StuAddDialog(asmd,true);
 	}//end addProcess
@@ -185,7 +176,6 @@ public class AdminStuMgrDesignEvt extends WindowAdapter implements ActionListene
 			
 			StudentDTO sDTO = listStuData.get(selectedNum);
 			int deleteStuNum=sDTO.getStuNum();
-//			System.out.println(deleteStuNum);
 			
 			switch (JOptionPane.showConfirmDialog(asmd,deleteStuNum+"번 학생 정보를 정말 삭제 하시겠습니까?")) {
 			case JOptionPane.OK_OPTION: 

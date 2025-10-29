@@ -231,7 +231,6 @@ public class AdminSubjectMgrDAO {
 			
 			totalCnt += pstmtEi5.executeUpdate();
 
-			System.out.println(totalCnt);
 		
 		return totalCnt;
 	}//insertCouseSub

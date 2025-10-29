@@ -233,11 +233,6 @@ public class AdminCourseMgrDesignDAO {
 			
 			pstmt=con.prepareStatement(updateCourse.toString());
 			
-			System.out.println(cDTO.getCourseName());
-			System.out.println(cDTO.getCourseStartDate());
-			System.out.println(cDTO.getCourseEndDate());
-			System.out.println(cDTO.getProfName());
-			System.out.println(cDTO.getCourseCode());
 			
 			pstmt.setString(1,cDTO.getCourseName());
 			pstmt.setString(2,cDTO.getCourseStartDate());
