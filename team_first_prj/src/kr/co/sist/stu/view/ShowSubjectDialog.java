@@ -18,20 +18,28 @@ public class ShowSubjectDialog extends JDialog {
 	private DefaultTableModel dtmShowSubDialog;
 	private JTable jtShowSubDialog;
 	private JButton jbtnClose;
+	
 	private int courseCode;
 	private String courseName;
 	
-	public ShowSubjectDialog( CourseSelectDesign csd, boolean modal, int courseCode, String courseName ) {
-		
-		super(csd, "상세 과목", modal);
-		this.courseCode=courseCode;
-		
+
+	
+    public ShowSubjectDialog(CourseSelectDesign csd, boolean modal, int courseCode, String courseName) {
+        super(csd, courseName, modal);
+        this.courseCode = courseCode;
+        this.courseName = courseName;
+        initLayout(csd);
+    }
+    
+    
+    
+    private void initLayout(CourseSelectDesign csd) {
+    
 		setLayout(new BorderLayout(10,10));
 		
 		//JTable
 		String[] columnNames = {"상세 과목"};
-		String[][] rowData = {{"java"},{"sql"},{"html5"}};
-		dtmShowSubDialog = new DefaultTableModel(rowData, columnNames);
+		dtmShowSubDialog = new DefaultTableModel(columnNames, 0);
 		jtShowSubDialog = new JTable(dtmShowSubDialog);
 		jtShowSubDialog.setRowHeight(25);
 		
@@ -64,24 +72,6 @@ public class ShowSubjectDialog extends JDialog {
 	}//ShowSubjectDialog
 
 
-	public int getCourseCode() {
-		return courseCode;
-	}
-
-
-	public void setCourseCode(int courseCode) {
-		this.courseCode = courseCode;
-	}
-
-
-	public String getCourseName() {
-		return courseName;
-	}
-
-
-	public void setCourseName(String courseName) {
-		this.courseName = courseName;
-	}
 
 
 	public DefaultTableModel getDtmShowSubDialog() {
@@ -96,6 +86,18 @@ public class ShowSubjectDialog extends JDialog {
 
 	public JButton getJbtnClose() {
 		return jbtnClose;
+	}
+
+
+
+	public int getCourseCode() {
+		return courseCode;
+	}
+
+
+
+	public String getCourseName() {
+		return courseName;
 	}
 	
 	

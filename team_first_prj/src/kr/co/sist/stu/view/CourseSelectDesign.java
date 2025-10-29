@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.sql.Date;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -17,6 +18,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
+import kr.co.sist.login.dao.CurrentStuData;
 import kr.co.sist.stu.controller.CourseSelectDesignEvt;
 
 public class CourseSelectDesign extends JDialog { 
@@ -26,15 +28,22 @@ public class CourseSelectDesign extends JDialog {
     private DefaultTableModel dtmSelectCourse;
     private JTable jtSelectCourse;
     private JScrollPane jspSelectCourse;
+    private Date courseStartDate, courseEndDate;
     
     private JLabel jlblStuName, jlblStuNum;
     private JTextField jtfStuNameData, jtfStuNumData;
     private JButton jbtnShowSub, jbtnApplyCourse, jbtnClose;
     
     
+    
     public CourseSelectDesign(StuInfoDesign sid, boolean modal) {
         super(sid,"수강 신청",modal); 
         setLayout(new BorderLayout());
+        
+        CurrentStuData csd = CurrentStuData.getInstance();
+        
+        int stuNum=csd.getStuNum();
+    	String stuName =csd.getStuName();
         
         // North Panel
         jpNorth = new JPanel(new GridLayout(1, 4, 10, 10)); 
@@ -43,27 +52,25 @@ public class CourseSelectDesign extends JDialog {
         jlblStuNum = new JLabel("학번", JLabel.CENTER);
         jtfStuNumData = new JTextField(10);
         jtfStuNumData.setEditable(false);
-
+        jtfStuNumData.setText(String.valueOf(stuNum));
+        
         jlblStuName = new JLabel("이름", JLabel.CENTER);
         jtfStuNameData = new JTextField(10);
         jtfStuNameData.setEditable(false);
-
+        jtfStuNameData.setText(stuName);
+        
         jlblStuNum.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         jlblStuName.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 
         jpNorth.add(jlblStuNum);
         jpNorth.add(jtfStuNumData);
-        jpNorth.add(jlblStuName);
+        jpNorth.add(jlblStuName); 
         jpNorth.add(jtfStuNameData);
 
         // Center Panel
         jpCenter = new JPanel(new BorderLayout()); 
         String[] columnsNames = {"신청 여부", "과정명"};
-        String[][] rowData = {
-                {"O", "FullStack"},
-                {"X", "AI"}
-        };
-        dtmSelectCourse = new DefaultTableModel(rowData, columnsNames);
+        dtmSelectCourse = new DefaultTableModel(columnsNames,0);
         jtSelectCourse = new JTable(dtmSelectCourse);
 
         TableColumnModel tcm = jtSelectCourse.getColumnModel();
@@ -71,7 +78,7 @@ public class CourseSelectDesign extends JDialog {
         tcm.getColumn(1).setPreferredWidth(120);
 
         jtSelectCourse.setRowHeight(35);
-        jtSelectCourse.setFont(new Font("맑은고딕", Font.BOLD, 15));
+        jtSelectCourse.setFont(new Font("맑은고딕", Font.PLAIN, 15));
 
         jspSelectCourse = new JScrollPane(jtSelectCourse);
         jpCenter.add(jspSelectCourse, BorderLayout.CENTER);
@@ -94,17 +101,17 @@ public class CourseSelectDesign extends JDialog {
         add(jpBottom, BorderLayout.SOUTH);
         
         CourseSelectDesignEvt csde = new CourseSelectDesignEvt(this);
-        
         jbtnShowSub.addActionListener(csde);
         jbtnApplyCourse.addActionListener(csde);
         jbtnClose.addActionListener(csde);
+        jtSelectCourse.addMouseListener(csde);
         addWindowListener(csde);
         
-        
-        
-        setBounds(600, 300, 600, 350); 
+        setBounds(600, 300, 500, 350); 
+        setResizable(false);
         setVisible(true);
-    }
+        
+    }//CourseSelectDesign
 
 
 
@@ -152,4 +159,31 @@ public class CourseSelectDesign extends JDialog {
 	}
 
 
-}
+
+	public Date getCourseStartDate() {
+		return courseStartDate;
+	}
+
+
+
+	public void setCourseStartDate(Date courseStartDate) {
+		this.courseStartDate = courseStartDate;
+	}
+
+
+
+	public Date getCourseEndDate() {
+		return courseEndDate;
+	}
+
+
+
+	public void setCourseEndDate(Date courseEndDate) {
+		this.courseEndDate = courseEndDate;
+	}
+
+
+	
+	
+	
+}//class

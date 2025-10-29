@@ -64,7 +64,7 @@ public class CourseSelectDesignEvt extends WindowAdapter implements ActionListen
    }// windowClosing
 
    /**
-    * 선택된 기간과 학생번호를 기반 과정 리스트를 보여주는 method
+    * 기간과 학생번호 기반 과정 리스트를 보여주는 method
     */
    public void showCourseProcess() {
       try {
@@ -122,7 +122,7 @@ public class CourseSelectDesignEvt extends WindowAdapter implements ActionListen
          courseName = listCourseData.get(selectedRow).getCourseName();
 
          ssd = new ShowSubjectDialog(csd, true, courseCode, courseName);
-//         ssde = new ShowSubjectDialogEvt(ssd);
+         ssde = new ShowSubjectDialogEvt(ssd); //call viewAllSubject()
 
 //         ssd.addWindowListener(ssde);
 //         ssd.getJbtnClose().addActionListener(ssde);
@@ -148,11 +148,24 @@ public class CourseSelectDesignEvt extends WindowAdapter implements ActionListen
          return;
       }//end if   
       
-      SearchCourseDTO selectedDTO = listCourseData.get(selectedRow);
-      JOptionPane.showMessageDialog(csd, selectedDTO.getCourseName() + " 과정을 신청했습니다.");
-      
-      
-      
+      SearchCourseDTO scDTO = listCourseData.get(selectedRow);
+
+      if (scDTO.isCheckCourse()) {
+          JOptionPane.showMessageDialog(csd, "이미 신청한 과정입니다.");
+          return;
+      }
+
+      boolean result = css.applyCourse(scDTO);
+
+      if (result) {
+          scDTO.setCheckCourse(true);
+         
+          showCourseProcess();
+          
+          JOptionPane.showMessageDialog(csd, scDTO.getCourseName() + " 과정을 신청했습니다.");
+      } else {
+          JOptionPane.showMessageDialog(csd, "신청 중 오류가 발생했습니다.");
+      }
       
    }// applyProcess
 

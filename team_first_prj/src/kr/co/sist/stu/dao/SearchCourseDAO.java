@@ -39,18 +39,24 @@ public class SearchCourseDAO {
 			con = gc.getConn();
 			StringBuilder selectCourse = new StringBuilder();
 		    selectCourse
-	        .append("select c.course_code, c.course_name, c.course_startdate, ")
-	        .append("c.course_enddate, c.course_inputdate, c.course_del_flag ")
-	        .append("from course c inner join student s on c.course_code = s.course_code ")
-	        .append("where s.stu_num = ? ")
-	        .append("AND course_startdate < sysdate AND course_enddate > sysdate ")
-	        .append("order by c.course_startdate desc");
+	        .append("SELECT c.course_code, c.course_name, c.course_startdate, ")
+	        .append("c.course_enddate, c.course_inputdate, c.course_del_flag, ")
+	        .append("CASE WHEN s.course_code = c.course_code THEN 1 ELSE 0 END AS check_course ")
+	        .append("FROM course c ")
+	        .append("LEFT JOIN student s ON s.stu_num = ? ")
+	        .append("ORDER BY c.course_startdate DESC");
+		    
+		    
+//	        .append("select c.course_code, c.course_name, c.course_startdate, ")
+//	        .append("c.course_enddate, c.course_inputdate, c.course_del_flag ")
+//	        .append("from course c inner join student s on c.course_code = s.course_code ")
+//	        .append("where s.stu_num = ? ")
+//	        .append("AND course_startdate < sysdate AND course_enddate > sysdate ")
+//	        .append("order by c.course_startdate desc");
 
 		  
 			pstmt = con.prepareStatement(selectCourse.toString());
 			pstmt.setInt(1, stuNum);
-
-
 			
 			rs = pstmt.executeQuery();
 
@@ -62,6 +68,9 @@ public class SearchCourseDAO {
 				scDTO.setCourseEndDate(rs.getDate("course_enddate"));
 				scDTO.setCourseInputDate(rs.getDate("course_inputdate"));
 				scDTO.setCourseFlag(rs.getBoolean("course_del_flag"));
+				//save check_course data
+	            scDTO.setCheckCourse(rs.getInt("check_course") == 1); 
+	            
 				list.add(scDTO);
 			}//end while
 
@@ -73,6 +82,13 @@ public class SearchCourseDAO {
 	}//selectCourse
 
 	
+	/**
+	 * update the lsDTO when they apply the course
+	 * @param lsDTO
+	 * @return
+	 * @throws SQLException
+	 * @throws IOException
+	 */
 	public int updateCourse(LoginStudentDTO lsDTO) throws SQLException, IOException {
 		int flag = 0;
 		GetConnection gc = GetConnection.getInstance();
