@@ -18,7 +18,7 @@ public class StuCourseMgrDAO {
         return stucmDAO;
     }
 
-    public List<StuCourseMgrDTO> selectAllCourse() throws SQLException, IOException {
+    public List<StuCourseMgrDTO> selectAllCourse(int courseCode) throws SQLException, IOException {
 
         List<StuCourseMgrDTO> list = new ArrayList<>();
         Connection con = null;
@@ -29,97 +29,6 @@ public class StuCourseMgrDAO {
         try {
             con = gc.getConn();
 
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-    
-            
             StringBuilder sb = new StringBuilder();
             sb.append("SELECT c.course_code, c.course_name, s.sub_code, s.sub_name, ")
               .append("NVL(e.exam_open, '시험불가') AS exam_open, ")
@@ -129,9 +38,11 @@ public class StuCourseMgrDAO {
               .append("JOIN course_subject cs ON cs.course_code = c.course_code ")
               .append("JOIN subject s ON s.sub_code = cs.sub_code ")
               .append("LEFT JOIN exam e ON e.course_code = c.course_code AND e.sub_code = s.sub_code ")
+              .append("WHERE c.course_code = ? ") // ✅ 로그인한 학생의 과정만
               .append("ORDER BY c.course_code, s.sub_code");
 
             pstmt = con.prepareStatement(sb.toString());
+            pstmt.setInt(1, courseCode); // ✅ 바인딩
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
@@ -141,28 +52,25 @@ public class StuCourseMgrDAO {
                 stucmDTO.setSubCode(rs.getInt("sub_code"));
                 stucmDTO.setSubName(rs.getString("sub_name"));
 
-                String open = rs.getString("exam_open");
+                String open  = rs.getString("exam_open");
                 String start = rs.getString("exam_start");
-                String end = rs.getString("exam_end");
+                String end   = rs.getString("exam_end");
 
-                if ("시험가능".equals(open)) {
-                	stucmDTO.setExamStart(start);
-                	stucmDTO.setExamEnd(end);
-                }else if ("응시가능".equals(open)) {
-                    	stucmDTO.setExamStart(start);
-                    	stucmDTO.setExamEnd(end);
-                    } else {
-                	stucmDTO.setExamStart("시험불가");
-                	stucmDTO.setExamEnd("");
+                if ("시험가능".equals(open) || "응시가능".equals(open)) {
+                    stucmDTO.setExamStart(start);
+                    stucmDTO.setExamEnd(end);
+                } else {
+                    stucmDTO.setExamStart("시험불가");
+                    stucmDTO.setExamEnd("");
                 }
 
                 list.add(stucmDTO);
             }
-
         } finally {
             gc.dbClose(con, pstmt, rs);
         }
 
         return list;
     }
+
 }
