@@ -35,7 +35,6 @@ public class ShowExamDetailDAO {
 	 */
 	public Collection<ShowExamItemListDTO> getExamItemList(String pCourseName,String pSubName) throws SQLException,IOException {
 		ShowExamItemListDTO eiDTO=null;
-		
 		List<ShowExamItemListDTO> list = new ArrayList<ShowExamItemListDTO>();
 		
 		Connection con = null;

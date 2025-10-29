@@ -64,7 +64,8 @@ public class AdminSubjectMgrDesignService {
 		AdminSubjectMgrDAO asmDAO = AdminSubjectMgrDAO.getinstance();
 		try {
 			totalCnt = asmDAO.insertCourseSub(courseCode, subCode);
-			if(totalCnt == 2) {
+			System.out.println(totalCnt);
+			if(totalCnt == 7) {
 				asmDAO.getCon().commit();
 			}//end if
 		} catch (IOException e) {
@@ -84,7 +85,6 @@ public class AdminSubjectMgrDesignService {
 			try {
 				asmDAO.getGc().dbClose(asmDAO.getCon(), null, null);
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

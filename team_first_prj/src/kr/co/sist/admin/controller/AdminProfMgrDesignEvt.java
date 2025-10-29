@@ -142,6 +142,7 @@ public class AdminProfMgrDesignEvt extends WindowAdapter implements ActionListen
 	DefaultTableModel dtmProMgr = apmd.getDtmProMgr();
 		
 		int dtmStuMgrlastIndex= dtmProMgr.getRowCount()-1;
+		
 //		StudentDTO sDTO= asms.searchStudent(dtmStuMgrlastIndex);
 		
 		

@@ -159,16 +159,21 @@ public class AdminSubjectMgrDAO {
 	private Connection con;
 	private GetConnection gc;
 	public int insertCourseSub(int courseCode, int SubjectCode) throws IOException, SQLException {
-		int rowCnt =0;
-		int rowCnt2 =0;
+		
 		int totalCnt =0;
-		Connection con = null;
+		con = null;
 		PreparedStatement pstmt = null;
 		PreparedStatement pstmt2 =null;
-		
+		PreparedStatement pstmtEi1 =null;
+		PreparedStatement pstmtEi2 =null;
+		PreparedStatement pstmtEi3 =null;
+		PreparedStatement pstmtEi4 =null;
+		PreparedStatement pstmtEi5 =null;
+				
 		gc = GetConnection.getInstance();
 		
 			con = gc.getConn();
+			con.setAutoCommit(false);
 			
 			String insertCourseSub = "	insert into course_subject values(?,?)	 ";
 			
@@ -177,7 +182,7 @@ public class AdminSubjectMgrDAO {
 			pstmt.setInt(1, courseCode);
 			pstmt.setInt(2, SubjectCode);
 			
-			rowCnt = pstmt.executeUpdate();
+			totalCnt += pstmt.executeUpdate();
 			
 			String insertExam = "	insert into exam(test_code,exam_open,course_code, sub_code) values(sequence_test_code.nextval,'시험불가',?,?)	 ";
 			
@@ -186,9 +191,47 @@ public class AdminSubjectMgrDAO {
 			pstmt2.setInt(1, courseCode);
 			pstmt2.setInt(2, SubjectCode);
 			
-			rowCnt = pstmt2.executeUpdate();
+			totalCnt += pstmt2.executeUpdate();
+			
+			String insertEI1 = "	insert into exam_item(EXAM_CODE,TEST_CODE) values(sequence_exam_code.nextval,(select test_code from exam where course_code=? and sub_code = ?))";
+			pstmtEi1 = con.prepareStatement(insertEI1);
 		
-			totalCnt=rowCnt + rowCnt2;
+			pstmtEi1.setInt(1, courseCode);
+			pstmtEi1.setInt(2, SubjectCode);
+			
+			totalCnt  += pstmtEi1.executeUpdate();
+			
+			
+			String insertEI2 = "	insert into exam_item(EXAM_CODE,TEST_CODE) values(sequence_exam_code.nextval,(select test_code from exam where course_code=? and sub_code = ?))";
+			pstmtEi2 = con.prepareStatement(insertEI2);
+		
+			pstmtEi2.setInt(1, courseCode);
+			pstmtEi2.setInt(2, SubjectCode);
+			
+			totalCnt += pstmtEi2.executeUpdate();
+			String insertEI3 = "	insert into exam_item(EXAM_CODE,TEST_CODE) values(sequence_exam_code.nextval,(select test_code from exam where course_code=? and sub_code = ?))";
+			pstmtEi3 = con.prepareStatement(insertEI3);
+			
+			pstmtEi3.setInt(1, courseCode);
+			pstmtEi3.setInt(2, SubjectCode);
+			
+			totalCnt += pstmtEi2.executeUpdate();
+			String insertEI4 = "	insert into exam_item(EXAM_CODE,TEST_CODE) values(sequence_exam_code.nextval,(select test_code from exam where course_code=? and sub_code = ?))";
+			pstmtEi4 = con.prepareStatement(insertEI4);
+			
+			pstmtEi4.setInt(1, courseCode);
+			pstmtEi4.setInt(2, SubjectCode);
+			
+			totalCnt += pstmtEi3.executeUpdate();
+			String insertEI5 = "	insert into exam_item(EXAM_CODE,TEST_CODE) values(sequence_exam_code.nextval,(select test_code from exam where course_code=? and sub_code = ?))";
+			pstmtEi5 = con.prepareStatement(insertEI5);
+			
+			pstmtEi5.setInt(1, courseCode);
+			pstmtEi5.setInt(2, SubjectCode);
+			
+			totalCnt += pstmtEi5.executeUpdate();
+
+			System.out.println(totalCnt);
 		
 		return totalCnt;
 	}//insertCouseSub
