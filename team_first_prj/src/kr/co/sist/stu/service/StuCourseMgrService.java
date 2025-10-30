@@ -11,7 +11,10 @@ public class StuCourseMgrService {
     public List<StuCourseMgrDTO> selectAllCourse() {
         StuCourseMgrDAO dao = StuCourseMgrDAO.getInstance();
         try {
-            int courseCode = CurrentStuData.getCourseCode();
+        	
+        	CurrentStuData csd = CurrentStuData.getInstance();
+        	
+            int courseCode = csd.getLogStuDTO().getStuCourseNum();
 
             return dao.selectAllCourse(courseCode);
         } catch (Exception e) {

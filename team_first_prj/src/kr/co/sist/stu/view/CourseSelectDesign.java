@@ -44,8 +44,8 @@ public class CourseSelectDesign extends JDialog {
         
         CurrentStuData csd = CurrentStuData.getInstance();
         
-        int stuNum=csd.getStuNum();
-    	String stuName =csd.getStuName();
+        int stuNum=csd.getLogStuDTO().getStuNum();
+    	String stuName =csd.getLogStuDTO().getStuName();
      
         // North Panel
         jpNorth = new JPanel(new GridLayout(1, 4, 10, 10)); 

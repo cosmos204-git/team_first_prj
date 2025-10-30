@@ -46,7 +46,7 @@ public class CourseSelectService {
             CurrentStuData csd = CurrentStuData.getInstance();
             LoginStudentDTO lsDTO = new LoginStudentDTO();
 
-            lsDTO.setStuNum(csd.getStuNum());
+            lsDTO.setStuNum(csd.getLogStuDTO().getStuNum());
             lsDTO.setStuCourseNum(scDTO.getCourseCode());
 
             int flag = scDAO.updateCourse(lsDTO);

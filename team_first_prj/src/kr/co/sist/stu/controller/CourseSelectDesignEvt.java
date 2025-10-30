@@ -77,7 +77,7 @@ public class CourseSelectDesignEvt extends WindowAdapter implements ActionListen
       try {
          CurrentStuData crsd = CurrentStuData.getInstance();
          
-         int stuNum = crsd.getStuNum();
+         int stuNum = crsd.getLogStuDTO().getStuNum();
 
          
          listCourseData = css.searchCourse(stuNum);

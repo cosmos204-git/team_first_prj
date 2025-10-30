@@ -95,8 +95,11 @@ public class StuCourseMgrDesignEvt extends WindowAdapter implements ActionListen
     }
 
     public void showReportProcess() {
-        int stuNum = CurrentStuData.getStuNum();
-        String stuName = CurrentStuData.getStuName();
+    	
+    	CurrentStuData csd = CurrentStuData.getInstance();
+    	
+        int stuNum = csd.getLogStuDTO().getStuNum();
+        String stuName = csd.getLogStuDTO().getStuName();
         new StuReportDesign(scmd, true, stuNum, stuName);
     }
     

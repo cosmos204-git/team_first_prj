@@ -27,33 +27,5 @@ public class CurrentStuData {
         return logStuDTO;
     }
 
-    public static int getStuNum() {
-        if (getInstance().logStuDTO != null) {
-            return getInstance().logStuDTO.getStuNum();
-        }
-        return 0;
-    }
-
-    public static String getStuName() {
-        if (getInstance().logStuDTO != null) {
-            return getInstance().logStuDTO.getStuName();
-        }
-        return "";
-    }
-
-    public static String getCourseName() {
-        if (getInstance().logStuDTO != null) {
-            return getInstance().logStuDTO.getStuCourseName();
-        }
-        return "";
-    }
-
-    public static int getCourseCode() {
-        if (getInstance().logStuDTO != null) {
-            return getInstance().logStuDTO.getStuCourseNum();
-        }
-        return 0;
-    }
-    
     
 }

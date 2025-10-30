@@ -35,7 +35,7 @@ public class StuExamDesignEvt extends WindowAdapter implements ActionListener {
 
             try {
                 Integer testCourseCode = kr.co.sist.stu.dao.StuExamDAO.getInstance().findCourseCodeByTestCode(testCode);
-                int stuCourseCode = kr.co.sist.login.dao.CurrentStuData.getCourseCode();
+                int stuCourseCode = kr.co.sist.login.dao.CurrentStuData.getInstance().getLogStuDTO().getStuCourseNum();
                 if (testCourseCode == null || testCourseCode != stuCourseCode) {
                     JOptionPane.showMessageDialog(view,
                         "이 시험은 본인의 과정과 다른 과정입니다.\n응시할 수 없습니다.",
