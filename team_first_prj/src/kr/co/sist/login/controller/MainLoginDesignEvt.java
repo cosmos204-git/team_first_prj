@@ -1,5 +1,6 @@
 package kr.co.sist.login.controller;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -23,18 +24,18 @@ public class MainLoginDesignEvt extends WindowAdapter implements ActionListener{
 		
 		
 		if (e.getSource() == mld.getJbtnStuLogin()) {
-			new LoginDesign(0);
+			new LoginDesign(mld,0, 106,189,229);
 			mld.dispose();
 			
 		}
 		
 		if (e.getSource() == mld.getJbtnProfLogin()) {
-			new LoginDesign(1);
+			new LoginDesign(mld,1,96,186,42);
 			mld.dispose();
 		}
 		
 		if (e.getSource() == mld.getJbtnAdminLogin()) {
-			new LoginDesign(2);
+			new LoginDesign(mld,2,55,101,163);
 			mld.dispose();
 		}
 		

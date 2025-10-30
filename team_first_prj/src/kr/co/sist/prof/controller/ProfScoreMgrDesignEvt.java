@@ -78,10 +78,6 @@ public class ProfScoreMgrDesignEvt extends WindowAdapter implements ActionListen
 				}
 			}
 			
-			System.out.println(subMap);
-			
-			
-		
 		}
 		
 		
