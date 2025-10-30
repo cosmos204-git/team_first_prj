@@ -3,7 +3,10 @@ package kr.co.sist.admin.dao;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import kr.co.sist.admin.dto.ProfDTO;
 import kr.co.sist.login.dao.GetConnection;
@@ -56,6 +59,48 @@ public class ProfModifyDAO {
 		return flag;
 	}//updateStudent 
 	
+	public List<ProfDTO> selectAllProfessor() throws SQLException,IOException{
+		ProfDTO pDTO=null;
+		
+		List<ProfDTO> list = new ArrayList<ProfDTO>();
+		
+		Connection con = null;
+		PreparedStatement pstmt=null;
+		ResultSet rs = null;
+		
+		GetConnection gc = GetConnection.getInstance();
+		
+		try {
+			con=gc.getConn();
+			StringBuilder selectProfessor= new StringBuilder();
+			selectProfessor
+			.append("	select PROF_NUM, PROF_NAME, PROF_TEL, PROF_INPUTDATE	")
+			.append("	from PROFESSOR												")
+			.append("	where PROF_DEL_FLAG='N' 								 	")
+			.append("	order by PROF_NUM asc								 		");
+			
+			pstmt = con.prepareStatement(selectProfessor.toString());
+			
+			rs=pstmt.executeQuery();
+			
+			while(rs.next()) {
+				pDTO = new ProfDTO();
+				pDTO.setProfNum(rs.getInt("PROF_NUM"));
+				pDTO.setProfName(rs.getString("PROF_NAME"));
+				pDTO.setProfTel(rs.getString("PROF_TEL"));
+				pDTO.setProfInputDate (rs.getDate("PROF_INPUTDATE"));
+		
+		
+
+				
+				list.add(pDTO);
+			
+			}//end if 
+		}finally {
+			gc.dbClose(con, pstmt, rs);
+		}//end finally
+		return list;
+	}//selectAllProfessor
 
 		
 	

@@ -72,7 +72,7 @@ public class AdminProfMgrDAO {
 			gc.dbClose(con, pstmt, rs);
 		}//end finally
 		return list;
-	}//selectAllStudent
+	}//selectAllProfessor
 	
 	
 	/**

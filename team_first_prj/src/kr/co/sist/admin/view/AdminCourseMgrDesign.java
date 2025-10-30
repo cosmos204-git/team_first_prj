@@ -14,6 +14,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 import kr.co.sist.admin.controller.AdminCourseMgrDesignEvt;
 
@@ -94,6 +95,20 @@ public class AdminCourseMgrDesign extends JDialog {
 	String[] columNames = "과정코드,과정명,교번,교수,시작일,종료일,등록일".split(",");
 	dtmAdminCouresMgr = new DefaultTableModel(columNames,0);
 	jtAdminCourseMgr = new JTable(dtmAdminCouresMgr);
+	
+	TableColumnModel tcm = jtAdminCourseMgr.getColumnModel();
+	tcm.getColumn(0).setPreferredWidth(50);
+	tcm.getColumn(1).setPreferredWidth(100);
+	tcm.getColumn(2).setPreferredWidth(20);
+	tcm.getColumn(3).setPreferredWidth(50);
+	tcm.getColumn(4).setPreferredWidth(60);
+	tcm.getColumn(5).setPreferredWidth(60);
+	tcm.getColumn(6).setPreferredWidth(60);
+
+	// 행의 높이
+	jtAdminCourseMgr.setRowHeight(20);
+
+	
 	JScrollPane jsp = new JScrollPane(jtAdminCourseMgr);
 	
 	
@@ -107,44 +122,44 @@ public class AdminCourseMgrDesign extends JDialog {
 	jbtnSearch = new JButton("검색");
 	
 	
-	jlblCourseCode.setBounds(30,40,70,20);
-	jlblCourseCodeData.setBounds(105,40,70,20);
-	jlblCourseName.setBounds(30,65,70,20);
+	jlblCourseCode.setBounds(30,90,70,20);
+	jlblCourseName.setBounds(30,jlblCourseCode.getY()+40,70,20);
 	
-	jlblProfNum.setBounds(30,90,70,20);
-	jlblProfNumData.setBounds(105,90,70,20);
+	jlblProfNum.setBounds(30,jlblCourseName.getY()+40,70,20);
 	
-	jlblProfName.setBounds(30,115,70,20);
-	jlblStartdate.setBounds(30,140,70,20);
-	jlblEnddate.setBounds(30,165,70,20);
-	jlblInputdata.setBounds(30,190,70,20);
+	jlblProfName.setBounds(30,jlblProfNum.getY()+40,70,20);
+	jlblStartdate.setBounds(30,jlblProfName.getY()+40,70,20);
+	jlblEnddate.setBounds(30,jlblStartdate.getY()+40,70,20);
+	jlblInputdata.setBounds(30,jlblEnddate.getY()+40,70,20);
 	
-	jlblInputdataData.setBounds(105,190,100,20);
+	jlblCourseCodeData.setBounds(105,jlblCourseCode.getY(),70,20);
+	jlblProfNumData.setBounds(105,jlblProfNum.getY(),70,20);
+	jlblInputdataData.setBounds(105,331,100,20);
 
 	
 	
-	jtfCourseName.setBounds(105,65,100,20);
-	jtfSearchCourse.setBounds(397,16,100,20);
+	jtfCourseName.setBounds(105,jlblCourseName.getY(),100,20);
+	jtfSearchCourse.setBounds(552,19,150,30);
 	
-	jcbProfName.setBounds(105,115,106,20);
+	jcbProfName.setBounds(105,jlblProfName.getY(),106,20);
 	
-	jcbStartdateY.setBounds(105,140,60,20);
-	jcbStartdateM.setBounds(170,140,40,20);
-	jcbStartdateD.setBounds(215,140,40,20);
+	jcbStartdateY.setBounds(105,jlblStartdate.getY()+2,60,20);
+	jcbStartdateM.setBounds(170,jlblStartdate.getY()+2,40,20);
+	jcbStartdateD.setBounds(215,jlblStartdate.getY()+2,40,20);
 	
-	jcbEnddateY.setBounds(105,165,60,20);
-	jcbEnddateM.setBounds(170,165,40,20);
-	jcbEnddateD.setBounds(215,165,40,20);
+	jcbEnddateY.setBounds(105,jlblEnddate.getY(),60,20);
+	jcbEnddateM.setBounds(170,jlblEnddate.getY(),40,20);
+	jcbEnddateD.setBounds(215,jlblEnddate.getY(),40,20);
 	
 	
 	
-	jsp.setBounds(280,44,280,180);
-	jbtnClose.setBounds(500,233,60,20);
-	jbtnDelete.setBounds(435,233,60,20);
-	jbtnAdd.setBounds(345,233,85,20);
-	jbtnModify.setBounds(280,233,60,20);
+	jsp.setBounds(297,60,500,320);
+	jbtnClose.setBounds(660,390,80,30);
+	jbtnDelete.setBounds(570,390,80,30);
+	jbtnAdd.setBounds(455,390,105,30);
+	jbtnModify.setBounds(360,390,85,30);
 	
-	jbtnSearch.setBounds(500,15,60,20);
+	jbtnSearch.setBounds(711,18,85,30);
 	
 	
 	add(jlblCourseCodeData);
@@ -192,7 +207,7 @@ public class AdminCourseMgrDesign extends JDialog {
 	jcbEnddateM.addItemListener(acmde);
 	addWindowListener(acmde);
 	
-	setSize(600,300);
+	setSize(850,500);
 	setLocationRelativeTo(null);
 	setResizable(false);
 	setVisible(true);

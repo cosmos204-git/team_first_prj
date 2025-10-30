@@ -66,9 +66,9 @@ public class AdminCourseMgrDesignDAO {
 			con=gc.getConn();
 			StringBuilder selectCourse= new StringBuilder();
 			selectCourse
-			.append("	select c.COURSE_CODE,c.COURSE_NAME||CASE	")
-			.append("	WHEN  (c.COURSE_STARTDATE<=TRUNC(sysdate)) and (c.COURSE_ENDDATE>=TRUNC(sysdate)+1) and(c.COURSE_ENDDATE-c.COURSE_STARTDATE >0) THEN '(진행 중)' 	")
-			.append("	WHEN  (c.COURSE_ENDDATE>=TRUNC(sysdate)+1) and (c.COURSE_STARTDATE>=TRUNC(sysdate)) and(c.COURSE_ENDDATE-c.COURSE_STARTDATE >0) THEN '(진행 전)'	")
+			.append("	select c.COURSE_CODE,c.COURSE_NAME ||CASE	")
+			.append("	WHEN  (c.COURSE_STARTDATE<=TRUNC(sysdate)) and (c.COURSE_ENDDATE>=TRUNC(sysdate)) and(c.COURSE_ENDDATE-c.COURSE_STARTDATE >=0) THEN '(진행 중)' 	")
+			.append("	WHEN  (c.COURSE_STARTDATE>TRUNC(sysdate)) and(c.COURSE_ENDDATE-c.COURSE_STARTDATE >=0) THEN '(진행 전)'	")
 			.append("	ELSE '(종료)'  END as COURSE_NAME	")
 			.append("	, p.PROF_NUM,p.PROF_NAME, to_char(c.COURSE_STARTDATE,'yyyy-MM-dd') COURSE_STARTDATE,	")
 			.append("	to_char(c.COURSE_ENDDATE,'yyyy-MM-dd') COURSE_ENDDATE, to_char(c.COURSE_INPUTDATE,'yyyy-MM-dd') COURSE_INPUTDATE	")
@@ -151,7 +151,7 @@ public class AdminCourseMgrDesignDAO {
 //	}//selectAllCourse
 	
 //	public List<String> selectCombo() throws IOException, SQLException {
-//		List<String> List = new ArrayList<String>();
+//		List<String> list = new ArrayList<String>();
 //
 //		Connection con = null;
 //		PreparedStatement pstmt = null;
@@ -169,20 +169,20 @@ public class AdminCourseMgrDesignDAO {
 //			pstmt = con.prepareStatement(selectCombo.toString());
 //
 //			rs = pstmt.executeQuery();
-//			String combo=null;
+//			String profName=null;
 //			while (rs.next()) {
-//				combo=rs.getString("PROF_NAME");
+//				profName=rs.getString("PROF_NAME");
 //
-//				List.add(combo);
+//				list.add(profName);
 //			} // end while
 //		} finally {
 //			gc.dbClose(con, pstmt, rs);
 //		} // end finally
 //
-//		return List;
+//		return list;
 //	}// selectCombo
-	
-	
+//	
+//	
 	public Map<String, String> selectCombo() throws IOException, SQLException {
 		Map<String, String> list = new HashMap<String, String>();
 
@@ -204,7 +204,10 @@ public class AdminCourseMgrDesignDAO {
 			rs = pstmt.executeQuery();
 //			String combo=null;
 			while (rs.next()) {
-				list.put(rs.getString("PROF_NAME"),String.valueOf(rs.getInt("PROF_NUM")));
+				String profName=rs.getString("PROF_NAME");
+				String profNum=String.valueOf(rs.getInt("PROF_NUM"));
+		
+				list.put(profName,profNum);
 			} // end while
 		} finally {
 			gc.dbClose(con, pstmt, rs);
@@ -279,14 +282,14 @@ public class AdminCourseMgrDesignDAO {
 			con=gc.getConn();
 			StringBuilder selectCourse = new StringBuilder();
 			selectCourse
-			.append("	select c.COURSE_CODE,c.COURSE_NAME||CASE	")
-			.append("	WHEN  (c.COURSE_STARTDATE<=TRUNC(sysdate)) and (c.COURSE_ENDDATE>=TRUNC(sysdate)+1) and(c.COURSE_ENDDATE-c.COURSE_STARTDATE >0) THEN '(진행 중)' 	")
-			.append("	WHEN  (c.COURSE_ENDDATE>=TRUNC(sysdate)+1) and (c.COURSE_STARTDATE>=TRUNC(sysdate)) and(c.COURSE_ENDDATE-c.COURSE_STARTDATE >0) THEN '(진행 전)'	")
+			.append("	select c.COURSE_CODE,c.COURSE_NAME ||CASE	")
+			.append("	WHEN  (c.COURSE_STARTDATE<=TRUNC(sysdate)) and (c.COURSE_ENDDATE>=TRUNC(sysdate)) and(c.COURSE_ENDDATE-c.COURSE_STARTDATE >=0) THEN '(진행 중)' 	")
+			.append("	WHEN  (c.COURSE_STARTDATE>TRUNC(sysdate)) and(c.COURSE_ENDDATE-c.COURSE_STARTDATE >=0) THEN '(진행 전)'	")
 			.append("	ELSE '(종료)'  END as COURSE_NAME	")
 			.append("	, p.PROF_NUM,p.PROF_NAME, to_char(c.COURSE_STARTDATE,'yyyy-MM-dd') COURSE_STARTDATE,	")
 			.append("	to_char(c.COURSE_ENDDATE,'yyyy-MM-dd') COURSE_ENDDATE, to_char(c.COURSE_INPUTDATE,'yyyy-MM-dd') COURSE_INPUTDATE	")
 			.append("	from COURSE c,PROFESSOR p	")
-			.append("	where (c.PROF_NUM=p.PROF_NUM )and (PROF_DEL_FLAG='N'and COURSE_DEL_FLAG='N') and c.COURSE_NAME=?	")
+			.append("	where (c.PROF_NUM=p.PROF_NUM )and (PROF_DEL_FLAG='N'and COURSE_DEL_FLAG='N') and c.COURSE_NAME like '%'||?||'%'	")
 			.append("	order by c.COURSE_CODE asc	");
 			
 			
@@ -333,12 +336,18 @@ public class AdminCourseMgrDesignDAO {
 			updateCourse
 			.append("   UPDATE COURSE				")
 			.append("	SET COURSE_NAME = ?,COURSE_STARTDATE = ? ,COURSE_ENDDATE  = ?, COURSE_INPUTDATE = sysdate ")
-			.append("	,PROF_NUM=(select PROF_NUM from  PROFESSOR where PROF_NAME=?)")			
+			.append("	,PROF_NUM=(select PROF_NUM from  PROFESSOR where PROF_NAME=? and PROF_DEL_FLAG='N')")			
+//			.append("	,PROF_NUM=?")			
 			.append("	WHERE  COURSE_CODE=? AND COURSE_DEL_FLAG = 'N'			");
 			
 			pstmt=con.prepareStatement(updateCourse.toString());
 			
 			
+//			pstmt.setString(1,cDTO.getCourseName());
+//			pstmt.setString(2,cDTO.getCourseStartDate());
+//			pstmt.setString(3,cDTO.getCourseEndDate());
+//			pstmt.setString(4,cDTO.getProfName());
+//			pstmt.setInt(5,cDTO.getCourseCode());
 			pstmt.setString(1,cDTO.getCourseName());
 			pstmt.setString(2,cDTO.getCourseStartDate());
 			pstmt.setString(3,cDTO.getCourseEndDate());

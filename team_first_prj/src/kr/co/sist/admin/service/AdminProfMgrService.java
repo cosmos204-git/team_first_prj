@@ -27,6 +27,7 @@ public class AdminProfMgrService {
 	}//searchAllProfessor
 	
 	
+	
 	public ProfDTO searchProfessor(int ProfNum) {
 		ProfDTO pDTO = null;
 		

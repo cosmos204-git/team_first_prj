@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
@@ -36,6 +37,20 @@ public class ProfModifyDialogEvt extends WindowAdapter implements ActionListener
 		pmd.dispose();
 	}//windowClosing
 	
+	public boolean duplicateName(String profName) {
+		boolean profFlag=false;
+		List<ProfDTO> list = pms.searchAllProfessor();
+		for(ProfDTO pDTO:list) {
+			String name= pDTO.getProfName();
+			if(profName.equals(name)) {
+				profFlag=true;
+				break;
+			}
+		}
+		
+		return profFlag;
+	}//duplicateName
+	
 	public void ModifyProcess() {
 		//1.사용자가 변경한 값을 얻고 
 		ProfDTO pDTO = new ProfDTO();
@@ -65,6 +80,11 @@ public class ProfModifyDialogEvt extends WindowAdapter implements ActionListener
 			JOptionPane.showMessageDialog(pmd, msg);
 			return;
 		}//end if 
+		
+		
+		if(duplicateName(profName)) {
+			profName=profName+"("+Integer.parseInt(pmd.getJtfProfNum().getText())+")";
+		}
 		
 		pDTO.setProfName(profName);
 		pDTO.setProfPass(profPass);

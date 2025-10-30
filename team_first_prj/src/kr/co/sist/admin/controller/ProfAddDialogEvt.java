@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.sql.SQLException;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
@@ -38,13 +38,27 @@ public class ProfAddDialogEvt extends WindowAdapter implements ActionListener{
 		pad.dispose();
 	}//windowClosing
 	
+	
+	public boolean duplicateName(String profName) {
+		boolean profFlag=false;
+		List<ProfDTO> list = pas.searchAllProfessor();
+		for(ProfDTO pDTO:list) {
+			String name= pDTO.getProfName();
+			if(profName.equals(name)) {
+				profFlag=true;
+				break;
+			}
+		}
+		
+		return profFlag;
+	}//duplicateName
+	
 	public void addProcess() {
 		ProfDTO pDTO = new ProfDTO();
 		
 
 		String profName= pad.getJtfProName().getText().trim();
 		String profTel = pad.getJtfProTel().getText().trim();
-		
 		
 		String telRegex = "^010-\\d{4}-\\d{4}$";
 		
@@ -66,6 +80,9 @@ public class ProfAddDialogEvt extends WindowAdapter implements ActionListener{
 			return;
 		}//end if
 		
+		if(duplicateName(profName)) {
+			profName=profName+"("+String.valueOf(pas.AddProfNum())+")";
+		}
 		
 		pDTO.setProfName(profName);
 		pDTO.setProfTel(profTel);

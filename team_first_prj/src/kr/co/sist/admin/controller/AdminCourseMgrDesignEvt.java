@@ -39,7 +39,8 @@ public class AdminCourseMgrDesignEvt extends WindowAdapter implements ActionList
 		acmds= new AdminCourseMgrDesignService();
 		searchAllProcess();
 		searchProfProcess();
-		acmd.getJlblCourseCodeData().setText(String.valueOf(acmds.AddCourseNum()));
+		resetInputField();
+//		acmd.getJlblCourseCodeData().setText(String.valueOf(acmds.AddCourseNum()));
 	}//AdminCourseMgrDesignEvt
 	
 	@Override
@@ -78,6 +79,7 @@ public class AdminCourseMgrDesignEvt extends WindowAdapter implements ActionList
 		switch(me.getButton()) {
 		case MouseEvent.BUTTON1 : //왼쪽버튼 클릭
 				clickedOneCourse();
+				selectedNum=acmd.getJtAdminCourseMgr().getSelectedRow();
 			}//end switch
 		
 	}//mouseClicked
@@ -121,8 +123,7 @@ public class AdminCourseMgrDesignEvt extends WindowAdapter implements ActionList
 		acmd.dispose();
 	}//closeProcess
 	
-	
-	
+
 	public void searchProfProcess() {
 		DefaultComboBoxModel<String> dcbm = acmd.getDcbmProfName();
 		dcbm.addElement("");
@@ -193,6 +194,7 @@ public class AdminCourseMgrDesignEvt extends WindowAdapter implements ActionList
 			dtmAdminCouresMgr.addRow(rowData);
 		}//end for 
 		maxRow=acmd.getJtAdminCourseMgr().getRowCount();
+		selectedNum=-1;
 		
 	}//searchAllProcess
 	
@@ -202,11 +204,13 @@ public class AdminCourseMgrDesignEvt extends WindowAdapter implements ActionList
 			JOptionPane.showMessageDialog(acmd, "검색할 과정명을 입력해주세요!");	
 			searchAllProcess();
 			resetInputField();
-			acmd.getJlblCourseCodeData().setText(String.valueOf(acmds.AddCourseNum()));
+//			acmd.getJlblCourseCodeData().setText(String.valueOf(acmds.AddCourseNum()));
 			return;
 		}if(!validCourseName(acmd.getJtfSearchCourse().getText())) {
+		
 				JOptionPane.showMessageDialog(acmd, "존재하지 않는 과정명입니다.");
 				searchAllProcess();
+				acmd.getJtfSearchCourse().setText("");
 				resetInputField();
 				acmd.getJlblCourseCodeData().setText(String.valueOf(acmds.AddCourseNum()));
 				return ;
@@ -260,8 +264,9 @@ public class AdminCourseMgrDesignEvt extends WindowAdapter implements ActionList
 		for(CourseMgrDTO cDTO:cmDTO) {
 			String dtoCourseName=cDTO.getCourseName().substring(0, cDTO.getCourseName().indexOf("("));
 			
-			if(dtoCourseName.equals(CourseName)) {
+			if(dtoCourseName.equals(CourseName)||dtoCourseName.contains(CourseName)) {
 				flag=true;
+				break;
 			}//end if 	
 		}//end for 
 		return flag;
@@ -372,6 +377,11 @@ public class AdminCourseMgrDesignEvt extends WindowAdapter implements ActionList
 		int courseCode =Integer.parseInt(acmd.getJlblCourseCodeData().getText()); 
 		
 		String msg = "과정명,교수, 시작일, 종료일 모두 입력되었는지 확인해주세요";
+		if(selectedNum==-1) {
+			msg="수정할 과정을 클릭해주세요";
+			JOptionPane.showMessageDialog(acmd, msg);
+			return;
+		}//
 		if(startDate==null||startDate.isEmpty()||endDate==null||endDate.isEmpty()
 		||courseName==null||courseName.isEmpty()||profName==null||profName.isEmpty()) {
 			JOptionPane.showMessageDialog(acmd, msg);
@@ -400,6 +410,7 @@ public class AdminCourseMgrDesignEvt extends WindowAdapter implements ActionList
 		cmDTO.setCourseCode(Integer.parseInt(acmd.getJlblCourseCodeData().getText()));
 		cmDTO.setCourseName(courseName);
 		cmDTO.setProfName(profName);
+//		cmDTO.setProfNum(Integer.parseInt(acmd.getJlblProfNumData().getText()));
 		cmDTO.setCourseStartDate(startDate);
 		cmDTO.setCourseEndDate(endDate);
 		
@@ -411,7 +422,8 @@ public class AdminCourseMgrDesignEvt extends WindowAdapter implements ActionList
 			resetInputField();
 		}//end if 
 		JOptionPane.showMessageDialog(acmd, msg);
-		acmd.getJlblCourseCodeData().setText(String.valueOf(acmds.AddCourseNum()));
+//		acmd.getJlblCourseCodeData().setText(String.valueOf(acmds.AddCourseNum()));
+		resetInputField();
 		searchAllProcess();
 		
 	}//modifyProcess
@@ -462,7 +474,8 @@ public class AdminCourseMgrDesignEvt extends WindowAdapter implements ActionList
 		LocalDate today= LocalDate.now();
 	
 		//입력칸을 초기화
-		acmd.getJlblCourseCodeData().setText("");
+//		acmd.getJlblCourseCodeData().setText("");
+		acmd.getJlblCourseCodeData().setText(String.valueOf(acmds.AddCourseNum()));
 		acmd.getJtfCourseName().setText("");
 		acmd.getJlblProfNumData().setText("");
 		acmd.getJcbProfName().setSelectedIndex(0);

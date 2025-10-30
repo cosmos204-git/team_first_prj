@@ -8,7 +8,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.time.LocalDate;
 import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
@@ -88,22 +87,9 @@ public class AdminSubjectMgrDesignEvt extends WindowAdapter implements ActionLis
 	public void searchCourseProcess() {
 		AdminSubjectMgrDesignService asmds = new AdminSubjectMgrDesignService();
 		DefaultComboBoxModel<String> dcbm = asmd.getDcbmCourse();
-		LocalDate currentDate = LocalDate.now();
-		LocalDate startDate = LocalDate.now();
-		LocalDate endDate = LocalDate.now();
-		String isIng = "";
 		cDTOList = asmds.searchCourse();
 		for( CourseDTO temp : cDTOList) {
-			startDate = LocalDate.parse(temp.getCourseStartDate());
-			endDate = LocalDate.parse(temp.getCourseEndDate());
-			if(!currentDate.isBefore(startDate) && !currentDate.isAfter(endDate)) {
-				isIng = "(진행 중)";
-			}else if(currentDate.isBefore(startDate)) {
-				isIng = "(시작 전)";
-			}else {
-				isIng = "(종료)";
-			}//end else
-			dcbm.addElement(temp.getCourseName()+isIng);
+			dcbm.addElement(temp.getCourseName());
 		}//end for
 	}//searchCoursProcess
 	

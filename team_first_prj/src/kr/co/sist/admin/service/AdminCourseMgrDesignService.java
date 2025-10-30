@@ -8,9 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import kr.co.sist.admin.dao.AdminCourseMgrDesignDAO;
-import kr.co.sist.admin.dao.ProfAddDAO;
 import kr.co.sist.admin.dto.CourseMgrDTO;
-import kr.co.sist.admin.dto.ProfDTO;
 
 public class AdminCourseMgrDesignService {
 
@@ -32,7 +30,7 @@ public class AdminCourseMgrDesignService {
 	
 	
 
-	
+//	
 	public Map<String,String> searchCombo(){
 		 Map<String,String> list = new HashMap<String,String>();
 		AdminCourseMgrDesignDAO acmdDAO =AdminCourseMgrDesignDAO.getInstance();
@@ -46,6 +44,20 @@ public class AdminCourseMgrDesignService {
 		
 		return list;
 	}//searchCombo
+	
+//	public List<String> searchCombo(){
+//		 List<String> list = new ArrayList<String>();
+//		AdminCourseMgrDesignDAO acmdDAO =AdminCourseMgrDesignDAO.getInstance();
+//		try {
+//			list = acmdDAO.selectCombo();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		
+//		return list;
+//	}//searchCombo
 	
 	public List<CourseMgrDTO> searchCourse(String courseName) {
 		
