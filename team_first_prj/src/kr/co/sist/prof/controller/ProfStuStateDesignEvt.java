@@ -72,13 +72,20 @@ public class ProfStuStateDesignEvt extends WindowAdapter implements ActionListen
             DefaultTableModel model = pssd.getDtmStudent();
             model.setRowCount(0); // 기존 행 삭제
 
+            
             for (ProfStuStateDTO dto : listProfStuState) {
-                Object[] row = {
+            	
+            	Object[] row = {
                     dto.getStuNum(),
                     dto.getStuName(),
                     dto.getStuTel()
                 };
-                model.addRow(row);
+            	
+            	// 학번이 있는 경우에만 추가
+            	if (dto.getStuNum() != 0 ) {
+                    model.addRow(row);
+                }            	
+            	
             }
 
 
@@ -107,7 +114,11 @@ public class ProfStuStateDesignEvt extends WindowAdapter implements ActionListen
 		        dto.getStuName(),
 		        dto.getStuTel()
 		    };
-		    model.addRow(row);
+        	
+        	// 학번이 있는 경우에만 추가
+        	if (dto.getStuNum() != 0 ) {
+                model.addRow(row);
+            } 
 		}
 	}//updateTableByCourse
     
