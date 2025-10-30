@@ -1,6 +1,7 @@
 package kr.co.sist.admin.view;
 
 
+import java.awt.Color;
 import java.awt.Font;
 
 import javax.swing.JButton;
@@ -80,7 +81,8 @@ public class StuAddDialog extends JDialog {
 		jbtnAdd.setBounds(155,215,100,25);
 		jbtnClose.setBounds(300,215,100,25);
 
-		
+		jbtnClose.setBackground(new Color(0xE6E6E6));
+		jbtnAdd.setBackground(new Color(0xE6E6E6));
 		
 		add(jbtnClose);
 		add(jbtnAdd);
@@ -96,6 +98,7 @@ public class StuAddDialog extends JDialog {
 		addWindowListener(sade);
 		
 		setSize(600,300);
+		getContentPane().setBackground(new Color(0xF8F9FA));
 		setLocationRelativeTo(null);
 		setResizable(false);
 		setVisible(true);

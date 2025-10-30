@@ -12,7 +12,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.UIManager;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
@@ -110,6 +112,10 @@ public class AdminCourseMgrDesign extends JDialog {
 	// 행의 높이
 	jtAdminCourseMgr.setRowHeight(20);
 
+	DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+	centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+	
+	jtAdminCourseMgr.setDefaultRenderer(Object.class, centerRenderer);
 	
 	JScrollPane jsp = new JScrollPane(jtAdminCourseMgr);
 	

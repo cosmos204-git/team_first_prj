@@ -1,5 +1,6 @@
 package kr.co.sist.admin.view;
 
+import java.awt.Color;
 import java.awt.Font;
 
 import javax.swing.JButton;
@@ -7,6 +8,7 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
 
 import kr.co.sist.admin.controller.StuModifyDialogEvt;
 
@@ -76,6 +78,10 @@ public class StuModifyDialog extends JDialog {
 		jbtnAdd.setBounds(155,220,100,25);
 		jbtnClose.setBounds(300,220,100,25);
 
+		
+		jbtnAdd.setBackground(new Color(0xE6E6E6));
+		jbtnClose.setBackground(new Color(0xE6E6E6));
+		
 		add(jtfStuNum);
 		add(jtfStuName);
 		add(jtfStuTel);
@@ -95,6 +101,8 @@ public class StuModifyDialog extends JDialog {
 		setSize(600,300);
 		setLocationRelativeTo(null);
 //        setBounds(600,300,600,350);
+		
+		getContentPane().setBackground(new Color(0xF8F9FA));
 		setResizable(false);
 		setVisible(true);
 		

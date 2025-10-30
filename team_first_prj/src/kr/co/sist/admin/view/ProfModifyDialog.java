@@ -1,5 +1,6 @@
 package kr.co.sist.admin.view;
 
+import java.awt.Color;
 import java.awt.Font;
 
 import javax.swing.JButton;
@@ -99,6 +100,7 @@ public class ProfModifyDialog extends JDialog {
 		
 		setSize(600,300);
 		setLocationRelativeTo(null);
+		getContentPane().setBackground(new Color(0xF8F9FA));
 		setResizable(false);
 		setVisible(true);
 		

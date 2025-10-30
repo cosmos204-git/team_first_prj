@@ -1,5 +1,6 @@
 package kr.co.sist.admin.view;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.util.List;
@@ -12,6 +13,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
@@ -28,12 +33,12 @@ public class AdminStuMgrDesign extends JDialog {
 
 	public AdminStuMgrDesign(AdminInfoDesign aid, boolean modal) {
 		super(aid,"관리자 - 학생관리",modal);
-		JPanel jpNouthSerch= new JPanel();
+		JPanel jpNouthSerch= new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		JPanel jpSouthButton= new JPanel(new FlowLayout(FlowLayout.CENTER, 30, 10));
 		String[] columnNames = { "학번", "이름", "휴대폰번호", "가입일" };
 		
 		JLabel jlblStuNum =new JLabel("학번 :");
-		jtfStuNum = new JTextField(15);
+		jtfStuNum = new JTextField(10);
 		
 		dtmStuMgr = new DefaultTableModel(columnNames, 0);
 		jtStuMgr = new JTable(dtmStuMgr);
@@ -51,7 +56,7 @@ public class AdminStuMgrDesign extends JDialog {
 		jlblStuNum.setFont(font);
 		
 		jtfStuNum.setFont(font);
-		jtStuMgr.setFont(font);
+//		jtStuMgr.setFont(font);
 		
 		jbtnSearch.setFont(font);
 		jbtnModify.setFont(font);
@@ -86,8 +91,34 @@ public class AdminStuMgrDesign extends JDialog {
 
 		// 스크롤바 설정
 		JScrollPane jspStuMgr = new JScrollPane(jtStuMgr);
+		
+		
+		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+		centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+		centerRenderer.setOpaque(true);
+		centerRenderer.setBackground(new Color(0xF8F9FA));
+		jtStuMgr.setDefaultRenderer(Object.class, centerRenderer);
+		
+		jspStuMgr.getViewport().setBackground(new Color(0xF8F9FA)); 
+		jspStuMgr.setBorder(new LineBorder(new Color(0x000000), 2));
+		
 
 		setLayout(new BorderLayout());
+		
+		
+		JPanel jpCenter = new JPanel(new BorderLayout());
+		jpCenter.add(jspStuMgr);
+		
+		jpCenter.setBorder(new EmptyBorder(5, 10, 5, 10));// top, left, bottom, right 여백
+		jpNouthSerch.setBorder(new EmptyBorder(5, 10, 0, 7));// top, left, bottom, right 여백
+		jpSouthButton.setBorder(new EmptyBorder(0, 0, 5, 0));// top, left, bottom, right 여백
+		
+		jbtnModify.setBackground(new Color(0xE6E6E6));
+		jbtnAdd.setBackground(new Color(0xE6E6E6));
+		jbtnDelete.setBackground(new Color(0xE6E6E6));
+		jbtnClose.setBackground(new Color(0xE6E6E6));
+		jbtnSearch.setBackground(new Color(0xE6E6E6));
+		
 		jpSouthButton.add(jbtnModify);
 		jpSouthButton.add(jbtnAdd);
 		jpSouthButton.add(jbtnDelete);
@@ -100,11 +131,15 @@ public class AdminStuMgrDesign extends JDialog {
 		
 		
 		add("North",jpNouthSerch);
-		add("Center",jspStuMgr);
+		add("Center",jpCenter);
 		add("South",jpSouthButton);
 		
 		
-		setSize(600, 300);
+		setSize(700, 400);
+		jpNouthSerch.setBackground(new Color(0xF8F9FA));
+		jpCenter.setBackground(new Color(0xF8F9FA));
+		jpSouthButton.setBackground(new Color(0xF8F9FA));
+		getContentPane().setBackground(new Color(0xF8F9FA));
 		setResizable(false);
 		setLocationRelativeTo(null);
 		setVisible(true);

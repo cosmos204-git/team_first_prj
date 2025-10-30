@@ -5,12 +5,14 @@ import java.awt.Font;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
@@ -26,10 +28,10 @@ public class AdminProfMgrDesign extends JDialog {
 
 	public AdminProfMgrDesign(AdminInfoDesign aid, boolean modal) {
 		super(aid,"관리자 - 교수관리",modal);
-		JPanel jpNouthSerch= new JPanel();
+		JPanel jpNouthSerch= new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		JPanel jpSouthButton= new JPanel(new FlowLayout(FlowLayout.CENTER, 30, 10));
 		String[] columnNames = { "교번", "이름", "휴대폰번호", "가입일" };
-		jtfProfNum = new JTextField(15);
+		jtfProfNum = new JTextField(10);
 		dtmProMgr = new DefaultTableModel(columnNames, 0);
 		jtProfMgr = new JTable(dtmProMgr);
 		
@@ -45,8 +47,9 @@ public class AdminProfMgrDesign extends JDialog {
 		// 글꼴 설정
 		Font font = new Font("맑은 고딕", Font.BOLD, 15);
 		jlblProfNum.setFont(font);
+		
 		jtfProfNum.setFont(font);
-		jtProfMgr.setFont(font);
+//		jtProfMgr.setFont(font);
 		jbtnSearch.setFont(font);
 		jbtnModify.setFont(font);
 		jbtnAdd.setFont(font);
@@ -65,7 +68,8 @@ public class AdminProfMgrDesign extends JDialog {
 		jtProfMgr.addMouseListener(asde);
 		
 		
-
+		
+		
 		// columns(열)의 넓이 설정
 		TableColumnModel tcm = jtProfMgr.getColumnModel();
 		tcm.getColumn(0).setPreferredWidth(40);// 교번
@@ -75,9 +79,14 @@ public class AdminProfMgrDesign extends JDialog {
 
 		// 행의 높이
 		jtProfMgr.setRowHeight(20);
-
+		
+		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+		centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		jtProfMgr.setDefaultRenderer(Object.class, centerRenderer);
+		
 		// 스크롤바 설정
-		JScrollPane jspStuMgr = new JScrollPane(jtProfMgr);
+		JScrollPane jspProfMgr = new JScrollPane(jtProfMgr);
 
 		setLayout(new BorderLayout());
 		jpSouthButton.add(jbtnModify);
@@ -88,13 +97,18 @@ public class AdminProfMgrDesign extends JDialog {
 		jpNouthSerch.add(jtfProfNum);
 		jpNouthSerch.add(jbtnSearch);
 		
+		JPanel jpCenter = new JPanel(new BorderLayout());
+		jpCenter.add(jspProfMgr);
 		
+		jpCenter.setBorder(new EmptyBorder(5, 10, 5, 10));// top, left, bottom, right 여백
+		jpNouthSerch.setBorder(new EmptyBorder(5, 10, 0, 7));// top, left, bottom, right 여백
+		jpSouthButton.setBorder(new EmptyBorder(0, 0, 5, 0));// top, left, bottom, right 여백
 		add("North",jpNouthSerch);
-		add("Center",jspStuMgr);
+		add("Center",jpCenter);
 		add("South",jpSouthButton);
 		
 		
-		setSize(600, 300);
+		setSize(700, 400);
 		setLocationRelativeTo(null);
 		setResizable(false);
 		setVisible(true);
