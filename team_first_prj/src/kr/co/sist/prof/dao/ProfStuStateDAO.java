@@ -55,7 +55,7 @@ public class ProfStuStateDAO {
 			.append(" FROM course c left JOIN professor p ON p.prof_num = c.prof_num ")
 			.append("               left JOIN student_course sc ON c.course_code = sc.course_code ")
 			.append("               left JOIN student s ON sc.stu_num = s.stu_num ")
-			.append(" where c.course_del_flag='N' and s.stu_num is not null and p.prof_num=? ")                                      
+			.append(" where c.course_del_flag='N' and p.prof_num=? ")                                      
 			.append(" ORDER BY  p.prof_name, c.course_name, s.stu_num ");			
 			
 			
@@ -111,7 +111,7 @@ public class ProfStuStateDAO {
 			.append(" FROM course c left JOIN professor p ON p.prof_num = c.prof_num ")
 			.append("               left JOIN student_course sc ON c.course_code = sc.course_code ")
 			.append("               left JOIN student s ON sc.stu_num = s.stu_num ")
-			.append(" where c.course_del_flag='N' and s.stu_num is not null and c.course_name=? ")                                      
+			.append(" where c.course_del_flag='N' and c.course_name=? ")                                      
 			.append(" ORDER BY  p.prof_name, c.course_name, s.stu_num ");		
 
 			
