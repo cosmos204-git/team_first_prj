@@ -159,6 +159,11 @@ public class ProfExamMgrDesignEvt extends WindowAdapter implements ActionListene
 		    	uDTO.setExamStart((String) pemd2.getJcbExamStart().getSelectedItem());
 		    	uDTO.setExamEnd((String) pemd2.getJcbExamEnd().getSelectedItem());
 
+		    	if ( pemd2.getJcbExamEnd().getSelectedIndex() < pemd2.getJcbExamStart().getSelectedIndex() ) {
+	                JOptionPane.showMessageDialog(pemd2, " 시험 [종료시간]을 [시작시간]보다 늦게 설정해 주세요.");
+	                return;
+		    	}
+		    	
 	            // DAO 호출
 	            ProfExamMgrDAO pDAO = ProfExamMgrDAO.getInstance();
 	            int result = pDAO.updateExam(uDTO);
@@ -179,12 +184,5 @@ public class ProfExamMgrDesignEvt extends WindowAdapter implements ActionListene
 		    
 	    }//updateExamItem		
 		   
-	   private void  ShowExamDetailDesignDialog() {
-		   
-		   
-		   
-		   
-	   }//ShowExamDetailDesignDialog
-	   
 
 } // class
