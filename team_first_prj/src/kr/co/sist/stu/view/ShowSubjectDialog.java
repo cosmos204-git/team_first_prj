@@ -1,21 +1,27 @@
 package kr.co.sist.stu.view;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
 import kr.co.sist.stu.controller.ShowSubjectDialogEvt;
 
 public class ShowSubjectDialog extends JDialog {
 	
 	private DefaultTableModel dtmShowSubDialog;
+	private DefaultTableCellRenderer setFont_center;
 	private JTable jtShowSubDialog;
 	private JButton jbtnClose;
 	
@@ -42,9 +48,21 @@ public class ShowSubjectDialog extends JDialog {
 		dtmShowSubDialog = new DefaultTableModel(columnNames, 0);
 		jtShowSubDialog = new JTable(dtmShowSubDialog);
 		jtShowSubDialog.setRowHeight(25);
+		jtShowSubDialog.setFont(new Font("맑은 고딕", Font.BOLD, 16));
 		
 		JScrollPane jspTable = new JScrollPane(jtShowSubDialog);
 		
+        JTableHeader header = jtShowSubDialog.getTableHeader();
+        header.setFont(new Font("맑은 고딕", Font.BOLD, 16));
+        header.setPreferredSize(new Dimension(0, 30));
+        setFont_center = (DefaultTableCellRenderer) header.getDefaultRenderer();
+        setFont_center.setHorizontalAlignment(SwingConstants.CENTER);
+        
+        
+		setFont_center = new DefaultTableCellRenderer();
+		setFont_center.setHorizontalAlignment(SwingConstants.CENTER);
+        jtShowSubDialog.getColumnModel().getColumn(0).setCellRenderer(setFont_center);
+        
 		JPanel jpCenter = new JPanel(new BorderLayout());
 		jpCenter.add(jspTable, BorderLayout.CENTER);
 		jpCenter.setBorder(new EmptyBorder(15, 20, 0, 20)); 
