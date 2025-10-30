@@ -62,18 +62,29 @@ public class ShowExamDetailDesignDialog extends JDialog {
             return;
         }
 
+//        for (ShowExamItemListDTO dto : list) {
+//            jtaReport.append(
+//                dto.getExamQuest() + "\n" +
+//                dto.getExamChoice1() + "\n" +
+//                dto.getExamChoice2() + "\n" +
+//                dto.getExamChoice3() + "\n" +
+//                dto.getExamChoice4() + "\n" +
+//                "정답: " + dto.getExamCorrectTChoice() + "\n\n"
+//            );
+//        }//end for
+
         for (ShowExamItemListDTO dto : list) {
-            jtaReport.append(
-                dto.getExamQuest() + "\n" +
-                dto.getExamChoice1() + "\n" +
-                dto.getExamChoice2() + "\n" +
-                dto.getExamChoice3() + "\n" +
-                dto.getExamChoice4() + "\n" +
-                "정답: " + dto.getExamCorrectTChoice() + "\n\n"
-            );
+        	jtaReport.append(
+        			dto.getExamQuest() + "\n" +
+        					dto.getExamChoice1() + "\n" +
+        					dto.getExamChoice2() + "\n" +
+        					dto.getExamChoice3() + "\n" +
+        					dto.getExamChoice4() + "\n" +
+        					"정답: " + dto.getExamCorrectTChoice() + "\n\n"
+        			);
         }//end for
         
     }//viewExamDetail
     
-    
+     
 }//class

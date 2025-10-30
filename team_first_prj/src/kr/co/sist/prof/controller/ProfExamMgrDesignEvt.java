@@ -183,6 +183,5 @@ public class ProfExamMgrDesignEvt extends WindowAdapter implements ActionListene
 	        }
 		    
 	    }//updateExamItem		
-		   
 
 } // class

@@ -53,11 +53,9 @@ public class ProfStuStateDAO {
 			.append(" SELECT      p.prof_num, p.prof_name,  c.course_name," ) 
 			.append(" s.stu_name, s.stu_num, s.stu_tel " ) 
 			.append(" FROM course c left JOIN professor p ON p.prof_num = c.prof_num ")
-			.append("               left JOIN student_course sc ON c.course_code = sc.course_code ")
-			.append("               left JOIN student s ON sc.stu_num = s.stu_num ")
+			.append("               left JOIN student s ON c.course_code = s.course_code ")
 			.append(" where c.course_del_flag='N' and p.prof_num=? ")                                      
 			.append(" ORDER BY  p.prof_name, c.course_name, s.stu_num ");			
-			
 			
 			// 3. 쿼리문 생성객체 얻기
 			pstmt = con.prepareStatement(selectStuState.toString());
@@ -65,7 +63,6 @@ public class ProfStuStateDAO {
 			//4. 바인드 변수에 값 설정
 			p_profNum=CurrentProfData.getInstance().getLogProfDTO().getProfNum();
 			
-//			System.out.println(selectStuState + "  교번은 "+ p_profNum +" 입니다.");
 			
 			pstmt.setInt(1, p_profNum);
 
@@ -109,8 +106,7 @@ public class ProfStuStateDAO {
 			.append(" SELECT      p.prof_num, p.prof_name,  c.course_name," ) 
 			.append(" s.stu_name, s.stu_num, s.stu_tel " ) 
 			.append(" FROM course c left JOIN professor p ON p.prof_num = c.prof_num ")
-			.append("               left JOIN student_course sc ON c.course_code = sc.course_code ")
-			.append("               left JOIN student s ON sc.stu_num = s.stu_num ")
+			.append("               left JOIN student s ON s.course_code = c.course_code ")
 			.append(" where c.course_del_flag='N' and c.course_name=? ")                                      
 			.append(" ORDER BY  p.prof_name, c.course_name, s.stu_num ");		
 
