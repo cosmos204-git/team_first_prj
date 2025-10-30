@@ -164,30 +164,44 @@ public class StuInfoModifyDesignEvt extends WindowAdapter implements ActionListe
 				simd.getJlblStuImg().setIcon(resizedIcon);
 				
 				FileInputStream fisImg = null;
-	            File tempResizedFile = null; 
+//	            File tempResizedFile = null; 
 
 	            try {
 	                // a) Image를 BufferedImage로 변환 (ImageIO.write를 위해 필요)
 	                BufferedImage bufferedResizedImage = new BufferedImage(100, 180, BufferedImage.TYPE_INT_RGB);
 	                bufferedResizedImage.getGraphics().drawImage(scaledImage, 0, 0, null);
-
-	                // b) 임시 파일 생성 및 저장 (FileInputStream을 사용하기 위해 필요)
-	                String extension = "." + ext; 
-	                tempResizedFile = File.createTempFile("resized_img_", extension);
-	                tempResizedFile.deleteOnExit(); 
 	                
-	                ImageIO.write(bufferedResizedImage, ext, tempResizedFile); 
+	                CurrentStuData csd = CurrentStuData.getInstance();
+	                
+	                int stuNumInt = csd.getLogStuDTO().getStuNum();
+	                String stuNum = String.valueOf(stuNumInt); 
+	                String extension = csd.getLogStuDTO().getExt();
+	                
+	                String saveDirPath = "c:/dev/images/";
+	                String saveFileName = stuNum + "s." + extension;
+	                
+//	                tempResizedFile = File.createTempFile("resized_img_", extension);
+//	                tempResizedFile.deleteOnExit(); 
+	                
+	                File targetDir = new File(saveDirPath);
+	                if (!targetDir.exists()) {
+	                    // 디렉토리가 없으면 생성
+	                    targetDir.mkdirs(); 
+	                }
+	                File targetFile = new File(saveDirPath + saveFileName);
+	                
+	                ImageIO.write(bufferedResizedImage, ext, targetFile); 
 	                
 	                // c) 임시 파일을 setProfImg가 요구하는 FileInputStream으로 읽어옴
-	                fisImg = new FileInputStream(tempResizedFile); 
+	                fisImg = new FileInputStream(targetFile); 
 
 	                // -------------------------------------------------------------
 	                // 3. [기존 로직 수정] DTO에 데이터 전달 및 DB 저장
 	                // -------------------------------------------------------------
-	                CurrentStuData csd = CurrentStuData.getInstance();
+	                
 	                
 	                // 원본 파일 객체를 setFile에 전달 (경로 참조용)
-	                csd.getLogStuDTO().setFile(file);       
+	                csd.getLogStuDTO().setFile(targetFile);       
 	                // 🚨 핵심: 리사이징된 이미지의 FileInputStream 전달
 	                csd.getLogStuDTO().setStuImg(fisImg);   
 	                // 확장자 전달
@@ -199,22 +213,38 @@ public class StuInfoModifyDesignEvt extends WindowAdapter implements ActionListe
 	                    if(fisImg != null) {fisImg.close();}
 	                    
 	                    // ⭐️ 임시 파일 삭제
-	                    if (tempResizedFile != null && tempResizedFile.exists()) {
-	                        tempResizedFile.delete();
-	                    }
+//	                    if (tempResizedFile != null && tempResizedFile.exists()) {
+//	                        tempResizedFile.delete();
+//	                    }
 	                } else {
 	                    // DB 저장 실패 시에도 임시 파일 및 스트림 정리
 	                    if(fisImg != null) {fisImg.close();}
-	                    if (tempResizedFile != null && tempResizedFile.exists()) {
-	                        tempResizedFile.delete();
-	                    }
+//	                    if (tempResizedFile != null && tempResizedFile.exists()) {
+//	                        tempResizedFile.delete();
+//	                    }
 	                } //end if (modifyProfImg)
 	                
 	            } catch (IOException e) {
 	                e.printStackTrace();
-	                if (fisImg != null) fisImg.close();
-	                if (tempResizedFile != null && tempResizedFile.exists()) tempResizedFile.delete();
+	                if (fisImg != null) {
+	                    try {
+	                        fisImg.close();
+	                    } catch (IOException closeE) {
+	                        closeE.printStackTrace();
+	                    }
+	                }
+//	                if (fisImg != null) fisImg.close();
+//	                if (tempResizedFile != null && tempResizedFile.exists()) tempResizedFile.delete();
 	            }
+			}else {
+				jfcFlag=false;
+			}
+			//end if		
+			
+			
+		}
+	}
+		
 	            // -------------------------------------------------------------
 	            // -------------------------------------------------------------
 				
@@ -238,12 +268,7 @@ public class StuInfoModifyDesignEvt extends WindowAdapter implements ActionListe
 					if(fisImg != null) {fisImg.close();}
 					*/
 	//				lDTO.getFile().delete();
-				}//end if		
-				
-				
-		}
-	}
-		
+	
 	
 	
 	
@@ -270,51 +295,56 @@ public class StuInfoModifyDesignEvt extends WindowAdapter implements ActionListe
 		InputStream is = null;
 		
 		ImageIcon ii = null;
-		
+
 		try {
-			is = getClass().getClassLoader().getResourceAsStream("properties/datebase.properties");
-			if (is == null) {
-	            throw new IOException("datebase.properties 파일을 클래스패스에서 찾을 수 없습니다.");
-	        }
-			prop.load(is);
-			
-			
-			File imageFile = csd.getLogStuDTO().getFile();
-			
-			boolean imageLoaded = false;
-			
-			if (imageFile != null && imageFile.exists()) {
-		        String imagePath = imageFile.getAbsolutePath();
-		        ii = new ImageIcon(imagePath);
-		        
-		        if (ii.getImageLoadStatus() == MediaTracker.COMPLETE) {
-		            imageLoaded = true; // 이미지 로드 성공
+		    is = getClass().getClassLoader().getResourceAsStream("properties/datebase.properties");
+		    if (is == null) {
+		        throw new IOException("datebase.properties 파일을 클래스패스에서 찾을 수 없습니다.");
+		    }
+		    prop.load(is);
+
+		    // 1. 이미지 파일의 전체 경로를 조합합니다.
+		    String imagePath = prop.getProperty("savePath") + csd.getLogStuDTO().getStuNum() + "s.png";
+		    File imageFile = new File(imagePath); // File 객체 생성
+
+		    // 2. 파일이 존재하는지 확인합니다.
+		    if (imageFile.exists()) {
+		        // 🚨 핵심 수정: ImageIO.read()를 사용하여 강제로 최신 파일 내용을 읽어옵니다.
+		        try {
+		            BufferedImage bImg = ImageIO.read(imageFile);
+		            
+		            if (bImg != null) {
+		                // 3. 읽어온 BufferedImage를 기반으로 ImageIcon을 생성합니다.
+		                ii = new ImageIcon(bImg);
+		            } else {
+		                // ImageIO.read에 실패한 경우 (파일이 손상되었거나 포맷 문제)
+		                System.err.println("경고: 이미지 파일(" + imagePath + ")을 읽을 수 없습니다. (포맷/손상 문제)");
+		            }
+		        } catch (IOException readE) {
+		            System.err.println("파일 시스템 읽기 오류: " + imagePath);
+		            readE.printStackTrace();
 		        }
 		    }
-			
-			if (!imageLoaded) {
+
+		    // 4. 이미지를 로드하지 못했거나 파일이 존재하지 않는 경우 기본 이미지를 로드합니다.
+		    if (ii == null) {
 		        try (InputStream defaultIs = getClass().getResourceAsStream("/images/default_img.png")) {
 		            if (defaultIs != null) {
-		                // InputStream에서 바이트 배열을 읽어와 ImageIcon 생성 (URL 사용 안함)
-		                byte[] imageBytes = defaultIs.readAllBytes();
-		                ii = new ImageIcon(imageBytes);
+		                ii = new ImageIcon(defaultIs.readAllBytes());
 		            } else {
-		                // 기본 이미지마저 찾을 수 없는 경우 경고를 출력합니다.
-		                System.err.println("경고: 기본 이미지 파일을 클래스패스에서 찾을 수 없습니다.");
+		                System.err.println("경고: 기본 이미지 파일을 찾을 수 없습니다.");
 		            }
-		        } // try-with-resources에 의해 defaultIs는 자동으로 닫힙니다.
+		        }
 		    }
-		
-			// 3. 최종 로드된 이미지를 컴포넌트에 설정
+		    
+		    // 5. 최종 로드된 이미지를 컴포넌트에 설정
 		    if (ii != null) {
 		        simd.getJlblStuImg().setIcon(ii);
 		    }
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-	}
-	
 
+		} catch (IOException e) {
+		    e.printStackTrace();
+		    // 스트림 정리 로직은 try-with-resources나 finally 블록을 사용하면 좋습니다.
+		}
+	}
 }
