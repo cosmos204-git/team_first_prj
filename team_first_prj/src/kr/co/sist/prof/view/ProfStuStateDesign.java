@@ -14,6 +14,8 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
@@ -50,11 +52,20 @@ public class ProfStuStateDesign extends JDialog {
         jcbStuState = new JComboBox<>(dcbmStuState);
 
         // 폰트
-        Font font = new Font("맑은 고딕", Font.BOLD, 15);
+        Font font = new Font("맑은 고딕", Font.BOLD, 13);
         Arrays.asList(jlblProfName, jlblProfCourse, jtfProfName, jtStudent, jbtnSearch, jbtnClose)
                 .forEach(c -> c.setFont(font));
-        jtStudent.getTableHeader().setFont(new Font("맑은고딕", Font.BOLD, 15));
+        jtStudent.getTableHeader().setFont(new Font("맑은고딕", Font.BOLD, 13));
+        
+        // 선택은 가능, 수정은 불가능
+        jtStudent.setDefaultEditor(Object.class, null);
 
+        //jtable 센터 align
+	    DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+	    centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+	    ((DefaultTableCellRenderer) jtStudent.getDefaultRenderer(Object.class)).setHorizontalAlignment(SwingConstants.CENTER);
+
+	    
         // 테이블 설정
         TableColumnModel tcm = jtStudent.getColumnModel();
         tcm.getColumn(0).setPreferredWidth(60);
@@ -64,12 +75,12 @@ public class ProfStuStateDesign extends JDialog {
 
         // 배치
         setLayout(null);
-        jlblProfName.setBounds(60, 65, 80, 30);
-        jtfProfName.setBounds(130, 65, 120, 30);
-        jlblProfCourse.setBounds(280, 65, 80, 30);
-        jcbStuState.setBounds(360, 65, 150, 30);
-        jspStudent.setBounds(60, 110, 460, 350);
-        jbtnClose.setBounds(420, 480, 100, 35);
+        jlblProfName.setBounds(40, 15, 80, 30);
+        jtfProfName.setBounds(110, 15, 120, 30);
+        jlblProfCourse.setBounds(260, 15, 80, 30);
+        jcbStuState.setBounds(340, 15, 150, 30);
+        jspStudent.setBounds(40, 50, 460, 320);
+        jbtnClose.setBounds(400, 380, 100, 30);
 
         add(jlblProfName);
         add(jtfProfName);
@@ -85,7 +96,7 @@ public class ProfStuStateDesign extends JDialog {
         addWindowListener(pssde);
         
         
-        setSize(600, 600);
+        setSize(550, 480);
         setLocationRelativeTo(this);
         setVisible(true);
         
