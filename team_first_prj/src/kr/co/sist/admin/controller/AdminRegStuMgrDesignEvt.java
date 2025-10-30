@@ -113,7 +113,6 @@ public class AdminRegStuMgrDesignEvt extends WindowAdapter implements ActionList
 		int number = Integer.parseInt(aamd.getJtfStuNum().getText().trim());
 		}catch(NumberFormatException nfe) {
 			JOptionPane.showMessageDialog(aamd, "학번은 숫자로만 입력가능합니다.");
-			nfe.printStackTrace();
 			flag=true;
 		}//end catch
 		}//end if

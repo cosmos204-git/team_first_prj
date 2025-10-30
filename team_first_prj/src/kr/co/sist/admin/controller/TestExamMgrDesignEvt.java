@@ -6,6 +6,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -32,7 +33,7 @@ public class TestExamMgrDesignEvt extends WindowAdapter implements ActionListene
 		if(ae.getSource()==temd.getJbtnModify()) {
 			addProcess();
 			searchEiListProcess();
-			resetProcess();
+//			resetProcess();
 //			int row = temd.getJtExamList().getSelectedRow();
 //			selectedEIList(row);
 		}//end if 
@@ -61,6 +62,7 @@ public class TestExamMgrDesignEvt extends WindowAdapter implements ActionListene
 	
 	
 	public void resetProcess() {
+		temd.getJlblEICodeData().setText("");
 		temd.getJlblExamNumData().setText("");
 		temd.getJtaExamQuest().setText("");
 		temd.getJtfExamChoice1().setText("");
@@ -72,10 +74,29 @@ public class TestExamMgrDesignEvt extends WindowAdapter implements ActionListene
 	
 	public void addProcess() {
 		try {
-			int selectedRow = temd.getJtExamList().getSelectedRow();
-			if(selectedRow<0) {
+			String text = temd.getJlblEICodeData().getText();
+			if(text ==null || text.isEmpty()) {
 				JOptionPane.showMessageDialog(temd, "문제를 선택 후 수정하세요.");
 				 return;
+			}
+			String[] check = {temd.getJtaExamQuest().getText()
+					,temd.getJtfExamChoice1().getText()
+					,temd.getJtfExamChoice2().getText()
+					,temd.getJtfExamChoice3().getText()
+					,temd.getJtfExamChoice4().getText()
+					,temd.getJtfCorrect().getText()
+					};
+			int checkNum=0;
+			for(String a: check) {
+				boolean f = (a==null || a.equals(""));
+				if(f) {
+					checkNum++;
+				}
+			}
+			System.out.println(checkNum);
+			if(checkNum != 0) {
+				JOptionPane.showMessageDialog(temd, "누락된 항목이 있습니다.");
+				return;
 			}
 			int correct = 0 ;
 //			if(temd.getJtfCorrect().getText() == null || temd.getJtfCorrect().getText().isEmpty()) {
@@ -91,8 +112,9 @@ public class TestExamMgrDesignEvt extends WindowAdapter implements ActionListene
 			}//end if 
 		
 			TestExamMgrService tems = new TestExamMgrService();
-			int row =  temd.getJtExamList().getSelectedRow();
-			int eiCode = examItemList.get(row).getExamCode();
+//			int row =  temd.getJtExamList().getSelectedRow();
+//			int eiCode = examItemList.get(row).getExamCode();
+			int eiCode = Integer.parseInt( temd.getJlblEICodeData().getText());
 			examItemDTO eiDTO = new examItemDTO();
 			eiDTO.setExamQuest(temd.getJtaExamQuest().getText());
 			eiDTO.setExamChoice1(temd.getJtfExamChoice1().getText());
@@ -103,6 +125,7 @@ public class TestExamMgrDesignEvt extends WindowAdapter implements ActionListene
 			int cnt = tems.modifyEI(eiDTO, eiCode);
 			if(cnt ==1) {
 				JOptionPane.showMessageDialog(temd, "수정 되었습니다.");
+				resetProcess();
 			}
 		}catch(NumberFormatException nfe) {
 			JOptionPane.showMessageDialog(temd, "정답은 번호로만 입력 가능합니다.");
@@ -141,6 +164,7 @@ public class TestExamMgrDesignEvt extends WindowAdapter implements ActionListene
 		String choice2 = examItemList.get(index).getExamChoice2();
 		String choice3 = examItemList.get(index).getExamChoice3();
 		String choice4 = examItemList.get(index).getExamChoice4();
+		String code = String.valueOf( examItemList.get(index).getExamCode());
 		String correct = String.valueOf(examItemList.get(index).getExamCorrectTChoice());
 		temd.getJlblExamNumData().setText((index+1)+"");
 		temd.getJtaExamQuest().setText(examItemList.get(index).getExamQuest());
@@ -149,6 +173,7 @@ public class TestExamMgrDesignEvt extends WindowAdapter implements ActionListene
 		temd.getJtfExamChoice3().setText(choice3);
 		temd.getJtfExamChoice4().setText(choice4);
 		temd.getJtfCorrect().setText(correct);
+		temd.getJlblEICodeData().setText(code);
 		
 
 		if(temd.getJtfCorrect().getText().equals("0")) {

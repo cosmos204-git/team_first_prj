@@ -18,7 +18,7 @@ public class TestExamMgrDesign extends JDialog {
 	private DefaultTableModel dtmExamList ; 
 	private JTable jtExamList;
 	private JLabel jlblExamList,jlblSubName,jlblSubNameData,jlblExamQuest,jlblExamNum,jlblExamNumData,jlblExamChoice1
-	,jlblExamChoice2,jlblExamChoice3,jlblExamChoice4,jlblCorrect;
+	,jlblExamChoice2,jlblExamChoice3,jlblExamChoice4,jlblCorrect, jlblEICodeData;
 	private JButton jbtnReset,jbtnAdd,jbtnDelete, jbtnModify;
 	private JTextField jtfExamChoice1,jtfExamChoice2,jtfExamChoice3,jtfExamChoice4, jtfCorrect;
 	private JTextArea jtaExamQuest;
@@ -41,6 +41,7 @@ public class TestExamMgrDesign extends JDialog {
 		jtExamList = new JTable(dtmExamList);
 		JScrollPane jspExamList = new JScrollPane(jtExamList);
 		
+		jlblEICodeData = new JLabel("과목코드");
 		jlblSubName = new JLabel("과목");
 		jlblSubNameData = new JLabel();
 		jlblExamNum = new JLabel("번호");
@@ -88,6 +89,7 @@ public class TestExamMgrDesign extends JDialog {
 		jlblExamList.setBounds(30,20,100,20);
 		jspExamList.setBounds(30,50,170,180);
 		jlblSubName.setBounds(230,20,50,20);
+		jlblEICodeData.setBounds(350,20,70,20);
 		jlblSubNameData.setBounds(280,20,50,20);
 		jlblExamNum.setBounds(230,45,50,20);
 		jlblExamNumData.setBounds(280,45,50,20);
@@ -108,6 +110,8 @@ public class TestExamMgrDesign extends JDialog {
 //		jbtnAdd.setBounds(430,230,65,20);
 //		jbtnDelete.setBounds(500,230,65,20);
 		
+		add(jlblEICodeData);
+		add(jlblCorrect);
 		add(jlblExamList);
 		add(jspExamList);
 		add(jlblSubName);
@@ -268,6 +272,14 @@ public class TestExamMgrDesign extends JDialog {
 	public JTextArea getJtaExamQuest() {
 		return jtaExamQuest;
 	}
+
+	public JLabel getJlblEICodeData() {
+		return jlblEICodeData;
+	}
+
 	
+	
+
+		
 	
 }//class
