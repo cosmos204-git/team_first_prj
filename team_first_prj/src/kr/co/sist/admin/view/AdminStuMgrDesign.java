@@ -7,6 +7,7 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -30,7 +31,10 @@ public class AdminStuMgrDesign extends JDialog {
 		JPanel jpNouthSerch= new JPanel();
 		JPanel jpSouthButton= new JPanel(new FlowLayout(FlowLayout.CENTER, 30, 10));
 		String[] columnNames = { "학번", "이름", "휴대폰번호", "가입일" };
+		
+		JLabel jlblStuNum =new JLabel("학번 :");
 		jtfStuNum = new JTextField(15);
+		
 		dtmStuMgr = new DefaultTableModel(columnNames, 0);
 		jtStuMgr = new JTable(dtmStuMgr);
 
@@ -43,6 +47,9 @@ public class AdminStuMgrDesign extends JDialog {
 
 		// 글꼴 설정
 		Font font = new Font("맑은 고딕", Font.BOLD, 15);
+		
+		jlblStuNum.setFont(font);
+		
 		jtfStuNum.setFont(font);
 		jtStuMgr.setFont(font);
 		
@@ -85,6 +92,9 @@ public class AdminStuMgrDesign extends JDialog {
 		jpSouthButton.add(jbtnAdd);
 		jpSouthButton.add(jbtnDelete);
 		jpSouthButton.add(jbtnClose);
+		
+		
+		jpNouthSerch.add(jlblStuNum);
 		jpNouthSerch.add(jtfStuNum);
 		jpNouthSerch.add(jbtnSearch);
 		

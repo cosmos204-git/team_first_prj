@@ -6,6 +6,7 @@ import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -31,6 +32,8 @@ public class AdminProfMgrDesign extends JDialog {
 		jtfProfNum = new JTextField(15);
 		dtmProMgr = new DefaultTableModel(columnNames, 0);
 		jtProfMgr = new JTable(dtmProMgr);
+		
+		JLabel jlblProfNum = new JLabel("교번 : ");
 
 		jbtnSearch = new JButton("검색");
 
@@ -41,6 +44,7 @@ public class AdminProfMgrDesign extends JDialog {
 
 		// 글꼴 설정
 		Font font = new Font("맑은 고딕", Font.BOLD, 15);
+		jlblProfNum.setFont(font);
 		jtfProfNum.setFont(font);
 		jtProfMgr.setFont(font);
 		jbtnSearch.setFont(font);
@@ -80,6 +84,7 @@ public class AdminProfMgrDesign extends JDialog {
 		jpSouthButton.add(jbtnAdd);
 		jpSouthButton.add(jbtnDelete);
 		jpSouthButton.add(jbtnClose);
+		jpNouthSerch.add(jlblProfNum);
 		jpNouthSerch.add(jtfProfNum);
 		jpNouthSerch.add(jbtnSearch);
 		

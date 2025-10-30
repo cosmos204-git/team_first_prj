@@ -286,7 +286,7 @@ public class AdminCourseMgrDesignEvt extends WindowAdapter implements ActionList
 			}//end if 	
 		}//end for 
 		return flag;
-	}//validCourseName
+	}//modifiyCourseName
 	
 	
 	
@@ -327,7 +327,7 @@ public class AdminCourseMgrDesignEvt extends WindowAdapter implements ActionList
 			return ;
 		}
 		if(validDate(endDate,startDate)) {
-			msg="시작일이 종료일보다 작습니다. 다시 설정해주세요 ";
+			msg="시작일과 종료일을 확인해주세요. ";
 			JOptionPane.showMessageDialog(acmd, msg);
 			return;
 		}//end if

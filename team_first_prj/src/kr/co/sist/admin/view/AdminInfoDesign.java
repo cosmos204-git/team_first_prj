@@ -91,7 +91,7 @@ public class AdminInfoDesign extends JFrame {
 		return jbtnScoreMgr;
 	}//getJbtnScoreMgr
 
-	
+//	
 //	// 삭제 필요 main문
 //	public static void main(String[] args) {
 //		new AdminInfoDesign();

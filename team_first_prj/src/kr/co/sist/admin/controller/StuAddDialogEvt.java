@@ -51,8 +51,16 @@ public class StuAddDialogEvt extends WindowAdapter implements ActionListener{
 		String msg = "이름과 전화번호를 모두 입력해주세요!"; 
 		
 		String telRegex = "^010-\\d{4}-\\d{4}$";
+		String nameRegex = "[a-zA-Zㄱ-힣]+";
+		
 		//이름, 전화번호가 적혀져 있는 내용이 없다면 
 		if(stuName==null||stuName.isEmpty()||stuTel==null||stuTel.isEmpty()) {
+			JOptionPane.showMessageDialog(sad, msg);
+			return;
+		}
+		
+		if(!Pattern.matches(nameRegex, stuName)){
+			msg="이름은 숫자 및 특수문자 사용이 불가능합니다.";
 			JOptionPane.showMessageDialog(sad, msg);
 			return;
 		}

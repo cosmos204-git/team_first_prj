@@ -39,6 +39,8 @@ public class AdminCourseMgrDesign extends JDialog {
 	Font font = new Font("맑은 고딕",Font.BOLD,15);
 	UIManager.put("Label.font", font);
 	
+	JLabel jlblCourse = new JLabel("과정명 :");
+	
 	jlblCourseCode = new JLabel("과목코드 :");
 	jlblCourseName = new JLabel("과정명 :");
 	jlblProfName = new JLabel("교수 :");
@@ -161,7 +163,9 @@ public class AdminCourseMgrDesign extends JDialog {
 	
 	jbtnSearch.setBounds(711,18,85,30);
 	
+	jlblCourse.setBounds(jbtnAdd.getX()+33,16,85,30);
 	
+	add(jlblCourse);
 	add(jlblCourseCodeData);
 	add(jtfCourseName);
 	add(jtfSearchCourse);

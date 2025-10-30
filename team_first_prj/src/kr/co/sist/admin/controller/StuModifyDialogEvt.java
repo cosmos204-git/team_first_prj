@@ -51,11 +51,17 @@ public class StuModifyDialogEvt extends WindowAdapter implements ActionListener{
 		String stuTel=smd.getJtfStuTel().getText().trim();
 		
 		String telRegex = "^010-\\d{4}-\\d{4}$";
+		String nameRegex = "[a-zA-Zㄱ-힣]+";
 		
 		String msg="이름,비밀번호,전화번호를 모두 입력해주세요!";
 //		if(stuName==null||stuName.isEmpty()||stuTel==null||stuTel.isEmpty()
 //				||stuPass==null||stuPass.isEmpty()) {
 		if(stuName.isEmpty()||stuTel.isEmpty()||stuPass.isEmpty()) {
+			JOptionPane.showMessageDialog(smd, msg);
+			return;
+		}
+		if(!Pattern.matches(nameRegex, stuName)){
+			msg="이름은 숫자 및 특수문자 사용이 불가능합니다.";
 			JOptionPane.showMessageDialog(smd, msg);
 			return;
 		}
@@ -80,7 +86,6 @@ public class StuModifyDialogEvt extends WindowAdapter implements ActionListener{
 		
 			
 		boolean flag = smfs.modifyStudent(sDTO)==1;
-		System.out.println(flag);
 		
 		
 		if(flag) {

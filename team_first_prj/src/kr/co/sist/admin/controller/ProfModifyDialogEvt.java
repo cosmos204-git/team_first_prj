@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
 
+import kr.co.sist.admin.dto.CourseMgrDTO;
 import kr.co.sist.admin.dto.ProfDTO;
 import kr.co.sist.admin.service.ProfModifyService;
 import kr.co.sist.admin.view.ProfModifyDialog;
@@ -37,30 +38,37 @@ public class ProfModifyDialogEvt extends WindowAdapter implements ActionListener
 		pmd.dispose();
 	}//windowClosing
 	
-	public boolean duplicateName(String profName) {
-		boolean profFlag=false;
-		List<ProfDTO> list = pms.searchAllProfessor();
-		for(ProfDTO pDTO:list) {
-			String name= pDTO.getProfName();
-			if(profName.equals(name)) {
-				profFlag=true;
-				break;
-			}
-		}
+
+	
+	public boolean modifiyProfName(String profName, int profNum) {
+		boolean flag=false;
 		
-		return profFlag;
-	}//duplicateName
+		List<ProfDTO> list = pms.searchAllProfessor();
+		
+		for(ProfDTO pDTO:list) {
+			String dtoCourseName=pDTO.getProfName().trim();
+			
+			if(dtoCourseName.equals(profName)&&pDTO.getProfNum()!=profNum) {
+				flag=true;
+				break;
+			}//end if 	
+		}//end for 
+		return flag;
+	}//validCourseName
+
 	
 	public void ModifyProcess() {
 		//1.사용자가 변경한 값을 얻고 
 		ProfDTO pDTO = new ProfDTO();
 		
-		pDTO.setProfNum(Integer.parseInt(pmd.getJtfProfNum().getText().trim()));
+		int profNum=Integer.parseInt(pmd.getJtfProfNum().getText().trim());
+		pDTO.setProfNum(profNum);
 		String profName=pmd.getJtfProfName().getText().trim();
 		String profPass=String.valueOf(pmd.getJpfProfPass().getPassword()).trim();
 		String profTel=pmd.getJtfProfTel().getText().trim();
 		
 		String telRegex = "(^010-\\d{4}-\\d{4}$)";
+		String nameRegex = "[a-zA-Zㄱ-힣]+";
 		
 		String msg="이름,비밀번호,전화번호를 모두 입력해주세요!";
 		if(profName==null||profName.isEmpty()||profTel==null||profTel.isEmpty()
@@ -71,6 +79,10 @@ public class ProfModifyDialogEvt extends WindowAdapter implements ActionListener
 			msg="이름을 2~5자 사이로 입력해주세요.";
 			JOptionPane.showMessageDialog(pmd, msg);
 			return ;
+		}else if(!Pattern.matches(nameRegex, profName)){
+			msg="이름은 숫자 및 특수문자 사용이 불가능합니다.";
+			JOptionPane.showMessageDialog(pmd, msg);
+			return;
 		}else if(!Pattern.matches(telRegex, profTel)) {
 			msg="전화번호 형식이 올바르지 않습니다.\n ex)010-xxxx-xxxx";
 			JOptionPane.showMessageDialog(pmd, msg);
@@ -82,7 +94,7 @@ public class ProfModifyDialogEvt extends WindowAdapter implements ActionListener
 		}//end if 
 		
 		
-		if(duplicateName(profName)) {
+		if(modifiyProfName(profName,profNum)) {
 			profName=profName+"("+Integer.parseInt(pmd.getJtfProfNum().getText())+")";
 		}
 		
@@ -96,11 +108,7 @@ public class ProfModifyDialogEvt extends WindowAdapter implements ActionListener
 		if(flag) {
 			msg=pDTO.getProfName()+"의 교수 정보가 수정되었습니다.";
 		}//end if
-//		
-//		switch(flag) {
-//		case 1: msg=sDTO.getStuNum()+"번 학생의 정보를 ";
-//		}//end switch
-		
+
 		JOptionPane.showMessageDialog(pmd, msg);
 	
 		pmd.dispose();
