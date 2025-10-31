@@ -34,7 +34,7 @@ public class MainLoginDesign extends JFrame {
 		MainLoginDesignEvt mlde = new MainLoginDesignEvt(this);
 		
 		jlbTitle.setFont(titleFont);
-		jlbTitle.setIcon(new ImageIcon("src/images/logo.png"));
+		jlbTitle.setIcon(new ImageIcon(getClass().getResource("/images/logo.png")));
 		jbtnStuLogin.setFont(font);
 		jbtnProfLogin.setFont(font);
 		jbtnAdminLogin.setFont(font);

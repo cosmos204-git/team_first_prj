@@ -170,20 +170,22 @@ public class ProfScoreMgrDesignEvt extends WindowAdapter implements ActionListen
 		
 		report = new StringBuilder();
 		for(int i = 0;  i<listExam.size();i++) {
-			report.append(listExam.get(i).getExamQuest())
-			.append("\n\n")
+			report.append("문제 : ")
+			.append(listExam.get(i).getExamQuest())
+			.append("\n\n 1번 : ")
 			.append(listExam.get(i).getExamChoice1())
-			.append("\n")
+			.append("\n 2번 : ")
 			.append(listExam.get(i).getExamChoice2())
-			.append("\n")
+			.append("\n 3번 : ")
 			.append(listExam.get(i).getExamChoice3())
-			.append("\n")
+			.append("\n 4번 : ")
 			.append(listExam.get(i).getExamChoice4())
 			.append("\n\n 정답 : ")
 			.append(listExam.get(i).getExamCorrectChoice())
 			.append("\n 제출한 답 : ")
 			.append(listExam.get(i).getStuAns())
-			.append("\n\n");
+			.append("\n\n")
+			.append("-----------------------------------------------------------\n\n");
 			
 		}
 				

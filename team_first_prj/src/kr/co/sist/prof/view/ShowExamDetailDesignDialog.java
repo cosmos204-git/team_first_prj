@@ -26,14 +26,14 @@ public class ShowExamDetailDesignDialog extends JDialog {
         jlbSubject.setFont(new Font("맑은 고딕", Font.BOLD, 20));
 
         jtaReport = new JTextArea();
-        jtaReport.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
+        jtaReport.setFont(new Font("맑은 고딕",Font.BOLD,15));
         jtaReport.setEditable(false);
 
         JScrollPane jspReport = new JScrollPane(jtaReport);
         
  	
 
-        add("North", jlbSubject);
+       // add("North", jlbSubject);
         add("Center", jspReport);
 
         try {
@@ -44,7 +44,7 @@ public class ShowExamDetailDesignDialog extends JDialog {
         }
         
 
-        setBounds(pemd.getX() + 100, pemd.getY() + 50, 600, 700);
+        setBounds(pemd.getX() + 100, pemd.getY() + 50, 400, 700);
         setVisible(true);
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
     }
@@ -78,12 +78,13 @@ public class ShowExamDetailDesignDialog extends JDialog {
 
         for (ShowExamItemListDTO dto : list) {
         	jtaReport.append(
-        			dto.getExamQuest() + "\n" +
-        					dto.getExamChoice1() + "\n" +
-        					dto.getExamChoice2() + "\n" +
-        					dto.getExamChoice3() + "\n" +
-        					dto.getExamChoice4() + "\n" +
+        			"문제 : "+ dto.getExamQuest() + "\n\n" +
+					"1번 : "+ dto.getExamChoice1() + "\n" +
+					"2번 : "+ dto.getExamChoice2() + "\n" +
+					"3번 : "+ dto.getExamChoice3() + "\n" +
+					"4번 : "+ dto.getExamChoice4() + "\n\n" +
         					"정답: " + dto.getExamCorrectTChoice() + "\n\n"
+        					+ "-----------------------------------------------------------\n\n"
         			);
         }//end for
         
