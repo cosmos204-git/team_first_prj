@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
 
 import kr.co.sist.login.controller.LoginDesignEvt;
 
@@ -44,9 +45,10 @@ public class LoginDesign extends JFrame{
 		this.loginFlag = loginFlag;
 		this.mld=mld;
 		
-		JLabel jlbNum = new JLabel("아이디");
-		JLabel jlbPw = new JLabel("비밀번호");
+		JLabel jlbNum = new JLabel();
+		JLabel jlbPw = new JLabel();
 		Font font = new Font("맑은 고딕",Font.BOLD,20);
+		Border grayBorder = BorderFactory.createLineBorder(new Color(230, 230, 230), 2);
 		
 		jtfNum = new JTextField();
 		jtfPw = new JPasswordField();
@@ -55,39 +57,45 @@ public class LoginDesign extends JFrame{
 		JLabel jlbTitle = new JLabel();
 		
 		jlbTitle.setIcon(new ImageIcon("src/images/logo.png"));
+		jlbNum.setIcon(new ImageIcon("src/images/id_logo.png"));
+		jlbPw.setIcon(new ImageIcon("src/images/pw_logo.png"));
 		
 		setLayout(null);
 		
-		jlbTitle.setBounds(125, 25, 350, 50);
+		jlbTitle.setBounds(120, 25, 220, 50);
 		add(jlbTitle);
 		
-		jlbNum.setSize(100,45);
+		jlbNum.setSize(45,45);
 		jlbNum.setLocation(50,85);
 		jlbNum.setFont(font);
 		add(jlbNum);
 		
 		jtfNum.setSize(200,40);
-		jtfNum.setLocation(150,90);
+		jtfNum.setLocation(100,90);
 		jtfNum.setFont(font);
 		add(jtfNum);
 		
-		jlbPw.setSize(100,45);
+		jlbPw.setSize(45,45);
 		jlbPw.setLocation(50,145);
 		jlbPw.setFont(font);
 		add(jlbPw);
 		
 		jtfPw.setSize(200,40);
-		jtfPw.setLocation(150,150);
+		jtfPw.setLocation(100,150);
 		jtfPw.setFont(font);
 		add(jtfPw);
 		
 		jbtnLogin.setSize(100,100);
-		jbtnLogin.setLocation(380,90);
+		jbtnLogin.setLocation(315,90);
 		jbtnLogin.setFont(font);
 		jbtnLogin.setBackground(new Color(x,y,z));
 		jbtnLogin.setForeground(Color.white);
 		add(jbtnLogin);
+
 		
+		
+		jtfNum.setBorder(grayBorder);
+		jtfPw.setBorder(grayBorder);
 
 		jbtnLogin.setBorder(BorderFactory.createEmptyBorder());
 //		jtfPw.setBorder(BorderFactory.createEmptyBorder());
@@ -102,7 +110,7 @@ public class LoginDesign extends JFrame{
 		
 		getContentPane().setBackground(new Color(247, 247, 249));
 		setResizable(false);
-		setBounds(mld.getX()+50,mld.getY()+50,545,280);
+		setBounds(mld.getX()+50,mld.getY()+50,485,280);
 		setVisible(true);
 		
 

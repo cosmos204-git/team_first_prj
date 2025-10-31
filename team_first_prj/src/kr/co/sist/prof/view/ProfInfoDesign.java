@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.io.IOException;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -134,6 +135,8 @@ public class ProfInfoDesign extends JFrame{
 		JLabel jlblProfName = new JLabel("이름");
 		JLabel jlblProfCourse = new JLabel("담당과정");
 		JLabel jlblProfEmail = new JLabel("메일주소");
+		JLabel jlbTitle = new JLabel();
+		jlbTitle.setIcon(new ImageIcon("src/images/logo.png"));
 		
 		jlblProfImg = new JLabel();
 		ImageIcon ii = new ImageIcon();
@@ -151,61 +154,62 @@ public class ProfInfoDesign extends JFrame{
 		jbtnMgrExam = new JButton("시험 관리");
 		jbtnMgrProfScore = new JButton("성적 관리");
 		
-		jbtnModifyProfInfo.setBackground(new Color(0xE6E6E6));
-		jbtnStuState.setBackground(new Color(0xE6E6E6));
-		jbtnMgrExam.setBackground(new Color(0xE6E6E6));
-		jbtnMgrProfScore.setBackground(new Color(0xE6E6E6));
-		
-		Font font = new Font("맑은고딕",Font.BOLD,15);
+		Font font = new Font("맑은 고딕",Font.BOLD,15);
 		
 		setLayout(null);
 		
+		jlbTitle.setSize(350,50);
+		jlbTitle.setLocation(150, 25);
+		add(jlbTitle);
+		
+		
+		
 		jlblProfNum.setSize(200,50);
-		jlblProfNum.setLocation(140,20);
+		jlblProfNum.setLocation(140,80);
 		jlblProfNum.setFont(font);
 		add(jlblProfNum);
 		
 		
-		jtfProfNumData.setSize(150,30);
-		jtfProfNumData.setLocation(250,30);
-		jtfProfNumData.setFont(font);
-		add(jtfProfNumData);
-		
-		jtfProfNameData.setSize(150,30);
-		jtfProfNameData.setLocation(250,70);
-		jtfProfNameData.setFont(font);
-		add(jtfProfNameData);
-		
-		jtfProfCourseData.setSize(150,30);
-		jtfProfCourseData.setLocation(250,110);
-		jtfProfCourseData.setFont(font);
-		add(jtfProfCourseData);
-		
-		jtfProfEmailData.setSize(150,30);
-		jtfProfEmailData.setLocation(250,150);
-		jtfProfEmailData.setFont(font);
-		add(jtfProfEmailData);
-		
 		
 		
 		jlblProfName.setSize(200,50);
-		jlblProfName.setLocation(140,60);
+		jlblProfName.setLocation(140,115);
 		jlblProfName.setFont(font);
 		add(jlblProfName);
 		
 		jlblProfCourse.setSize(200,50);
-		jlblProfCourse.setLocation(140,100);
+		jlblProfCourse.setLocation(140,150);
 		jlblProfCourse.setFont(font);
 		add(jlblProfCourse);
 
 		jlblProfEmail.setSize(200,50);
-		jlblProfEmail.setLocation(140,140);
+		jlblProfEmail.setLocation(140,185);
 		jlblProfEmail.setFont(font);
 		add(jlblProfEmail);
 		
 		
+		jtfProfNumData.setSize(150,30);
+		jtfProfNumData.setLocation(220,90);
+		jtfProfNumData.setFont(font);
+		add(jtfProfNumData);
+		
+		jtfProfNameData.setSize(150,30);
+		jtfProfNameData.setLocation(220,125);
+		jtfProfNameData.setFont(font);
+		add(jtfProfNameData);
+		
+		jtfProfCourseData.setSize(150,30);
+		jtfProfCourseData.setLocation(220,160);
+		jtfProfCourseData.setFont(font);
+		add(jtfProfCourseData);
+		
+		jtfProfEmailData.setSize(150,30);
+		jtfProfEmailData.setLocation(220,195);
+		jtfProfEmailData.setFont(font);
+		add(jtfProfEmailData);
+		
 		jlblProfImg.setSize(100,120);
-		jlblProfImg.setLocation(20, 38);
+		jlblProfImg.setLocation(20, 100);
 		jlblProfImg.setFont(font);
 		jlblProfImg.setBackground(Color.BLACK);
 		jlblProfImg.setOpaque(true);
@@ -215,25 +219,41 @@ public class ProfInfoDesign extends JFrame{
 		
 		
 		jbtnModifyProfInfo.setSize(150,30);
-		jbtnModifyProfInfo.setLocation(420,30);
+		jbtnModifyProfInfo.setLocation(380,90);
 		jbtnModifyProfInfo.setFont(font);		
 		add(jbtnModifyProfInfo);
 		
 		jbtnStuState.setSize(150,30);
-		jbtnStuState.setLocation(420,70);
+		jbtnStuState.setLocation(380,125);
 		jbtnStuState.setFont(font);		
 		add(jbtnStuState);
 		
 		jbtnMgrExam.setSize(150,30);
-		jbtnMgrExam.setLocation(420,110);
+		jbtnMgrExam.setLocation(380,160);
 		jbtnMgrExam.setFont(font);		
 		add(jbtnMgrExam);
 		
 		jbtnMgrProfScore.setSize(150,30);
-		jbtnMgrProfScore.setLocation(420,150);
+		jbtnMgrProfScore.setLocation(380,195);
 		jbtnMgrProfScore.setFont(font);		
 		add(jbtnMgrProfScore);
 
+		jbtnModifyProfInfo.setBorder(BorderFactory.createEmptyBorder());
+		jbtnStuState.setBorder(BorderFactory.createEmptyBorder());
+		jbtnMgrExam.setBorder(BorderFactory.createEmptyBorder());
+		jbtnMgrProfScore.setBorder(BorderFactory.createEmptyBorder());
+		
+		jbtnModifyProfInfo.setBackground(new Color(96,186,42));
+		jbtnStuState.setBackground(new Color(96,186,42));
+		jbtnMgrExam.setBackground(new Color(96,186,42));
+		jbtnMgrProfScore.setBackground(new Color(96,186,42));
+		
+		jbtnModifyProfInfo.setForeground(Color.white);
+		jbtnStuState.setForeground(Color.white);
+		jbtnMgrExam.setForeground(Color.white);
+		jbtnMgrProfScore.setForeground(Color.white);
+		
+		
 		ProfInfoDesignEvt pide = new ProfInfoDesignEvt(this);
 		
 		jbtnModifyProfInfo.addActionListener(pide);
@@ -242,10 +262,8 @@ public class ProfInfoDesign extends JFrame{
 		jbtnMgrExam.addActionListener(pide);
 		addWindowListener(pide);
 		
-	    getContentPane().setBackground(new Color(0xF8F9FA));
-
-		
-		setBounds(600,300,600,350);
+		getContentPane().setBackground(new Color(247, 247, 249));
+		setBounds(600,300,570,350);
 		setVisible(true);
 		
 		
@@ -256,5 +274,3 @@ public class ProfInfoDesign extends JFrame{
 
 	
 }// class
-
-
