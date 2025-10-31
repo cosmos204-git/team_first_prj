@@ -105,7 +105,7 @@ public class StuExamDesign extends JDialog {
         
         jbtnSubmit.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 
-        Color btnColor = new Color(0x6A, 0xBD, 0xE5);
+        Color btnColor = new Color(106,189,229);
         jbtnSubmit.setBackground(btnColor);
 
         jbtnSubmit.setForeground(Color.WHITE);

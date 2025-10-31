@@ -4,12 +4,14 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -49,7 +51,7 @@ public class ProfScoreMgrDesign extends JDialog{
 		dcbmProfSub = new DefaultComboBoxModel<String>();
 		jbtnSearchStuNum = new JButton("검색");
 		jbtnShowStuReportInfo = new JButton("시험지상세보기");
-		
+		Font font = new Font("맑은 고딕",Font.BOLD,15);
 		
 		jtfStuNum = new JTextField(); 
 		jcbProfCourse = new JComboBox<String>(dcbmProfCourse);
@@ -83,6 +85,11 @@ public class ProfScoreMgrDesign extends JDialog{
 		jspProfScoreMgr.getViewport().setBackground(new Color(0xF8F9FA)); 
 		jspProfScoreMgr.setBorder(new LineBorder(new Color(0x000000), 2));
 		
+		jbtnSearchStuNum.setPreferredSize(new Dimension(70, 25)); 
+	    
+	    // 2. 시험지 상세 보기 버튼 크기 조정 (예: 130 x 25)
+	    jbtnShowStuReportInfo.setPreferredSize(new Dimension(130, 25));
+		
 		
 		JPanel jp = new JPanel();
 		JPanel jpa = new JPanel();
@@ -93,6 +100,17 @@ public class ProfScoreMgrDesign extends JDialog{
 		jp.setPreferredSize(new Dimension(20,100));
 		jpa.setPreferredSize(new Dimension(20,100));
 		
+		jbtnSearchStuNum.setSize(200, 200);
+		
+		jbtnSearchStuNum.setFont(font);
+		jbtnShowStuReportInfo.setFont(font);
+		
+		jbtnSearchStuNum.setBorder(BorderFactory.createEmptyBorder());
+		jbtnSearchStuNum.setBackground(new Color(96,186,42));
+		jbtnSearchStuNum.setForeground(Color.white);
+		jbtnShowStuReportInfo.setBorder(BorderFactory.createEmptyBorder());
+		jbtnShowStuReportInfo.setBackground(new Color(96,186,42));
+		jbtnShowStuReportInfo.setForeground(Color.white);
 		
 		
 		

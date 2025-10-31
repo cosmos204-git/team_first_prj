@@ -1,6 +1,5 @@
 package kr.co.sist.prof.view;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -11,9 +10,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.SwingConstants;
-import javax.swing.border.LineBorder;
-import javax.swing.table.DefaultTableCellRenderer;
 
 import kr.co.sist.prof.dao.ShowExamDetailDAO;
 import kr.co.sist.prof.dto.ShowExamItemListDTO;
@@ -46,6 +42,7 @@ public class ShowExamDetailDesignDialog extends JDialog {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "시험지 불러오기 중 오류가 발생했습니다.");
         }
+        
 
         setBounds(pemd.getX() + 100, pemd.getY() + 50, 600, 700);
         setVisible(true);

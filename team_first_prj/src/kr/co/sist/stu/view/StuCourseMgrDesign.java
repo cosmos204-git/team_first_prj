@@ -125,10 +125,12 @@ public class StuCourseMgrDesign extends JDialog {
         addWindowListener(evt);
         
         //색변경
-        jbtnclose.setBackground(new Color(0xE6E6E6));
-        jbtnShowExam.setBackground(new Color(0xE6E6E6));
-        jbtnShowStuReport.setBackground(new Color(0xE6E6E6));
-
+        jbtnclose.setBackground(new Color(106,189,229));
+        jbtnShowExam.setBackground(new Color(106,189,229));
+        jbtnShowStuReport.setBackground(new Color(106,189,229));
+        jbtnclose.setForeground(Color.white);
+        jbtnShowExam.setForeground(Color.white);
+        jbtnShowStuReport.setForeground(Color.white);
         
         evt.viewStuInfo();
         loadTableData();

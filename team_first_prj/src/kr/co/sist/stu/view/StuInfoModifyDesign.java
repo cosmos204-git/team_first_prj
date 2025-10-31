@@ -10,6 +10,7 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.border.Border;
 
 import kr.co.sist.stu.controller.StuInfoModifyDesignEvt;
 
@@ -29,6 +30,8 @@ public class StuInfoModifyDesign extends JDialog{
       JLabel jlblStuAddr = new JLabel("주소");
       JLabel jlblStuAddr2 = new JLabel("상세주소");
       JLabel jlbTitle = new JLabel();
+      
+      Border grayBorder = BorderFactory.createLineBorder(new Color(230, 230, 230), 2);
       
       jlbTitle.setIcon(new ImageIcon("src/images/logo.png"));      
       
@@ -166,7 +169,13 @@ public class StuInfoModifyDesign extends JDialog{
       jbtnSelectImage.setForeground(Color.white);
       jbtnModifyPw.setForeground(Color.white);
       jbtnClose.setForeground(Color.white);
-      
+	      
+      jtfStuAddr.setBorder(grayBorder);
+      jtfStuAddr2.setBorder(grayBorder);
+      jtfStuEmail.setBorder(grayBorder);
+      jtfStuNameData.setBorder(grayBorder);
+      jtfStuNumData.setBorder(grayBorder);
+      jtfStuTelData.setBorder(grayBorder);
       
       
       StuInfoModifyDesignEvt simde = new StuInfoModifyDesignEvt(this);

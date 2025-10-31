@@ -11,6 +11,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.border.Border;
 
 import kr.co.sist.prof.controller.ProInfoModifyDesignEvt;
 
@@ -39,6 +40,8 @@ public class ProfInfoModifyDesign extends JDialog {
 		JLabel jlblProfCourse = new JLabel("담당과정");
 		JLabel jlblProfEmail = new JLabel("메일주소");
 		JLabel jlbTitle = new JLabel();
+		
+		Border grayBorder = BorderFactory.createLineBorder(new Color(230, 230, 230), 2);
 	      
 		jlbTitle.setIcon(new ImageIcon("src/images/logo.png"));      
 	      
@@ -61,9 +64,9 @@ public class ProfInfoModifyDesign extends JDialog {
 		jbtnModifyProfPW = new JButton("비밀번호 변경");
 		jbtnModifyProfInfo = new JButton("개인정보 수정");
 		jbtnClose = new JButton("닫기");
-		jbtnAddImg = new JButton("사진첨부");
+		jbtnAddImg = new JButton("사진 선택");
 		
-		Font font = new Font("맑은고딕",Font.BOLD,15);
+		Font font = new Font("맑은 고딕",Font.BOLD,15);
 		
 		setLayout(null);
 		
@@ -169,6 +172,12 @@ public class ProfInfoModifyDesign extends JDialog {
 		jbtnAddImg.setForeground(Color.white);
 		jbtnModifyProfPW.setForeground(Color.white);
 		jbtnClose.setForeground(Color.white);
+		
+		jtfProfCourseData.setBorder(grayBorder);
+		jtfProfEmailData.setBorder(grayBorder);
+		jtfProfNameData.setBorder(grayBorder);
+		jtfProfNumData.setBorder(grayBorder);
+		jtfProfTelData.setBorder(grayBorder);
 		
 		
 		ProInfoModifyDesignEvt pimde = new ProInfoModifyDesignEvt(this);

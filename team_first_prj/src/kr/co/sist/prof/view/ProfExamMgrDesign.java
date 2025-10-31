@@ -3,6 +3,7 @@ package kr.co.sist.prof.view;
 import java.awt.Color;
 import java.awt.Font;
 
+import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -216,6 +217,13 @@ public class ProfExamMgrDesign extends JDialog{
 		      jbtnModifyExam.setBounds(230,480,150,35);//수정 완료
 		      jbtnExamDetail.setBounds(400,480,150,35);//시험지 상세 보기
 		      add(jspStuReport);
+		      
+		      jbtnModifyExam.setBorder(BorderFactory.createEmptyBorder());
+		      jbtnModifyExam.setBackground(new Color(96,186,42));
+		      jbtnModifyExam.setForeground(Color.white);
+		      jbtnExamDetail.setBorder(BorderFactory.createEmptyBorder());
+		      jbtnExamDetail.setBackground(new Color(96,186,42));
+		      jbtnExamDetail.setForeground(Color.white);
 		      
 		      //JFrame에 추가 
 		      add(jbtnModifyExam);

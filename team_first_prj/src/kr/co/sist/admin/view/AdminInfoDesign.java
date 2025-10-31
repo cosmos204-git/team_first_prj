@@ -1,6 +1,7 @@
 package kr.co.sist.admin.view;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Image;
 
@@ -90,13 +91,6 @@ public class AdminInfoDesign extends JFrame {
 		jbtnScoreMgr.setContentAreaFilled(false); // ← 버튼 배경 제거
 		jbtnScoreMgr.setOpaque(false); // ← 완전 투명 가능
 		
-		Font font = new Font("맑은 고딕", Font.BOLD, 20);
-		jbtnStuMgr.setFont(font);
-		jbtnProfMgr.setFont(font);
-		jbtnCourseMgr.setFont(font);
-		jbtnAllStuMgr.setFont(font);
-		jbtnSubjectMgr.setFont(font);
-		jbtnScoreMgr.setFont(font);
  
 		setLayout(null);
 

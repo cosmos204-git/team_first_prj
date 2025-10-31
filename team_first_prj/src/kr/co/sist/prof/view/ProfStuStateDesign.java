@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -105,6 +106,15 @@ public class ProfStuStateDesign extends JDialog {
         add(jspStudent);
         add(jbtnClose);
 
+        
+        jbtnClose.setBorder(BorderFactory.createEmptyBorder());
+        jbtnClose.setBackground(new Color(96,186,42));
+        jbtnClose.setForeground(Color.white);
+		jbtnSearch.setBorder(BorderFactory.createEmptyBorder());
+		jbtnSearch.setBackground(new Color(96,186,42));
+		jbtnSearch.setForeground(Color.white);
+        
+        
         // 이벤트 연결
         ProfStuStateDesignEvt pssde = new ProfStuStateDesignEvt(this);
         jbtnClose.addActionListener(pssde);

@@ -1,5 +1,6 @@
 package kr.co.sist.admin.view;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.time.LocalDate;
 
@@ -14,6 +15,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
+import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
@@ -109,15 +111,20 @@ public class AdminCourseMgrDesign extends JDialog {
 	tcm.getColumn(5).setPreferredWidth(60);
 	tcm.getColumn(6).setPreferredWidth(60);
 
+	JScrollPane jsp = new JScrollPane(jtAdminCourseMgr);
+	
 	// 행의 높이
 	jtAdminCourseMgr.setRowHeight(20);
 
 	DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 	centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+	centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+	centerRenderer.setOpaque(true);
+	centerRenderer.setBackground(new Color(0xF8F9FA));
 	
 	jtAdminCourseMgr.setDefaultRenderer(Object.class, centerRenderer);
-	
-	JScrollPane jsp = new JScrollPane(jtAdminCourseMgr);
+	jsp.getViewport().setBackground(new Color(0xF8F9FA)); 
+	jsp.setBorder(new LineBorder(new Color(0x000000), 2));
 	
 	
 
@@ -128,6 +135,27 @@ public class AdminCourseMgrDesign extends JDialog {
 	jbtnClose = new JButton("닫기");
 	
 	jbtnSearch = new JButton("검색");
+	
+	jbtnModify.setFont(font);
+	jbtnAdd.setFont(font);
+	jbtnDelete.setFont(font);
+	jbtnClose.setFont(font);
+	jbtnSearch.setFont(font);
+	
+	jbtnModify.setBackground(new Color(0xE6E6E6));
+	jbtnAdd.setBackground(new Color(0xE6E6E6));
+	jbtnDelete.setBackground(new Color(0xE6E6E6));
+	jbtnClose.setBackground(new Color(0xE6E6E6));
+	jbtnSearch.setBackground(new Color(0xE6E6E6));
+	
+	
+	jcbProfName.setBackground(new Color(0xF8F9FA));
+	jcbStartdateM.setBackground(new Color(0xF8F9FA));
+	jcbStartdateD.setBackground(new Color(0xF8F9FA));
+	jcbEnddateY.setBackground(new Color(0xF8F9FA));
+	jcbEnddateM.setBackground(new Color(0xF8F9FA));
+	jcbEnddateD.setBackground(new Color(0xF8F9FA));
+	
 	
 	
 	jlblCourseCode.setBounds(30,90,70,20);
@@ -162,6 +190,7 @@ public class AdminCourseMgrDesign extends JDialog {
 	
 	
 	jsp.setBounds(297,60,500,320);
+//	jsp.setBounds(297,60,440,280);
 	jbtnClose.setBounds(660,390,80,30);
 	jbtnDelete.setBounds(570,390,80,30);
 	jbtnAdd.setBounds(455,390,105,30);
@@ -217,7 +246,8 @@ public class AdminCourseMgrDesign extends JDialog {
 	jcbEnddateM.addItemListener(acmde);
 	addWindowListener(acmde);
 	
-	setSize(850,500);
+	setSize(820,500);
+	getContentPane().setBackground(new Color(0xF8F9FA));
 	setLocationRelativeTo(null);
 	setResizable(false);
 	setVisible(true);

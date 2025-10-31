@@ -105,7 +105,7 @@ public class LoginDesignEvt extends WindowAdapter implements ActionListener{
 					}
 					if(logDTO.getStuPass().equals(stuPass)){
 						CurrentStuData.getInstance().setLogStuDTO(logDTO);
-						JOptionPane.showMessageDialog(ld, logDTO.getStuName() + "학생님 환영합니다.");
+						JOptionPane.showMessageDialog(ld, logDTO.getStuName() + " 학생님 환영합니다.");
 							new StuInfoDesign();
 						ld.dispose();
 						
@@ -196,7 +196,7 @@ public class LoginDesignEvt extends WindowAdapter implements ActionListener{
 					}
 					
 					CurrentProfData.getInstance().setLogProfDTO(logDTO);
-					JOptionPane.showMessageDialog(ld, logDTO.getProfName() + "교수님 환영합니다.");
+					JOptionPane.showMessageDialog(ld, logDTO.getProfName() + " 교수님 환영합니다.");
 					new ProfInfoDesign();
 					ld.dispose();
 				}else {
