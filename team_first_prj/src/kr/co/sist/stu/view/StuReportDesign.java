@@ -78,7 +78,8 @@ public class StuReportDesign extends JDialog {
         jbtnClose.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 
         //색변경
-        jbtnClose.setBackground(new Color(0xE6E6E6));
+        jbtnClose.setBackground(new Color(106,189,229));
+        jbtnClose.setForeground(Color.white);
 //        Color btnColor = new Color(0x6A, 0xBD, 0xE5);
 //        jbtnClose.setBackground(btnColor);
 

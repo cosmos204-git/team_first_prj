@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.border.Border;
 
 import kr.co.sist.prof.controller.ProfInfoDesignEvt;
 
@@ -24,6 +25,8 @@ public class ProfInfoDesign extends JFrame{
 
 	private JButton jbtnModifyProfInfo, jbtnStuState, jbtnMgrExam, jbtnMgrProfScore;
 
+	
+	
 	public JLabel getJlblProfImg() {
 		return jlblProfImg;
 	}
@@ -131,6 +134,8 @@ public class ProfInfoDesign extends JFrame{
 	public ProfInfoDesign() throws IOException {
 		super("교수 기본 화면");
 		
+		
+		Border grayBorder = BorderFactory.createLineBorder(new Color(230, 230, 230), 2);
 		JLabel jlblProfNum = new JLabel("교번");
 		JLabel jlblProfName = new JLabel("이름");
 		JLabel jlblProfCourse = new JLabel("담당과정");
@@ -254,6 +259,12 @@ public class ProfInfoDesign extends JFrame{
 		jbtnMgrProfScore.setForeground(Color.white);
 		
 		
+		jtfProfCourseData.setBorder(grayBorder);
+		jtfProfEmailData.setBorder(grayBorder);
+		jtfProfNameData.setBorder(grayBorder);
+		jtfProfNumData.setBorder(grayBorder);
+		
+		
 		ProfInfoDesignEvt pide = new ProfInfoDesignEvt(this);
 		
 		jbtnModifyProfInfo.addActionListener(pide);
@@ -263,7 +274,7 @@ public class ProfInfoDesign extends JFrame{
 		addWindowListener(pide);
 		setResizable(false);
 		getContentPane().setBackground(new Color(247, 247, 249));
-		setBounds(600,300,570,350);
+		setBounds(150,150,570,350);
 		setVisible(true);
 		
 		

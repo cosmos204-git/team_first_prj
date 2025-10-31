@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -81,9 +82,8 @@ public class ShowSubjectDialog extends JDialog {
 		addWindowListener(ssde);
 		
 		//색변경
-	    jbtnClose.setBackground(new Color(0xE6E6E6));
-
-		
+	    jbtnClose.setBackground(new Color(106,189,229));
+	    jbtnClose.setForeground(Color.white);
 		
 		
 		setBounds(csd.getX()+50,csd.getY()+50,300,300);

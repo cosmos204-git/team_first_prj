@@ -122,9 +122,12 @@ public class CourseSelectDesign extends JDialog {
         jbtnApplyCourse = new JButton("신청"); 
         jbtnClose = new JButton("닫기");
         //색변경
-        jbtnApplyCourse.setBackground(new Color(0xE6E6E6));
-        jbtnClose.setBackground(new Color(0xE6E6E6));
-        jbtnShowSub.setBackground(new Color(0xE6E6E6));
+        jbtnApplyCourse.setBackground(new Color(106,189,229));
+        jbtnClose.setBackground(new Color(106,189,229));
+        jbtnShowSub.setBackground(new Color(106,189,229));
+        jbtnApplyCourse.setForeground(Color.white);
+        jbtnClose.setForeground(Color.white);
+        jbtnShowSub.setForeground(Color.white);
         
 		
 	      DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();

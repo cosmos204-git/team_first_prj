@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.border.Border;
 
 import kr.co.sist.stu.controller.StuInfoDesignEvt;
 
@@ -29,7 +30,7 @@ public class StuInfoDesign extends JFrame {
 		JLabel jlblStuTel = new JLabel("전화번호");
 		JLabel jlblStuCourse = new JLabel("수강과정");
 		JLabel jlbTitle = new JLabel();
-		
+		Border grayBorder = BorderFactory.createLineBorder(new Color(230, 230, 230), 2);
 		jlbTitle.setIcon(new ImageIcon("src/images/logo.png"));
 		
 		
@@ -135,6 +136,11 @@ public class StuInfoDesign extends JFrame {
 		jbtnSelectCourse.setForeground(Color.white);
 		jbtnMgrCourse.setForeground(Color.white);
 		
+
+		jtfStuNameData.setBorder(grayBorder);
+		jtfStuNumData.setBorder(grayBorder);
+		jtfStuTelData.setBorder(grayBorder);
+		jtfStuCourseData.setBorder(grayBorder);
 		
 		
 		StuInfoDesignEvt side = new StuInfoDesignEvt(this);
@@ -146,7 +152,7 @@ public class StuInfoDesign extends JFrame {
 		addWindowListener(side);		
 		
 		setResizable(false);
-		setBounds(300,300,560,350);
+		setBounds(150,150,560,350);
 		setVisible(true);
 	}
 

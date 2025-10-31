@@ -70,15 +70,15 @@ public class LoginDesign extends JFrame{
 		jlbNum.setFont(font);
 		add(jlbNum);
 		
-		jtfNum.setSize(200,40);
-		jtfNum.setLocation(100,90);
-		jtfNum.setFont(font);
-		add(jtfNum);
-		
 		jlbPw.setSize(45,45);
 		jlbPw.setLocation(50,145);
 		jlbPw.setFont(font);
 		add(jlbPw);
+		
+		jtfNum.setSize(200,40);
+		jtfNum.setLocation(100,90);
+		jtfNum.setFont(font);
+		add(jtfNum);
 		
 		jtfPw.setSize(200,40);
 		jtfPw.setLocation(100,150);
