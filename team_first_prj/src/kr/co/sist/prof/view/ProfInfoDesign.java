@@ -141,7 +141,7 @@ public class ProfInfoDesign extends JFrame{
 		JLabel jlblProfCourse = new JLabel("담당과정");
 		JLabel jlblProfEmail = new JLabel("메일주소");
 		JLabel jlbTitle = new JLabel();
-		jlbTitle.setIcon(new ImageIcon("src/images/logo.png"));
+		jlbTitle.setIcon(new ImageIcon(getClass().getResource("/images/logo.png")));
 		
 		jlblProfImg = new JLabel();
 		ImageIcon ii = new ImageIcon();

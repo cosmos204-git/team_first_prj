@@ -24,7 +24,7 @@ public class ProfPwMdfDialog extends JDialog{
 		super(pimd,"교수 비밀번호 변경",modal);
 		Border grayBorder = BorderFactory.createLineBorder(new Color(230, 230, 230), 2);
 		JLabel jlbTitle = new JLabel();
-		jlbTitle.setIcon(new ImageIcon("src/images/logo.png"));
+		jlbTitle.setIcon(new ImageIcon(getClass().getResource("/images/logo.png")));
 		Font font = new Font("맑은 고딕",Font.BOLD,15);
 		setLayout(null);
 		

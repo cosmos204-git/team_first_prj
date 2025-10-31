@@ -148,6 +148,11 @@ public class LoginDesignEvt extends WindowAdapter implements ActionListener{
 		}
 		
 		
+		if(!list.get(0).getProfPass().equals(profPass)) {
+			JOptionPane.showMessageDialog(ld, "비밀번호가 틀립니다.");
+			return;
+		}
+		
 		for(int i = 0; i<list.size();i++) {
 			if(list.get(i).getCourseDelFlag().equals("N")) {
 				courseCount++;

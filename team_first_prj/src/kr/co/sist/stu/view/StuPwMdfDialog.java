@@ -1,21 +1,16 @@
 package kr.co.sist.stu.view;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
 
 import kr.co.sist.stu.controller.StuPwMdfDialogEvt;
 
@@ -33,7 +28,7 @@ public class StuPwMdfDialog extends JDialog{
 		
 		Border grayBorder = BorderFactory.createLineBorder(new Color(230, 230, 230), 2);
 		JLabel jlbTitle = new JLabel();
-		jlbTitle.setIcon(new ImageIcon("src/images/logo.png"));
+		jlbTitle.setIcon(new ImageIcon(getClass().getResource("/images/logo.png")));
 		Font font = new Font("맑은 고딕",Font.BOLD,15);
 		setLayout(null);
 		

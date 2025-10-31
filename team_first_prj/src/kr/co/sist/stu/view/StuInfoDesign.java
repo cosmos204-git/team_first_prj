@@ -31,7 +31,7 @@ public class StuInfoDesign extends JFrame {
 		JLabel jlblStuCourse = new JLabel("수강과정");
 		JLabel jlbTitle = new JLabel();
 		Border grayBorder = BorderFactory.createLineBorder(new Color(230, 230, 230), 2);
-		jlbTitle.setIcon(new ImageIcon("src/images/logo.png"));
+		jlbTitle.setIcon(new ImageIcon(getClass().getResource("/images/logo.png")));
 		
 		
 		jlblStuImg = new JLabel();

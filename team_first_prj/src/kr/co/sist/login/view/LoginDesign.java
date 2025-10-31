@@ -56,9 +56,9 @@ public class LoginDesign extends JFrame{
 		
 		JLabel jlbTitle = new JLabel();
 		
-		jlbTitle.setIcon(new ImageIcon("src/images/logo.png"));
-		jlbNum.setIcon(new ImageIcon("src/images/id_logo.png"));
-		jlbPw.setIcon(new ImageIcon("src/images/pw_logo.png"));
+		jlbTitle.setIcon(new ImageIcon(getClass().getResource("/images/logo.png")));
+		jlbNum.setIcon(new ImageIcon(getClass().getResource("/images/id_logo.png")));
+		jlbPw.setIcon(new ImageIcon(getClass().getResource("/images/pw_logo.png")));
 		
 		setLayout(null);
 		

@@ -1,5 +1,7 @@
 package kr.co.sist.prof.view;
 
+import java.awt.Font;
+
 import javax.swing.JDialog;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -9,6 +11,7 @@ public class ShowStuReportInfoDesignDialog extends JDialog {
 	
 	JTextArea jtlReport;
 	StringBuilder report;
+
 	
 	public ShowStuReportInfoDesignDialog(ProfScoreMgrDesign psmd, boolean modal, StringBuilder report) {
 		
@@ -16,10 +19,12 @@ public class ShowStuReportInfoDesignDialog extends JDialog {
 		
 		this.report = report;
 		jtlReport = new JTextArea();
+		Font font = new Font("맑은 고딕",Font.BOLD,15);
 		JScrollPane jspReport = new JScrollPane(jtlReport);
 		
 		
 		
+		jtlReport.setFont(font);
 		jtlReport.setText(report.toString());
 		
 		add("Center", jspReport);
@@ -42,6 +47,5 @@ public class ShowStuReportInfoDesignDialog extends JDialog {
 	public StringBuilder getReport() {
 		return report;
 	}
-
 
 }

@@ -43,8 +43,7 @@ public class ProfInfoModifyDesign extends JDialog {
 		
 		Border grayBorder = BorderFactory.createLineBorder(new Color(230, 230, 230), 2);
 	      
-		jlbTitle.setIcon(new ImageIcon("src/images/logo.png"));      
-	      
+		jlbTitle.setIcon(new ImageIcon(getClass().getResource("/images/logo.png")));
 		
 		jlblProfImg = new JLabel();
 		ImageIcon ii = new ImageIcon();
