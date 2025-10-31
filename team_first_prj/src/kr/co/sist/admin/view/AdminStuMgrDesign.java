@@ -1,6 +1,7 @@
 package kr.co.sist.admin.view;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.util.List;
@@ -74,6 +75,11 @@ public class AdminStuMgrDesign extends JDialog {
 		jbtnClose.addActionListener(asde);
 		jtStuMgr.addMouseListener(asde);
 		
+		
+		
+		
+		
+
 		// columns(열)의 넓이 설정
 		TableColumnModel tcm = jtStuMgr.getColumnModel();
 		tcm.getColumn(0).setPreferredWidth(40);// 학번
@@ -97,7 +103,12 @@ public class AdminStuMgrDesign extends JDialog {
 		jspStuMgr.getViewport().setBackground(new Color(0xF8F9FA)); 
 		jspStuMgr.setBorder(new LineBorder(new Color(0x000000), 2));
 		
-
+		jbtnModify.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		jbtnAdd.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		jbtnDelete.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		jbtnClose.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		jbtnSearch.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		
 		setLayout(new BorderLayout());
 		
 		

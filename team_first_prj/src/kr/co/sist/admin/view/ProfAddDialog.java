@@ -1,6 +1,8 @@
 package kr.co.sist.admin.view;
 
 
+import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Font;
 
 import javax.swing.JButton;
@@ -55,6 +57,11 @@ public class ProfAddDialog extends JDialog {
 		jbtnAdd.setFont(font);
 		jbtnClose.setFont(font);
 		
+		jbtnClose.setBackground(new Color(0xE6E6E6));
+		jbtnAdd.setBackground(new Color(0xE6E6E6));
+		
+		jbtnClose.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		jbtnAdd.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		
 		//위치 선정
 		setLayout(null);
@@ -92,6 +99,7 @@ public class ProfAddDialog extends JDialog {
 		
 		setSize(600,300);
 		setLocationRelativeTo(null);
+		getContentPane().setBackground(new Color(0xF8F9FA));
 		setResizable(false);
 		setVisible(true);
 		

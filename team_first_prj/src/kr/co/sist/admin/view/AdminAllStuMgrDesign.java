@@ -1,6 +1,7 @@
 package kr.co.sist.admin.view;
 
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 
 import javax.swing.DefaultComboBoxModel;
@@ -29,13 +30,17 @@ public class AdminAllStuMgrDesign extends JDialog {
 	public AdminAllStuMgrDesign(AdminInfoDesign aid, boolean modal) {
 		super(aid,"관리자 - 입과관리",modal);
 		
+		JPanel jpNorth = new JPanel();
 		Font font = new Font("맑은 고딕",Font.BOLD,15);
 		
 		dcbmCoure = new DefaultComboBoxModel<String>();
 		jcbCourse = new JComboBox<String>(dcbmCoure);
-		jcbCourse.setPreferredSize(new Dimension(100,20));
-		jtfStuNum = new JTextField();
-		jtfStuNum.setPreferredSize(new Dimension(100,20));
+		jcbCourse.setPreferredSize(new Dimension(200,20));
+//		jcbCourse.setPrototypeDisplayValue("가나다라마바사아자차카타파하");
+		jtfStuNum = new JTextField(12);
+		
+	
+//		jtfStuNum.setPreferredSize(new Dimension(100,20));
 		JLabel jlblStu = new JLabel("   학번 :  ");
 		jlblStu.setFont(font);
 		JLabel jlblCorse = new JLabel("과정 :  ");
@@ -43,14 +48,13 @@ public class AdminAllStuMgrDesign extends JDialog {
 		jbtnSearchStuNum = new JButton("검색");
 		jbtnSearchStuNum.setFont(font);
 		
-		JPanel jpNorth = new JPanel();
 		jpNorth.add(jlblCorse);
 		jpNorth.add(jcbCourse);
 		jpNorth.add(jlblStu);
-		
+		jtfStuNum.setFont(font);
 		jpNorth.add(jtfStuNum);
 		jpNorth.add(jbtnSearchStuNum);
-		jpNorth.setFont(font);
+//		jpNorth.setFont(font);
 		
 		String[] columNames = {"과정명","교수명","학번","학생명","등록일"};
 		dtmStudent = new DefaultTableModel(columNames,0);
@@ -66,7 +70,7 @@ public class AdminAllStuMgrDesign extends JDialog {
 		addWindowListener(aamd);
 		
 		
-		setSize(600,300);
+		setSize(700,400);
 		setLocationRelativeTo(null);
 		setResizable(false);
 		setVisible(true);

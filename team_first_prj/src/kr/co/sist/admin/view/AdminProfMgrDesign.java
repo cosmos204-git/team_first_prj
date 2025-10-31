@@ -1,5 +1,7 @@
 package kr.co.sist.admin.view;
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.FlowLayout;
 import java.awt.Font;
 
@@ -12,6 +14,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
@@ -80,15 +83,34 @@ public class AdminProfMgrDesign extends JDialog {
 		// 행의 높이
 		jtProfMgr.setRowHeight(20);
 		
-		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-		centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-		
-		jtProfMgr.setDefaultRenderer(Object.class, centerRenderer);
-		
 		// 스크롤바 설정
 		JScrollPane jspProfMgr = new JScrollPane(jtProfMgr);
+		
+		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+		centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+		centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+		centerRenderer.setOpaque(true);
+		centerRenderer.setBackground(new Color(0xF8F9FA));
+		
+		jtProfMgr.setDefaultRenderer(Object.class, centerRenderer);
+		jspProfMgr.getViewport().setBackground(new Color(0xF8F9FA)); 
+		jspProfMgr.setBorder(new LineBorder(new Color(0x000000), 2));
+		
 
 		setLayout(new BorderLayout());
+		
+		jbtnModify.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		jbtnAdd.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		jbtnDelete.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		jbtnClose.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		jbtnSearch.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		
+		jbtnModify.setBackground(new Color(0xE6E6E6));
+		jbtnAdd.setBackground(new Color(0xE6E6E6));
+		jbtnDelete.setBackground(new Color(0xE6E6E6));
+		jbtnClose.setBackground(new Color(0xE6E6E6));
+		jbtnSearch.setBackground(new Color(0xE6E6E6));
+		
 		jpSouthButton.add(jbtnModify);
 		jpSouthButton.add(jbtnAdd);
 		jpSouthButton.add(jbtnDelete);
@@ -109,6 +131,10 @@ public class AdminProfMgrDesign extends JDialog {
 		
 		
 		setSize(700, 400);
+		jpNouthSerch.setBackground(new Color(0xF8F9FA));
+		jpCenter.setBackground(new Color(0xF8F9FA));
+		jpSouthButton.setBackground(new Color(0xF8F9FA));
+		getContentPane().setBackground(new Color(0xF8F9FA));
 		setLocationRelativeTo(null);
 		setResizable(false);
 		setVisible(true);

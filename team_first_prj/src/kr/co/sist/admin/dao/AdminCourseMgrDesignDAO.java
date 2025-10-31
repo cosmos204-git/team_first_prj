@@ -66,15 +66,21 @@ public class AdminCourseMgrDesignDAO {
 			con=gc.getConn();
 			StringBuilder selectCourse= new StringBuilder();
 			selectCourse
-			.append("	select c.COURSE_CODE,c.COURSE_NAME ||CASE	")
-			.append("	WHEN  (c.COURSE_STARTDATE<=TRUNC(sysdate)) and (c.COURSE_ENDDATE>=TRUNC(sysdate)) and(c.COURSE_ENDDATE-c.COURSE_STARTDATE >=0) THEN '(진행 중)' 	")
-			.append("	WHEN  (c.COURSE_STARTDATE>TRUNC(sysdate)) and(c.COURSE_ENDDATE-c.COURSE_STARTDATE >=0) THEN '(진행 전)'	")
-			.append("	ELSE '(종료)'  END as COURSE_NAME	")
-			.append("	, p.PROF_NUM,p.PROF_NAME, to_char(c.COURSE_STARTDATE,'yyyy-MM-dd') COURSE_STARTDATE,	")
-			.append("	to_char(c.COURSE_ENDDATE,'yyyy-MM-dd') COURSE_ENDDATE, to_char(c.COURSE_INPUTDATE,'yyyy-MM-dd') COURSE_INPUTDATE	")
-			.append("	from COURSE c,PROFESSOR p	")
-			.append("	where (c.PROF_NUM=p.PROF_NUM )and (PROF_DEL_FLAG='N'and COURSE_DEL_FLAG='N')	")
-			.append("	order by c.COURSE_CODE asc	");
+			.append("SELECT c.COURSE_CODE, ")
+			.append("       c.COURSE_NAME || CASE ")
+			.append("           WHEN (c.COURSE_STARTDATE <= TRUNC(SYSDATE)) AND (c.COURSE_ENDDATE >= TRUNC(SYSDATE)) THEN '(진행 중)' ")
+			.append("           WHEN (c.COURSE_STARTDATE > TRUNC(SYSDATE)) THEN '(진행 전)' ")
+			.append("           ELSE '(종료)' END AS COURSE_NAME, p.PROF_NUM, p.PROF_NAME, ")
+			.append("       TO_CHAR(c.COURSE_STARTDATE, 'yyyy-MM-dd') COURSE_STARTDATE, ")
+			.append("       TO_CHAR(c.COURSE_ENDDATE, 'yyyy-MM-dd') COURSE_ENDDATE, ")
+			.append("       TO_CHAR(c.COURSE_INPUTDATE, 'yyyy-MM-dd') COURSE_INPUTDATE ")
+			.append("FROM COURSE c ")
+			.append("LEFT JOIN PROFESSOR p ON c.PROF_NUM = p.PROF_NUM AND p.PROF_DEL_FLAG = 'N' ")
+			.append("WHERE c.COURSE_DEL_FLAG = 'N' ")
+			.append("ORDER BY c.COURSE_CODE ASC ");
+	
+			
+			
 
 			pstmt = con.prepareStatement(selectCourse.toString());
 			
