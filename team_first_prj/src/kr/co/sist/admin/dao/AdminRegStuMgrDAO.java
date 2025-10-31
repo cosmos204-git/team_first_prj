@@ -47,7 +47,7 @@ public class AdminRegStuMgrDAO {
 					.append("	from student s, course c, professor p	")
 					.append("	where s.course_code= c.course_code and c.prof_num=p.prof_num	")
 					.append("   and s.stu_del_flag='N'   ")
-					.append("	order by c.course_code, stu_num	");
+					.append("	order by c.course_code, stu_name	");
 
 			pstmt = con.prepareStatement(selectAllStu.toString());
 
@@ -125,18 +125,22 @@ public class AdminRegStuMgrDAO {
 		//콤보 박스 값 얻기
 //		String jcCourseName = jc.getSelectedItem().toString();
 		String jcCourseName = jc.getSelectedItem().toString().replaceAll("\\(.*", "");
-
+		String jcSubName =jc.getSelectedItem().toString();
+		
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
 		GetConnection gc = GetConnection.getInstance();
-
+		
+		if(jcSubName.equals("     --선택--")) {jcSubName="";}
+		
 		try {
 			con = gc.getConn();
 			
 			StringBuilder selectStu = new StringBuilder();
-			if(jtfStuNum.getText()==null || jtfStuNum.getText().trim().isEmpty()&&jc.getSelectedItem().toString().isEmpty()) {
+//			if(jtfStuNum.getText()==null || jtfStuNum.getText().trim().isEmpty()&&jc.getSelectedItem().toString().isEmpty()) {
+			if(jtfStuNum.getText()==null || jtfStuNum.getText().trim().isEmpty()&&jcSubName.isEmpty()) {
 				selectStu
 				.append("	select course_name, prof_name, stu_num, stu_name, to_char(stu_reg_inputdate,'yyyy-mm-dd') stu_reg_inputdate	")
 				.append("	from student s, course c, professor p	")
@@ -146,7 +150,8 @@ public class AdminRegStuMgrDAO {
 				
 				pstmt = con.prepareStatement(selectStu.toString());
 				
-			}else if(jtfStuNum.getText()!=null && !jtfStuNum.getText().trim().isEmpty() && !jc.getSelectedItem().toString().isEmpty()) {
+//			}else if(jtfStuNum.getText()!=null && !jtfStuNum.getText().trim().isEmpty() && !jc.getSelectedItem().toString().isEmpty()) {
+			}else if(jtfStuNum.getText()!=null && !jtfStuNum.getText().trim().isEmpty() && !jcSubName.isEmpty()) {
 				int stuNum = Integer.parseInt(jtfStuNum.getText().trim());
 				selectStu
 				.append("	select course_name, prof_name, stu_num, stu_name, to_char(stu_reg_inputdate,'yyyy-mm-dd') stu_reg_inputdate	")
@@ -162,7 +167,8 @@ public class AdminRegStuMgrDAO {
 				pstmt.setString(1, jcCourseName);
 				pstmt.setInt(2, stuNum);
 				
-			}else if(jtfStuNum.getText()!=null && !jtfStuNum.getText().trim().isEmpty() && jc.getSelectedItem().toString().isEmpty()) {
+//			}else if(jtfStuNum.getText()!=null && !jtfStuNum.getText().trim().isEmpty() && jc.getSelectedItem().toString().isEmpty()) {
+			}else if(jtfStuNum.getText()!=null && !jtfStuNum.getText().trim().isEmpty() && jcSubName.isEmpty()) {
 				int stuNum = Integer.parseInt(jtfStuNum.getText().trim());
 				selectStu
 				.append("	select course_name, prof_name, stu_num, stu_name, to_char(stu_reg_inputdate,'yyyy-mm-dd') stu_reg_inputdate	")
@@ -177,7 +183,8 @@ public class AdminRegStuMgrDAO {
 				
 				pstmt.setInt(1, stuNum);
 			
-			}else if(jtfStuNum.getText()==null || jtfStuNum.getText().trim().isEmpty() && !jc.getSelectedItem().toString().isEmpty()) {
+//			}else if(jtfStuNum.getText()==null || jtfStuNum.getText().trim().isEmpty() && !jc.getSelectedItem().toString().isEmpty()) {
+			}else if(jtfStuNum.getText()==null || jtfStuNum.getText().trim().isEmpty() && !jcSubName.isEmpty()) {
 				selectStu
 				.append("	select course_name, prof_name, stu_num, stu_name, to_char(stu_reg_inputdate,'yyyy-mm-dd') stu_reg_inputdate	")
 				.append("	from student s, course c, professor p	")

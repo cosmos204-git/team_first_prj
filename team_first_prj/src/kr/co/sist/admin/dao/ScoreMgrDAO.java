@@ -132,6 +132,9 @@ List<CourseDTO> courseList = new ArrayList<CourseDTO>();
 			String jcSub = sjc.getSelectedItem().toString();
 
 			StringBuilder selectScore = new StringBuilder();
+			if(jcCourse.equals("         --선택--")) {jcCourse="";}
+			if(jcSub.equals("         --선택--")) {jcSub="";}
+			
 			if (jtfstuNum != null && !jtfstuNum.getText().trim().isEmpty() && !jcCourse.isEmpty() && !jcSub.isEmpty()) {
 				// 과정,과목 콤보 박스 값 얻기
 				int stuNum = Integer.parseInt(jtfstuNum.getText());
@@ -141,7 +144,8 @@ List<CourseDTO> courseList = new ArrayList<CourseDTO>();
 						.append("   and r.stu_num = ?    ")
 						.append("   and r.course_code = (select course_code from course where course_name=?)    ")
 						.append("   and r.sub_code=(select sub_code from subject where sub_name=?)    ")
-						.append("   and st.stu_del_flag='N'    ");
+						.append("   and st.stu_del_flag='N'    ")
+						.append("   order by stu_score desc  ");
 
 				pstmt = con.prepareStatement(selectScore.toString());
 
@@ -156,7 +160,8 @@ List<CourseDTO> courseList = new ArrayList<CourseDTO>();
 						.append("   where r.sub_code =s.sub_code and r.stu_num=st.stu_num    ")
 						.append("   and r.course_code = (select course_code from course where course_name=?)    ")
 						.append("   and r.sub_code=(select sub_code from subject where sub_name=?)    ")
-						.append("   and st.stu_del_flag='N'    ");
+						.append("   and st.stu_del_flag='N'    ")
+						.append("   order by stu_score desc  ");
 
 				pstmt = con.prepareStatement(selectScore.toString());
 
@@ -168,7 +173,8 @@ List<CourseDTO> courseList = new ArrayList<CourseDTO>();
 						.append("	from report r, subject s , student st	")
 						.append("   where r.sub_code =s.sub_code and r.stu_num=st.stu_num    ")
 						.append("   and r.course_code = (select course_code from course where course_name=?)    ")
-						.append("   and st.stu_del_flag='N'    ");
+						.append("   and st.stu_del_flag='N'    ")
+						.append("   order by stu_score desc  ");
 
 				pstmt = con.prepareStatement(selectScore.toString());
 
@@ -178,7 +184,8 @@ List<CourseDTO> courseList = new ArrayList<CourseDTO>();
 				selectScore.append("	select 	r.stu_num stu, stu_name, sub_name, stu_score	")
 						.append("	from report r, subject s , student st	")
 						.append("   where r.sub_code =s.sub_code and r.stu_num=st.stu_num    ")
-						.append("   and st.stu_del_flag='N'    ");
+						.append("   and st.stu_del_flag='N'    ")
+						.append("   order by stu_score desc  ");
 
 				pstmt = con.prepareStatement(selectScore.toString());
 
@@ -189,8 +196,8 @@ List<CourseDTO> courseList = new ArrayList<CourseDTO>();
 			.append("   where r.sub_code =s.sub_code and r.stu_num=st.stu_num    ")
 			.append("   and r.stu_num = ?    ")
 			.append("   and r.course_code = (select course_code from course where course_name=?)    ")
-			.append("   and st.stu_del_flag='N'    ");
-			
+			.append("   and st.stu_del_flag='N'    ")
+			.append("   order by stu_score desc  ");			
 			pstmt = con.prepareStatement(selectScore.toString());
 			
 			pstmt.setInt(1, stuNum);
@@ -202,7 +209,9 @@ List<CourseDTO> courseList = new ArrayList<CourseDTO>();
 				.append("	from report r, subject s , student st	")
 				.append("   where r.sub_code =s.sub_code and r.stu_num=st.stu_num    ")
 				.append("   and r.stu_num = ?    ")
-				.append("   and st.stu_del_flag='N'    ");
+				.append("   and st.stu_del_flag='N'    ")
+				.append("   order by stu_score desc  ");
+				
 			
 			pstmt = con.prepareStatement(selectScore.toString());
 			
@@ -247,7 +256,8 @@ List<CourseDTO> courseList = new ArrayList<CourseDTO>();
 			selectAllScore
 			.append("	select 	r.stu_num stu, stu_name, sub_name, stu_score	")
 			.append("	from report r, subject s , student st	")
-			.append("	where r.sub_code =s.sub_code and r.stu_num=st.stu_num	");
+			.append("	where r.sub_code =s.sub_code and r.stu_num=st.stu_num	")
+			.append("   order by stu_score desc  ");
 			
 			pstmt = con.prepareStatement(selectAllScore.toString());
 			

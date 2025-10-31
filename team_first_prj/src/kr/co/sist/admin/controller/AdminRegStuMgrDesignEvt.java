@@ -61,7 +61,7 @@ public class AdminRegStuMgrDesignEvt extends WindowAdapter implements ActionList
 	public void searchComboProcess() {
 		AdminRegStuMgrService arsms = new AdminRegStuMgrService();
 		DefaultComboBoxModel<String> dcbm = aamd.getDcbmCoure();
-		dcbm.addElement("");
+		dcbm.addElement("     --선택--");
 		List<CourseDTO> list = arsms.searchCourse();
 		String courseName = "";
 		LocalDate currentDate = LocalDate.now();

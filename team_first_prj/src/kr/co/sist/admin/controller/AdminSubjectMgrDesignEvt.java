@@ -75,7 +75,7 @@ public class AdminSubjectMgrDesignEvt extends WindowAdapter implements ActionLis
 		AdminSubjectMgrDesignService asmds = new AdminSubjectMgrDesignService();
 		DefaultComboBoxModel<String> dcbm = asmd.getDcbmSub();
 		sDTOList = asmds.searchSub();
-		dcbm.addElement("");
+		dcbm.addElement("           --선택--");
 		
 		for(SubjectDTO sub : sDTOList) {
 			

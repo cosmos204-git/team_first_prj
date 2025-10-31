@@ -62,7 +62,7 @@ public class AdminScoreMgrDesignEvt extends WindowAdapter implements ActionListe
 	public void searchCourseProcess() {
 		AdminScoreMgrService asms = new AdminScoreMgrService();
 		DefaultComboBoxModel<String> dcbm = asmd.getDcbmCourse();
-		dcbm.addElement("");
+		dcbm.addElement("         --선택--");
 		List<CourseDTO> cDTOList =  asms.searchCourse();
 		LocalDate currentDate = LocalDate.now();
 		LocalDate startDate = LocalDate.now();
@@ -87,7 +87,7 @@ public class AdminScoreMgrDesignEvt extends WindowAdapter implements ActionListe
 		AdminScoreMgrService asms = new AdminScoreMgrService();
 		DefaultComboBoxModel<String> dcbm = asmd.getDcbmSub();
 		dcbm.removeAllElements();
-		dcbm.addElement("");
+		dcbm.addElement("         --선택--");
 		List<SubjectDTO> sDTOList = asms.searchSubject(asmd.getJcbCourse());
 		for(SubjectDTO sDTO : sDTOList) {
 			dcbm.addElement(sDTO.getSubName());
