@@ -32,12 +32,25 @@ public class StuExamDesign extends JDialog {
         this.subjectName = subjectName;
         this.testCode = testCode;
 
+        Font font = new Font("맑은 고딕", Font.PLAIN, 15);
+        Font titleFont = new Font("맑은 고딕", Font.BOLD, 15);
+
         JPanel north = new JPanel(new FlowLayout(FlowLayout.LEFT, 12, 8));
-        north.add(new JLabel("이름 : "));
-        north.add(new JLabel(stuName));
+        JLabel lblNameTitle = new JLabel("이름 : ");
+        lblNameTitle.setFont(titleFont);
+        JLabel lblName = new JLabel(stuName);
+        lblName.setFont(font);
+
+        JLabel lblSubTitle = new JLabel("과목 : ");
+        lblSubTitle.setFont(titleFont);
+        JLabel lblSub = new JLabel(subjectName);
+        lblSub.setFont(font);
+
+        north.add(lblNameTitle);
+        north.add(lblName);
         north.add(Box.createHorizontalStrut(24));
-        north.add(new JLabel("과목 : "));
-        north.add(new JLabel(subjectName));
+        north.add(lblSubTitle);
+        north.add(lblSub);
         add(north, BorderLayout.NORTH);
 
         JPanel center = new JPanel();
@@ -49,10 +62,17 @@ public class StuExamDesign extends JDialog {
             qPanel.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
 
             JLabel q = new JLabel(it.getExamQuest());
-            JRadioButton c1 = new JRadioButton(it.getExamChoice1());
-            JRadioButton c2 = new JRadioButton(it.getExamChoice2());
-            JRadioButton c3 = new JRadioButton(it.getExamChoice3());
-            JRadioButton c4 = new JRadioButton(it.getExamChoice4());
+            q.setFont(titleFont); 
+
+            JRadioButton c1 = new JRadioButton("1. "+it.getExamChoice1());
+            JRadioButton c2 = new JRadioButton("2. "+it.getExamChoice2());
+            JRadioButton c3 = new JRadioButton("3. "+it.getExamChoice3());
+            JRadioButton c4 = new JRadioButton("4. "+it.getExamChoice4());
+
+            c1.setFont(font);
+            c2.setFont(font);
+            c3.setFont(font);
+            c4.setFont(font);
 
             ButtonGroup bg = new ButtonGroup();
             bg.add(c1); bg.add(c2); bg.add(c3); bg.add(c4);
@@ -79,37 +99,29 @@ public class StuExamDesign extends JDialog {
         StuExamDesignEvt evt = new StuExamDesignEvt(this);
         jbtnSubmit.addActionListener(evt);
         addWindowListener(evt);
+        
+        jbtnSubmit.setFont(new Font("맑은 고딕", Font.BOLD, 15));
+
+        Color btnColor = new Color(0x6A, 0xBD, 0xE5);
+        jbtnSubmit.setBackground(btnColor);
+
+        jbtnSubmit.setForeground(Color.WHITE);
+        
+        getContentPane().setFont(font);
+
+        getContentPane().setBackground(new Color(247, 247, 249));
+        north.setBackground(new Color(247, 247, 249));
+        south.setBackground(new Color(247, 247, 249));
 
         setSize(700, 500);
         setLocationRelativeTo(owner);
     }
 
-    public JButton getJbtnSubmit() {
-    	return jbtnSubmit; 
-    	
-    }
-    public int getStuNum() {
-    	return stuNum; 
-    	
-    }
-    public int getTestCode() {
-    	return testCode; 
-    	
-    }
-    public String getStuName() {
-    	return stuName; 
-    	
-    }
-    public String getSubjectName() {
-    	return subjectName; 
-    	
-    }
-    public List<ButtonGroup> getGroups() {
-    	return groups; 
-    	
-    }
-    public List<Integer> getExamCodes() {
-    	return examCodes; 
-    	
-    }
+    public JButton getJbtnSubmit() { return jbtnSubmit; }
+    public int getStuNum() { return stuNum; }
+    public int getTestCode() { return testCode; }
+    public String getStuName() { return stuName; }
+    public String getSubjectName() { return subjectName; }
+    public List<ButtonGroup> getGroups() { return groups; }
+    public List<Integer> getExamCodes() { return examCodes; }
 }

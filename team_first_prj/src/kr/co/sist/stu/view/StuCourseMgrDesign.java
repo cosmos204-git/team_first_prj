@@ -1,9 +1,25 @@
 package kr.co.sist.stu.view;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
 import java.util.List;
-import javax.swing.*;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+
 import kr.co.sist.stu.controller.StuCourseMgrDesignEvt;
 import kr.co.sist.stu.dto.StuCourseMgrDTO;
 import kr.co.sist.stu.service.StuCourseMgrService;
@@ -13,20 +29,39 @@ public class StuCourseMgrDesign extends JDialog {
     private JButton jbtnclose, jbtnShowStuReport, jbtnShowExam;
     private JTable jtStuCourseMgr;
     private DefaultTableModel dtmStuCourseMgr;
-    private JLabel jlblStuNumData, jlblStuNameData;
+    private JTextField jtfStuNumData, jtfStuNameData;
 
     public StuCourseMgrDesign(StuInfoDesign sid, boolean modal) {
         super(sid, "학업관리", modal);
+        setLayout(new BorderLayout());
 
-        JPanel plStuInfo = new JPanel(new FlowLayout(FlowLayout.LEFT, 20, 10));
-        JLabel jlblStuNum = new JLabel("학번 ");
-        jlblStuNumData = new JLabel();
-        JLabel jlblStuName = new JLabel("이름 ");
-        jlblStuNameData = new JLabel();
+        JPanel plStuInfo = new JPanel(new GridLayout(1, 4, 10, 10));
+        plStuInfo.setBorder(new EmptyBorder(25, 40, 20, 40));
+
+        Font font = new Font("맑은 고딕", Font.BOLD, 15);
+
+        JLabel jlblStuNum = new JLabel("학번", JLabel.CENTER);
+        jlblStuNum.setFont(font);
+        jtfStuNumData = new JTextField(10);
+        jtfStuNumData.setFont(font);
+        jtfStuNumData.setEditable(false);
+        jtfStuNumData.setHorizontalAlignment(SwingConstants.CENTER);
+
+        JLabel jlblStuName = new JLabel("이름", JLabel.CENTER);
+        jlblStuName.setFont(font);
+        jtfStuNameData = new JTextField(10);
+        jtfStuNameData.setFont(font);
+        jtfStuNameData.setEditable(false);
+        jtfStuNameData.setHorizontalAlignment(SwingConstants.CENTER);
+
+        jlblStuNum.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+        jlblStuName.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+
         plStuInfo.add(jlblStuNum);
-        plStuInfo.add(jlblStuNumData);
+        plStuInfo.add(jtfStuNumData);
         plStuInfo.add(jlblStuName);
-        plStuInfo.add(jlblStuNameData);
+        plStuInfo.add(jtfStuNameData);
+
         add(plStuInfo, BorderLayout.NORTH);
 
         String[] columnNames = {"과정", "과목", "시험시간"};
@@ -39,16 +74,25 @@ public class StuCourseMgrDesign extends JDialog {
         jbtnclose = new JButton("닫기");
         jbtnShowStuReport = new JButton("성적표");
         jbtnShowExam = new JButton("시험");
+        
+        Color btnColor = new Color(0x6A, 0xBD, 0xE5);
+        jbtnclose.setBackground(btnColor);
+        jbtnShowStuReport.setBackground(btnColor);
+        jbtnShowExam.setBackground(btnColor);
+
+        jbtnclose.setForeground(Color.WHITE);
+        jbtnShowStuReport.setForeground(Color.WHITE);
+        jbtnShowExam.setForeground(Color.WHITE);
+        
         buttonPanel.add(jbtnShowExam);
         buttonPanel.add(jbtnShowStuReport);
         buttonPanel.add(jbtnclose);
         add(buttonPanel, BorderLayout.SOUTH);
 
-        Font font = new Font("맑은고딕", Font.BOLD, 15);
         jlblStuNum.setFont(font);
         jlblStuName.setFont(font);
-        jlblStuNumData.setFont(font);
-        jlblStuNameData.setFont(font);
+        jtfStuNumData.setFont(font);
+        jtfStuNameData.setFont(font);
         jtStuCourseMgr.setFont(font);
         jbtnclose.setFont(font);
         jbtnShowStuReport.setFont(font);
@@ -63,7 +107,20 @@ public class StuCourseMgrDesign extends JDialog {
         
         evt.viewStuInfo();
         loadTableData();
-
+        
+        Color bg = new Color(247, 247, 249);
+        getContentPane().setBackground(bg);
+        plStuInfo.setBackground(bg);
+        buttonPanel.setBackground(bg);
+        
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        for (int i = 0; i < jtStuCourseMgr.getColumnCount(); i++) {
+            jtStuCourseMgr.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        }
+        ((DefaultTableCellRenderer) jtStuCourseMgr.getTableHeader().getDefaultRenderer())
+                .setHorizontalAlignment(SwingConstants.CENTER);
+        
         setBounds(600, 300, 600, 350);
         setVisible(true);
     }
@@ -89,20 +146,15 @@ public class StuCourseMgrDesign extends JDialog {
     	return jtStuCourseMgr; 
     	
     }
-    public JLabel getjlblStuNumData() {
-    	return jlblStuNumData;
+    public JTextField getJtfStuNumData() {
+    	return jtfStuNumData;
     }
     
     
     
-    public JLabel getjlblStuNameData() {
-    	return jlblStuNameData;
+    public JTextField getJtfStuNameData() {
+    	return jtfStuNameData;
     }
-    
-    public void setjlblStuNameData(JLabel getjlblStuNameData) {
-    	this.jlblStuNameData = getjlblStuNameData;
-    }
-    
     
     public DefaultTableModel getDtmStuCourseMgr() {
     	return dtmStuCourseMgr; 
@@ -120,12 +172,5 @@ public class StuCourseMgrDesign extends JDialog {
     	return jbtnShowExam; 
     	
     }
-    public JLabel getJlblStuNumData() {
-    	return jlblStuNumData; 
-    	
-    }
-    public JLabel getJlblStuNameData() {
-    	return jlblStuNameData; 
-    	
-    }
+
 }

@@ -38,11 +38,11 @@ public class StuCourseMgrDAO {
               .append("JOIN course_subject cs ON cs.course_code = c.course_code ")
               .append("JOIN subject s ON s.sub_code = cs.sub_code ")
               .append("LEFT JOIN exam e ON e.course_code = c.course_code AND e.sub_code = s.sub_code ")
-              .append("WHERE c.course_code = ? ") // ✅ 로그인한 학생의 과정만
+              .append("WHERE c.course_code = ? ") 
               .append("ORDER BY c.course_code, s.sub_code");
 
             pstmt = con.prepareStatement(sb.toString());
-            pstmt.setInt(1, courseCode); // ✅ 바인딩
+            pstmt.setInt(1, courseCode); 
             rs = pstmt.executeQuery();
 
             while (rs.next()) {

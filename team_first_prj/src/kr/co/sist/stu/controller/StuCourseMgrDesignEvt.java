@@ -55,8 +55,8 @@ public class StuCourseMgrDesignEvt extends WindowAdapter implements ActionListen
 
     public void viewStuInfo() {
         CurrentStuData csd = CurrentStuData.getInstance();
-        scmd.getjlblStuNameData().setText(csd.getLogStuDTO().getStuName());
-        scmd.getjlblStuNumData().setText(Integer.toString(csd.getLogStuDTO().getStuNum()));
+        scmd.getJtfStuNameData().setText(csd.getLogStuDTO().getStuName());
+        scmd.getJtfStuNumData().setText(Integer.toString(csd.getLogStuDTO().getStuNum()));
     }
 
     @Override public void windowClosing(WindowEvent e) { scmd.dispose(); }
@@ -72,8 +72,8 @@ public class StuCourseMgrDesignEvt extends WindowAdapter implements ActionListen
         String examTime = m.getValueAt(row, 2).toString();
         if ("시험불가".equals(examTime)) return;
 
-        String stuName = scmd.getJlblStuNameData().getText();
-        int stuNum = Integer.parseInt(scmd.getJlblStuNumData().getText().trim());
+        String stuName = scmd.getJtfStuNameData().getText();
+        int stuNum = Integer.parseInt(scmd.getJtfStuNumData().getText().trim());
 
         kr.co.sist.stu.service.StuExamService svc = new kr.co.sist.stu.service.StuExamService();
         Integer testCode = svc.findTestCode(course, subject);
