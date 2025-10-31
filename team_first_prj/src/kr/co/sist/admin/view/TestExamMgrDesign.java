@@ -1,5 +1,6 @@
 package kr.co.sist.admin.view;
 
+import java.awt.Color;
 import java.awt.Font;
 
 import javax.swing.JButton;
@@ -9,7 +10,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.UIManager;
+import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import kr.co.sist.admin.controller.TestExamMgrDesignEvt;
@@ -19,7 +23,7 @@ public class TestExamMgrDesign extends JDialog {
 	private JTable jtExamList;
 	private JLabel jlblExamList,jlblSubName,jlblSubNameData,jlblExamQuest,jlblExamNum,jlblExamNumData,jlblExamChoice1
 	,jlblExamChoice2,jlblExamChoice3,jlblExamChoice4,jlblCorrect, jlblEICodeData;
-	private JButton jbtnReset,jbtnAdd,jbtnDelete, jbtnModify;
+	private JButton jbtnReset, jbtnModify;
 	private JTextField jtfExamChoice1,jtfExamChoice2,jtfExamChoice3,jtfExamChoice4, jtfCorrect;
 	private JTextArea jtaExamQuest;
 	private int subCode , courseCode;
@@ -32,7 +36,7 @@ public class TestExamMgrDesign extends JDialog {
 		this.courseCode = courseCode;
 		this.subName = subName;
 		Font font = new Font("맑은 고딕",Font.BOLD,15);
-		Font font1 = new Font("맑은 고딕",Font.BOLD,10);
+		Font font1 = new Font("맑은 고딕",Font.BOLD,13);
 		UIManager.put("Label.font", font);
 
 
@@ -65,10 +69,6 @@ public class TestExamMgrDesign extends JDialog {
 		
 		jbtnReset = new JButton("초기화");
 		jbtnReset.setFont(font1);
-		jbtnDelete = new JButton("삭제");
-		jbtnDelete.setFont(font1);
-//		jbtnAdd = new JButton("추가");
-//		jbtnAdd.setFont(font1);
 		jbtnModify = new JButton("수정");
 		jbtnModify.setFont(font1);
 		
@@ -77,40 +77,55 @@ public class TestExamMgrDesign extends JDialog {
 		TestExamMgrDesignEvt temde = new TestExamMgrDesignEvt(this);
 		jbtnReset.addActionListener(temde);
 		jbtnModify.addActionListener(temde);
-//		jbtnAdd.addActionListener(temde);
-//		jbtnDelete.addActionListener(temde);
 		jtExamList.addMouseListener(temde);
 		addWindowListener(temde);
 		temde.searchEiListProcess();
 		
+		jbtnReset.setBackground(new Color(0xE6E6E6));
+		jbtnModify.setBackground(new Color(0xE6E6E6));
+		
+		jtExamList.setRowHeight(20);
+		
+		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+		centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+		centerRenderer.setOpaque(true);
+		centerRenderer.setBackground(new Color(0xF8F9FA));
+		jtExamList.setDefaultRenderer(Object.class, centerRenderer);
+		
+		jspExamList.getViewport().setBackground(new Color(0xF8F9FA)); 
+		jspExamList.setBorder(new LineBorder(new Color(0x000000), 2));
+		
+		jtExamList.getColumnModel().getColumn(1).setPreferredWidth(40);;
+
+		
 		
 		setLayout(null);
 		
-		jlblExamList.setBounds(30,20,100,20);
-		jspExamList.setBounds(30,50,170,180);
-		jlblSubName.setBounds(230,20,50,20);
-		jlblEICodeData.setBounds(350,20,70,20);
-		jlblSubNameData.setBounds(280,20,50,20);
-		jlblExamNum.setBounds(230,45,50,20);
-		jlblExamNumData.setBounds(280,45,50,20);
-		jlblExamQuest.setBounds(230,70,50,20);
-		jspQuest.setBounds(280,70,280,50);
-		jlblExamChoice1.setBounds(230,120,50,20);
-		jtfExamChoice1.setBounds(280,120,280,20);
-		jlblExamChoice2.setBounds(230,140,50,20);
-		jtfExamChoice2.setBounds(280,140,280,20);
-		jlblExamChoice3.setBounds(230,160,50,20);
-		jtfExamChoice3.setBounds(280,160,280,20);
-		jlblExamChoice4.setBounds(230,180,50,20);
-		jtfExamChoice4.setBounds(280,180,280,20);
-		jlblCorrect.setBounds(230,200,50,20);
-		jtfCorrect.setBounds(280,200,70,20);
-		jbtnReset.setBounds(360,230,65,20);
-		jbtnModify.setBounds(430,230,65,20);
+		jlblExamList.setBounds(50,20,100,20);
+		jspExamList.setBounds(50,50,190,240);
+		jlblSubName.setBounds(280,20,50,20);
+//		jlblEICodeData.setBounds(400,20,70,20);
+		jlblSubNameData.setBounds(330,20,50,20);
+		jlblExamNum.setBounds(280,55,50,20);
+		jlblExamNumData.setBounds(330,55,50,20);
+		jlblExamQuest.setBounds(280,90,50,20);
+		jspQuest.setBounds(330,90,280,55);
+		jlblExamChoice1.setBounds(280,150,50,20);
+		jtfExamChoice1.setBounds(330,150,280,25);
+		jlblExamChoice2.setBounds(280,180,50,20);
+		jtfExamChoice2.setBounds(330,180,280,25);
+		jlblExamChoice3.setBounds(280,210,50,20);
+		jtfExamChoice3.setBounds(330,210,280,25);
+		jlblExamChoice4.setBounds(280,240,50,20);
+		jtfExamChoice4.setBounds(330,240,280,25);
+		jlblCorrect.setBounds(280,270,50,20);
+		jtfCorrect.setBounds(330,270,70,25);
+		jbtnReset.setBounds(390,310,75,30);
+		jbtnModify.setBounds(480,310,75,30);
 //		jbtnAdd.setBounds(430,230,65,20);
 //		jbtnDelete.setBounds(500,230,65,20);
 		
-		add(jlblEICodeData);
+//		add(jlblEICodeData);
 		add(jlblCorrect);
 		add(jlblExamList);
 		add(jspExamList);
@@ -137,7 +152,7 @@ public class TestExamMgrDesign extends JDialog {
 		
 	
 		
-		setSize(600,300);
+		setSize(700,400);
 		setLocationRelativeTo(null);
 		setResizable(false);
 		setVisible(true);
@@ -232,17 +247,6 @@ public class TestExamMgrDesign extends JDialog {
 	public JButton getJbtnReset() {
 		return jbtnReset;
 	}
-
-
-	public JButton getJbtnAdd() {
-		return jbtnAdd;
-	}
-
-
-	public JButton getJbtnDelete() {
-		return jbtnDelete;
-	}
-
 
 	public JTextField getJtfExamChoice1() {
 		return jtfExamChoice1;
