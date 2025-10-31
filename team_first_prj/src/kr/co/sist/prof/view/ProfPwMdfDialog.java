@@ -1,6 +1,7 @@
 package kr.co.sist.prof.view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -52,6 +53,10 @@ public class ProfPwMdfDialog extends JDialog{
 		
 		jbtnModify = new JButton("변경");
 		jbtnClose = new JButton("닫기");
+		
+		jbtnModify.setBackground(new Color(0xE6E6E6));
+		jbtnClose.setBackground(new Color(0xE6E6E6));
+
 		
 		jpButton.add(jbtnModify);
 		jpButton.add(jbtnClose);

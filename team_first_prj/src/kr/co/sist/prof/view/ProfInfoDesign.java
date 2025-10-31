@@ -151,6 +151,11 @@ public class ProfInfoDesign extends JFrame{
 		jbtnMgrExam = new JButton("시험 관리");
 		jbtnMgrProfScore = new JButton("성적 관리");
 		
+		jbtnModifyProfInfo.setBackground(new Color(0xE6E6E6));
+		jbtnStuState.setBackground(new Color(0xE6E6E6));
+		jbtnMgrExam.setBackground(new Color(0xE6E6E6));
+		jbtnMgrProfScore.setBackground(new Color(0xE6E6E6));
+		
 		Font font = new Font("맑은고딕",Font.BOLD,15);
 		
 		setLayout(null);
@@ -237,6 +242,8 @@ public class ProfInfoDesign extends JFrame{
 		jbtnMgrExam.addActionListener(pide);
 		addWindowListener(pide);
 		
+	    getContentPane().setBackground(new Color(0xF8F9FA));
+
 		
 		setBounds(600,300,600,350);
 		setVisible(true);

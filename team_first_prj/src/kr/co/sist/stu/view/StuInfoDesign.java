@@ -49,6 +49,12 @@ public class StuInfoDesign extends JFrame {
 		jlblStuNum.setFont(font);
 		add(jlblStuNum);
 		
+		//색변경
+		jbtnMgrCourse.setBackground(new Color(0xE6E6E6));
+		jbtnModifyStuInfo.setBackground(new Color(0xE6E6E6));
+		jbtnSelectCourse.setBackground(new Color(0xE6E6E6));
+
+		
 		
 		jtfStuNumData.setSize(150,30);
 		jtfStuNumData.setLocation(250,30);

@@ -2,6 +2,7 @@ package kr.co.sist.stu.view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -17,6 +18,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
@@ -63,26 +65,43 @@ public class StuCourseMgrDesign extends JDialog {
         plStuInfo.add(jtfStuNameData);
 
         add(plStuInfo, BorderLayout.NORTH);
+        JPanel jp = new JPanel();
+        JPanel jpa = new JPanel();
+        jp.setPreferredSize(new Dimension(20,100));
+        jpa.setPreferredSize(new Dimension(20,100));
+        add("West",jp);
+        add("East",jpa);
+        
 
         String[] columnNames = {"과정", "과목", "시험시간"};
         dtmStuCourseMgr = new DefaultTableModel(columnNames, 0);
         jtStuCourseMgr = new JTable(dtmStuCourseMgr);
         jtStuCourseMgr.setRowHeight(25);
-        add(new JScrollPane(jtStuCourseMgr), BorderLayout.CENTER);
+        JScrollPane jspStuCourseMGR = new JScrollPane(jtStuCourseMgr);
+        add(jspStuCourseMGR, BorderLayout.CENTER);
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
         jbtnclose = new JButton("닫기");
         jbtnShowStuReport = new JButton("성적표");
         jbtnShowExam = new JButton("시험");
         
-        Color btnColor = new Color(0x6A, 0xBD, 0xE5);
-        jbtnclose.setBackground(btnColor);
-        jbtnShowStuReport.setBackground(btnColor);
-        jbtnShowExam.setBackground(btnColor);
-
-        jbtnclose.setForeground(Color.WHITE);
-        jbtnShowStuReport.setForeground(Color.WHITE);
-        jbtnShowExam.setForeground(Color.WHITE);
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        centerRenderer.setOpaque(true);
+        centerRenderer.setBackground(new Color(0xF8F9FA));
+        jtStuCourseMgr.setDefaultRenderer(Object.class, centerRenderer);
+        
+        jspStuCourseMGR.getViewport().setBackground(new Color(0xF8F9FA)); 
+        jspStuCourseMGR.setBorder(new LineBorder(new Color(0x000000), 2));
+        
+//        Color btnColor = new Color(0x6A, 0xBD, 0xE5);
+////        jbtnclose.setBackground(btnColor);
+////        jbtnShowStuReport.setBackground(btnColor);
+////        jbtnShowExam.setBackground(btnColor);
+////
+////        jbtnclose.setForeground(Color.WHITE);
+////        jbtnShowStuReport.setForeground(Color.WHITE);
+////        jbtnShowExam.setForeground(Color.WHITE);
         
         buttonPanel.add(jbtnShowExam);
         buttonPanel.add(jbtnShowStuReport);
@@ -105,6 +124,12 @@ public class StuCourseMgrDesign extends JDialog {
         jtStuCourseMgr.addMouseListener(evt);
         addWindowListener(evt);
         
+        //색변경
+        jbtnclose.setBackground(new Color(0xE6E6E6));
+        jbtnShowExam.setBackground(new Color(0xE6E6E6));
+        jbtnShowStuReport.setBackground(new Color(0xE6E6E6));
+
+        
         evt.viewStuInfo();
         loadTableData();
         
@@ -113,7 +138,6 @@ public class StuCourseMgrDesign extends JDialog {
         plStuInfo.setBackground(bg);
         buttonPanel.setBackground(bg);
         
-        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
         for (int i = 0; i < jtStuCourseMgr.getColumnCount(); i++) {
             jtStuCourseMgr.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);

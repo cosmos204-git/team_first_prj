@@ -55,6 +55,8 @@ public class StuReportDesign extends JDialog {
         north.add(jtfStuNumData);
         north.add(jlblStuName);
         north.add(jtfStuNameData);
+        
+
 
         String[] columns = {"이름", "과목", "점수", "등수"};
         dtmStuReport = new DefaultTableModel(columns, 0);
@@ -75,10 +77,12 @@ public class StuReportDesign extends JDialog {
         jbtnClose = new JButton("닫기");
         jbtnClose.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 
-        Color btnColor = new Color(0x6A, 0xBD, 0xE5);
-        jbtnClose.setBackground(btnColor);
+        //색변경
+        jbtnClose.setBackground(new Color(0xE6E6E6));
+//        Color btnColor = new Color(0x6A, 0xBD, 0xE5);
+//        jbtnClose.setBackground(btnColor);
 
-        jbtnClose.setForeground(Color.WHITE);
+//        jbtnClose.setForeground(Color.WHITE);
 
         JPanel south = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
         south.add(jbtnClose);

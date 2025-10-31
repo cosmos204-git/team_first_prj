@@ -74,11 +74,6 @@ public class AdminStuMgrDesign extends JDialog {
 		jbtnClose.addActionListener(asde);
 		jtStuMgr.addMouseListener(asde);
 		
-		
-		
-		
-		
-
 		// columns(열)의 넓이 설정
 		TableColumnModel tcm = jtStuMgr.getColumnModel();
 		tcm.getColumn(0).setPreferredWidth(40);// 학번

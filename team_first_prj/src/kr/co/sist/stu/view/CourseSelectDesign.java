@@ -17,6 +17,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
@@ -120,6 +121,28 @@ public class CourseSelectDesign extends JDialog {
         jbtnShowSub = new JButton("과목보기"); 
         jbtnApplyCourse = new JButton("신청"); 
         jbtnClose = new JButton("닫기");
+        //색변경
+        jbtnApplyCourse.setBackground(new Color(0xE6E6E6));
+        jbtnClose.setBackground(new Color(0xE6E6E6));
+        jbtnShowSub.setBackground(new Color(0xE6E6E6));
+        
+		
+	      DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+			centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+			centerRenderer.setOpaque(true);
+			centerRenderer.setBackground(new Color(0xF8F9FA));
+			jtSelectCourse.setDefaultRenderer(Object.class, centerRenderer);
+			
+			jspSelectCourse.getViewport().setBackground(new Color(0xF8F9FA)); 
+			jspSelectCourse.setBorder(new LineBorder(new Color(0x000000), 2));
+
+        
+        JPanel jp = new JPanel();
+        JPanel jpa = new JPanel();
+        jp.setPreferredSize(new Dimension(20,100));
+        jpa.setPreferredSize(new Dimension(20,100));
+        add("West",jp);
+        add("East",jpa);
 
         Font jbtnFont = new Font("맑은 고딕", Font.BOLD, 15);
         jbtnShowSub.setFont(jbtnFont);

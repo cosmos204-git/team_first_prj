@@ -1,5 +1,6 @@
 package kr.co.sist.prof.view;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -15,6 +16,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
@@ -41,6 +43,16 @@ public class ProfStuStateDesign extends JDialog {
         dtmStudent = new DefaultTableModel(columnNames, 0);
         jtStudent = new JTable(dtmStudent);
         jspStudent = new JScrollPane(jtStudent);
+        
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+		centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+		centerRenderer.setOpaque(true);
+		centerRenderer.setBackground(new Color(0xF8F9FA));
+		jtStudent.setDefaultRenderer(Object.class, centerRenderer);
+		
+		jspStudent.getViewport().setBackground(new Color(0xF8F9FA)); 
+		jspStudent.setBorder(new LineBorder(new Color(0x000000), 2));
+        
 
         jlblProfName = new JLabel("교수명");
         jlblProfCourse = new JLabel("과정명");
@@ -61,7 +73,6 @@ public class ProfStuStateDesign extends JDialog {
         jtStudent.setDefaultEditor(Object.class, null);
 
         //jtable 센터 align
-	    DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 	    centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
 	    ((DefaultTableCellRenderer) jtStudent.getDefaultRenderer(Object.class)).setHorizontalAlignment(SwingConstants.CENTER);
 
@@ -73,6 +84,11 @@ public class ProfStuStateDesign extends JDialog {
         tcm.getColumn(2).setPreferredWidth(120);
         jtStudent.setRowHeight(25);
 
+        //디자인 
+		jbtnClose.setBackground(new Color(0xE6E6E6));
+		jbtnSearch.setBackground(new Color(0xE6E6E6));
+		jcbStuState.setBackground(new Color(0xE6E6E6));
+       
         // 배치
         setLayout(null);
         jlblProfName.setBounds(40, 15, 80, 30);

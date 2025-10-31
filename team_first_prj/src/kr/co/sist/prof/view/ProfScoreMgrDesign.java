@@ -1,6 +1,7 @@
 package kr.co.sist.prof.view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.text.ParseException;
@@ -17,6 +18,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import kr.co.sist.login.dao.CurrentProfData;
@@ -45,10 +49,19 @@ public class ProfScoreMgrDesign extends JDialog{
 		dcbmProfSub = new DefaultComboBoxModel<String>();
 		jbtnSearchStuNum = new JButton("검색");
 		jbtnShowStuReportInfo = new JButton("시험지상세보기");
+		
+		
 		jtfStuNum = new JTextField(); 
 		jcbProfCourse = new JComboBox<String>(dcbmProfCourse);
 		jcbProfSub = new JComboBox<String>(dcbmProfSub);
 		courseMap = new HashMap<>();
+		
+		//색변경
+		jbtnSearchStuNum.setBackground(new Color(0xE6E6E6));
+		jbtnShowStuReportInfo.setBackground(new Color(0xE6E6E6));
+	    
+		jcbProfCourse.setBackground(new Color(0xE6E6E6));
+		jcbProfSub.setBackground(new Color(0xE6E6E6));
 		
 		//JTable			
 		String[] columnNames = {"학번","학생명","과목코드","과목명","점수"};
@@ -61,10 +74,24 @@ public class ProfScoreMgrDesign extends JDialog{
 		JScrollPane jspProfScoreMgr = new JScrollPane(jtProfScoreMgr);
 		
 		
+		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+		centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+		centerRenderer.setOpaque(true);
+		centerRenderer.setBackground(new Color(0xF8F9FA));
+		jtProfScoreMgr.setDefaultRenderer(Object.class, centerRenderer);
 		
+		jspProfScoreMgr.getViewport().setBackground(new Color(0xF8F9FA)); 
+		jspProfScoreMgr.setBorder(new LineBorder(new Color(0x000000), 2));
+		
+		
+		JPanel jp = new JPanel();
+		JPanel jpa = new JPanel();
 		JPanel jpNorth = new JPanel();
 		JPanel jpCenter = new JPanel();
 		JPanel jpSouth = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		
+		jp.setPreferredSize(new Dimension(20,100));
+		jpa.setPreferredSize(new Dimension(20,100));
 		
 		
 		
@@ -83,6 +110,8 @@ public class ProfScoreMgrDesign extends JDialog{
 		
 		add("North",jpNorth);
 		add("Center",jpCenter);
+		add("West",jpa);
+		add("East",jp);
 		add("South", jpSouth);
 		
 		

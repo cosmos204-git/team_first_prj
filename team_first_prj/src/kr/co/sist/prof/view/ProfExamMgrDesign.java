@@ -1,5 +1,6 @@
 package kr.co.sist.prof.view;
 
+import java.awt.Color;
 import java.awt.Font;
 
 import javax.swing.DefaultComboBoxModel;
@@ -12,6 +13,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -100,6 +102,8 @@ public class ProfExamMgrDesign extends JDialog{
 		      jcbExamEnd.addItem("18:00");
 		      jcbExamEnd.addItem("19:00");
 		      
+		      
+		      
 		      // 시험 관련 정보 라벨 
 		      // 강의 과정
 		      jlbExamCourse.setSize(200,50);
@@ -160,6 +164,13 @@ public class ProfExamMgrDesign extends JDialog{
 		      jbtnModifyExam = new JButton("수정 완료");		      
 		      jbtnExamDetail = new JButton("시험지 상세 보기");
 		      
+		      //색 변경
+		      jbtnExamDetail.setBackground(new Color(0xE6E6E6));
+		      jbtnModifyExam.setBackground(new Color(0xE6E6E6));
+		      jcbExamEnd.setBackground(new Color(0xE6E6E6));
+		      jcbExamState.setBackground(new Color(0xE6E6E6));
+		      jcbExamStart.setBackground(new Color(0xE6E6E6));
+		      
 		      jtCourseTable.setFont(font);
 		      jtCourseTable.getTableHeader().setFont(new Font("맑은고딕", Font.BOLD, 15));
 		      jbtnModifyExam.setFont(font);
@@ -189,6 +200,15 @@ public class ProfExamMgrDesign extends JDialog{
 		      //스크롤바 설정
 		      jspStuReport= new JScrollPane(jtCourseTable);
 		      
+				
+				centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+				centerRenderer.setOpaque(true);
+				centerRenderer.setBackground(new Color(0xF8F9FA));
+				jtCourseTable.setDefaultRenderer(Object.class, centerRenderer);
+				
+				jspStuReport.getViewport().setBackground(new Color(0xF8F9FA)); 
+				jspStuReport.setBorder(new LineBorder(new Color(0x000000), 2));
+		      
 		      //위치이동
 		      setLayout(null);
 		      jspStuReport.setBounds(70,40,650,350);//JTable
@@ -208,7 +228,8 @@ public class ProfExamMgrDesign extends JDialog{
 		      
 		      //table 선택값을 전달
 		      jtCourseTable.getSelectionModel().addListSelectionListener((ListSelectionListener) pemde);
-			      
+			  
+		      getContentPane().setBackground(new Color(0xF8F9FA));
 		      
 		      setLayout(null);
 		      

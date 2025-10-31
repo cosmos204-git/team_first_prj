@@ -1,5 +1,6 @@
 package kr.co.sist.prof.view;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -10,6 +11,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 
 import kr.co.sist.prof.dao.ShowExamDetailDAO;
 import kr.co.sist.prof.dto.ShowExamItemListDTO;
@@ -30,6 +34,8 @@ public class ShowExamDetailDesignDialog extends JDialog {
         jtaReport.setEditable(false);
 
         JScrollPane jspReport = new JScrollPane(jtaReport);
+        
+ 	
 
         add("North", jlbSubject);
         add("Center", jspReport);

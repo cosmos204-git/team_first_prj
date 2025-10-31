@@ -1,6 +1,7 @@
 package kr.co.sist.stu.view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -39,6 +40,10 @@ public class StuPwMdfDialog extends JDialog{
 		jtfCurrentStuPw = new JPasswordField(20);
 		jtfNewStuPw = new JPasswordField(20);
 		jtfConfirmnStuPw = new JPasswordField(20);
+		
+		//색변경
+		jbtnClose.setBackground(new Color(0xE6E6E6));
+		jbtnModify.setBackground(new Color(0xE6E6E6));
 
 		
 		jpStuPwMdf.add(jlblCurrentStuPw);

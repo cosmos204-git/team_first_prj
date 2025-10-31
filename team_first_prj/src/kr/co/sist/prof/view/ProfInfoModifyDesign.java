@@ -58,6 +58,11 @@ public class ProfInfoModifyDesign extends JDialog {
 		jbtnClose = new JButton("닫기");
 		jbtnAddImg = new JButton("사진첨부");
 		
+		jbtnModifyProfPW.setBackground(new Color(0xE6E6E6));
+		jbtnModifyProfInfo.setBackground(new Color(0xE6E6E6));
+		jbtnClose.setBackground(new Color(0xE6E6E6));
+		jbtnAddImg.setBackground(new Color(0xE6E6E6));
+		
 		Font font = new Font("맑은고딕",Font.BOLD,15);
 		
 		setLayout(null);
@@ -154,6 +159,9 @@ public class ProfInfoModifyDesign extends JDialog {
         jbtnClose.addActionListener(pimde);		
 		
         addWindowListener(pimde);
+        
+        getContentPane().setBackground(new Color(0xF8F9FA));
+
         
 		setBounds(pid.getX()+50,pid.getY()+50,600,350);
 		setVisible(true);

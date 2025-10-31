@@ -88,7 +88,10 @@ public class StuExamDesign extends JDialog {
             groups.add(bg);
             examCodes.add(it.getExamCode());
         }
+        //색변경
+	    jbtnSubmit.setBackground(new Color(0xE6E6E6));
 
+        
         JScrollPane jsp = new JScrollPane(center);
         add(jsp, BorderLayout.CENTER);
 

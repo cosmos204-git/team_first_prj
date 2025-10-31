@@ -55,6 +55,12 @@ public class StuInfoModifyDesign extends JDialog{
       jtfStuNameData.setLocation(250,30);
       jtfStuNameData.setFont(font);
       add(jtfStuNameData);
+      
+      //색변경
+      jbtnClose.setBackground(new Color(0xE6E6E6));
+      jbtnModifyPw.setBackground(new Color(0xE6E6E6));
+      jbtnModifyStuInfo.setBackground(new Color(0xE6E6E6));
+      jbtnSelectImage.setBackground(new Color(0xE6E6E6));
 
       
       jtfStuNumData.setSize(150,30);

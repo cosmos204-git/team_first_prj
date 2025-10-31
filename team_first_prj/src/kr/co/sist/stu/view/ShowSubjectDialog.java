@@ -1,6 +1,7 @@
 package kr.co.sist.stu.view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -78,6 +79,10 @@ public class ShowSubjectDialog extends JDialog {
 		ShowSubjectDialogEvt ssde = new ShowSubjectDialogEvt(this);
 		jbtnClose.addActionListener(ssde);
 		addWindowListener(ssde);
+		
+		//색변경
+	    jbtnClose.setBackground(new Color(0xE6E6E6));
+
 		
 		
 		

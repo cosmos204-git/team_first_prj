@@ -10,7 +10,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.UIManager;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import kr.co.sist.admin.controller.AdminSubjectMgrDesignEvt;
@@ -57,7 +59,11 @@ public class AdminSubjectMgrDesign extends JDialog {
 		
 		String[] columNames = {"과목코드","과목명","등록일"};
 		dtmAdminSubMgr = new DefaultTableModel(columNames,0	);
+		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+		centerRenderer.setHorizontalAlignment(SwingConstants.CENTER); // 또는 
 		jtAdminSubMgr = new JTable(dtmAdminSubMgr);
+		jtAdminSubMgr.setDefaultRenderer(Object.class, centerRenderer);
+		jtAdminSubMgr.setRowHeight(20);
 		JScrollPane jsp = new JScrollPane(jtAdminSubMgr);
 
 		//리스너 추가 
@@ -80,23 +86,23 @@ public class AdminSubjectMgrDesign extends JDialog {
 		
 		
 		setLayout(null);
-		jlblCourseName.setBounds(30,50,70,20);
-		jlblSubName.setBounds(30,85,70,20);
-		jlblSubNum.setBounds(30,120,80,20);
-		jlblCourseInputdate.setBounds(30,155,70,20);
-		jlblCourseInputdateData.setBounds(90,155,140,20);
-		jlblSubNumdata.setBounds(100,120,100,20);
+		jlblCourseName.setBounds(30,70,70,20);
+		jlblSubName.setBounds(30,105,70,20);
+		jlblSubNum.setBounds(30,140,80,20);
+		jlblCourseInputdate.setBounds(30,175,70,20);
+		jlblCourseInputdateData.setBounds(105,175,140,20);
+		jlblSubNumdata.setBounds(105,140,100,20);
 		
-		jcbCourse.setBounds(90,50,100,20);
-		jcbSub.setBounds(90,85,100,20);
+		jcbCourse.setBounds(105,70,130,20);
+		jcbSub.setBounds(105,105,130,20);
 		
 		
-		jbtnMgrTestExam.setBounds(180,210,130,30);
-		jbtnAdd.setBounds(320,210,60,30);
-		jbtnDelete.setBounds(390,210,60,30);
-		jbtnClose.setBounds(460,210,60,30);
+		jbtnMgrTestExam.setBounds(300,270,130,30);
+		jbtnAdd.setBounds(440,270,60,30);
+		jbtnDelete.setBounds(510,270,60,30);
+		jbtnClose.setBounds(580,270,60,30);
 		
-		jsp.setBounds(230,30,300,170);
+		jsp.setBounds(300,30,340,220);
 		
 		add(jlblCourseName);
 		add(jlblSubName);
@@ -113,7 +119,7 @@ public class AdminSubjectMgrDesign extends JDialog {
 		add(jbtnClose);
 		
 		
-		setSize(600,300);
+		setSize(700,380);
 		setLocationRelativeTo(null);
 		setResizable(false);
 		setVisible(true);

@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -12,6 +13,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import kr.co.sist.admin.controller.AdminRegStuMgrDesignEvt;
@@ -30,6 +33,8 @@ public class AdminRegStuMgrDesign extends JDialog {
 		super(aid,"관리자 - 입과관리",modal);
 		
 		Font font = new Font("맑은 고딕",Font.BOLD,15);
+		
+		
 		
 		dcbmCoure = new DefaultComboBoxModel<String>();
 		jcbCourse = new JComboBox<String>(dcbmCoure);
@@ -54,9 +59,12 @@ public class AdminRegStuMgrDesign extends JDialog {
 		
 		String[] columNames = {"과정명","교수명","학생명","학번","등록일"};
 		dtmStudent = new DefaultTableModel(columNames,0);
+		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+		centerRenderer.setHorizontalAlignment(SwingConstants.CENTER); // 또는 
 		jtAdminSubjectMgr = new JTable(dtmStudent);
+		jtAdminSubjectMgr.setDefaultRenderer(Object.class, centerRenderer);
+		jtAdminSubjectMgr.setRowHeight(20);
 		JScrollPane jsp = new JScrollPane(jtAdminSubjectMgr);
-		jtAdminSubjectMgr.setFont(font);
 		add("North",jpNorth);
 		add("Center",jsp);
 		
