@@ -140,10 +140,10 @@ public class AdminInfoDesign extends JFrame {
 
 	}// AdminInfoDesign
 	
-	// 삭제 필요 main문
-	public static void main(String[] args) {
-		new AdminInfoDesign();
-	}// main
+//	// 삭제 필요 main문
+//	public static void main(String[] args) {
+//		new AdminInfoDesign();
+//	}// main
 
 	public JButton getJbtnStuMgr() {
 		return jbtnStuMgr;

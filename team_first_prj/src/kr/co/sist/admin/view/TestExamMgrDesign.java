@@ -45,7 +45,7 @@ public class TestExamMgrDesign extends JDialog {
 		jtExamList = new JTable(dtmExamList);
 		JScrollPane jspExamList = new JScrollPane(jtExamList);
 		
-		jlblEICodeData = new JLabel("과목코드");
+		jlblEICodeData = new JLabel("");
 		jlblSubName = new JLabel("과목");
 		jlblSubNameData = new JLabel();
 		jlblExamNum = new JLabel("번호");
