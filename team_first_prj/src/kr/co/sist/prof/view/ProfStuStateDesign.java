@@ -123,6 +123,7 @@ public class ProfStuStateDesign extends JDialog {
         dcbmStuState.removeAllElements(); // 기존 제거
         Set<String> courseSet = new HashSet<>();
 
+        dcbmStuState.addElement("전체 과정");        
         for (ProfStuStateDTO dto : listProfStuState) {
             if (dto.getCourseName() != null && !courseSet.contains(dto.getCourseName())) {
                 courseSet.add(dto.getCourseName());
