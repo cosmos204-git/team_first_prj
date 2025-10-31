@@ -261,7 +261,7 @@ public class ProfInfoDesign extends JFrame{
 		jbtnMgrProfScore.addActionListener(pide);
 		jbtnMgrExam.addActionListener(pide);
 		addWindowListener(pide);
-		
+		setResizable(false);
 		getContentPane().setBackground(new Color(247, 247, 249));
 		setBounds(600,300,570,350);
 		setVisible(true);

@@ -41,9 +41,9 @@ public class StuPwMdfDialog extends JDialog{
 		jtfNewStuPw = new JPasswordField(20);
 		jtfConfirmnStuPw = new JPasswordField(20);
 		
-		//색변경
-		jbtnClose.setBackground(new Color(0xE6E6E6));
-		jbtnModify.setBackground(new Color(0xE6E6E6));
+////		//색변경
+//		jbtnClose.setBackground(new Color(106,189,229));
+//		jbtnModify.setBackground(new Color(106,189,229));
 
 		
 		jpStuPwMdf.add(jlblCurrentStuPw);

@@ -131,7 +131,7 @@ public class LoginDesignEvt extends WindowAdapter implements ActionListener{
 		
 		int profNum = Integer.parseInt(ld.getJtfNum().getText());
 		String profPass = ld.getJtfPw().getText();
-		
+		int courseCount = 0;
 		
 		if(profNum>9999) {
 			JOptionPane.showMessageDialog(ld, "아이디를 확인해주세요.");
@@ -139,10 +139,23 @@ public class LoginDesignEvt extends WindowAdapter implements ActionListener{
 		}
 		
 		
-		List<LoginProfDTO> list = ls.searchProfOneMember(profNum);			
+		List<LoginProfDTO> list = ls.searchProfOneMember(profNum);	
+		
 		
 		if(list.isEmpty()) {
 			JOptionPane.showMessageDialog(ld, "계정이 없습니다.");
+			return;
+		}
+		
+		
+		for(int i = 0; i<list.size();i++) {
+			if(list.get(i).getCourseDelFlag().equals("N")) {
+				courseCount++;
+			}
+		}
+		
+		if(courseCount==0) {
+			JOptionPane.showMessageDialog(ld, "배정된 과목이 없습니다. 관리자에게 문의 하세요.");
 			return;
 		}
 		
@@ -152,12 +165,12 @@ public class LoginDesignEvt extends WindowAdapter implements ActionListener{
 			int i = 0;
 			if(list.size()!=-1) {
 				for(i = 0; i< list.size()-1;i++) {
-					if(list.get(i).getCourseName()!=null) {
+					if(list.get(i).getCourseName()!=null && list.get(i).getCourseDelFlag().equals("N")) {
 						CourseName.append(list.get(i).getCourseName()).append(",");
 					}
 				}
 			}
-			if(list.get(i).getCourseName()!=null) {
+			if(list.get(i).getCourseName()!=null && list.get(i).getCourseDelFlag().equals("N")) {
 				CourseName.append(list.get(i).getCourseName());
 			}
 			logDTO = list.get(0);

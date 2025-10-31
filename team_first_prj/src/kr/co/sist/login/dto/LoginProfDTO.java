@@ -20,6 +20,7 @@ public class LoginProfDTO {
 	private String ext;
 	private Date courseEndDate;
 	private Date courseStrDate;
+	private String courseDelFlag;
 	
 	public LoginProfDTO() {
 		
@@ -29,7 +30,7 @@ public class LoginProfDTO {
 
 	public LoginProfDTO(int profNum, FileInputStream profImg, File file, String profName, String profPass,
 			String profNewPass, String profTel, String profEmail, Date profInputDate, int courseNum, String courseName,
-			String profDelFlag, String ext, Date courseEndDate, Date courseStrDate) {
+			String profDelFlag, String ext, Date courseEndDate, Date courseStrDate, String courseDelFlag) {
 		super();
 		this.profNum = profNum;
 		this.profImg = profImg;
@@ -46,6 +47,7 @@ public class LoginProfDTO {
 		this.ext = ext;
 		this.courseEndDate = courseEndDate;
 		this.courseStrDate = courseStrDate;
+		this.courseDelFlag = courseDelFlag;
 	}
 
 
@@ -136,6 +138,18 @@ public class LoginProfDTO {
 
 
 
+
+
+
+	public String getCourseDelFlag() {
+		return courseDelFlag;
+	}
+
+
+
+	public void setCourseDelFlag(String courseDelFlag) {
+		this.courseDelFlag = courseDelFlag;
+	}
 
 
 

@@ -215,10 +215,10 @@ public class LoginDAO {
 			//3.쿼리문 생성 객체 얻기
 			StringBuilder selectOneMember = new StringBuilder();
 			selectOneMember
-			.append("		SELECT professor.prof_NUM,prof_IMG,prof_NAME,prof_PASS,prof_TEL,prof_EMAIL,prof_INPUTDATE,course.COURSE_CODE,prof_DEL_FLAG, COURSE.COURSE_NAME, COURSE.COURSE_STARTDATE, COURSE.COURSE_ENDDATE")
-			.append("		FROM  professor")
+			.append("		SELECT professor.prof_NUM,prof_IMG,prof_NAME,prof_PASS,prof_TEL,prof_EMAIL,prof_INPUTDATE,course.COURSE_CODE,prof_DEL_FLAG, COURSE.COURSE_NAME, COURSE.COURSE_STARTDATE, COURSE.COURSE_ENDDATE, nvl(course.course_del_flag,'Y') as course_del_flag 	")
+			.append("		FROM  professor		")
 			.append("		LEFT JOIN COURSE ON professor.prof_num = COURSE.prof_num			")
-			.append("		WHERE professor.prof_NUM = ? ");
+			.append("		WHERE professor.prof_NUM = ?	");
 			
 			pstmt = con.prepareStatement(selectOneMember.toString());
 			
@@ -241,6 +241,7 @@ public class LoginDAO {
 				
 				logProfDTO.setCourseStrDate(rs.getDate("course_startdate"));
 				logProfDTO.setCourseEndDate(rs.getDate("course_enddate"));
+				logProfDTO.setCourseDelFlag(rs.getString("course_del_flag"));
 				
 				if(logProfDTO.getCourseEndDate()!=null) {
 		

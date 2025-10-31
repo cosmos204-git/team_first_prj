@@ -45,7 +45,8 @@ public class StuInfoDesign extends JFrame {
 		jtfStuCourseData.setEditable(false);
 		
 		jbtnModifyStuInfo = new JButton("개인정보변경");
-		jbtnSelectCourse = new JButton("수강신청"); 		jbtnMgrCourse = new JButton("학업관리");
+		jbtnSelectCourse = new JButton("수강신청"); 
+		jbtnMgrCourse = new JButton("학업관리");
 		
 		Font font = new Font("맑은 고딕",Font.BOLD,15);
 		
@@ -117,7 +118,7 @@ public class StuInfoDesign extends JFrame {
 		jbtnSelectCourse.setFont(font);		
 		add(jbtnSelectCourse);
 		
-		jbtnMgrCourse.setSize(140,35);
+		jbtnMgrCourse.setSize(140,30);
 		jbtnMgrCourse.setLocation(380,160);
 		jbtnMgrCourse.setFont(font);		
 		add(jbtnMgrCourse);
@@ -144,8 +145,8 @@ public class StuInfoDesign extends JFrame {
 		
 		addWindowListener(side);		
 		
-		
-		setBounds(300,300,570,350);
+		setResizable(false);
+		setBounds(300,300,560,350);
 		setVisible(true);
 	}
 
