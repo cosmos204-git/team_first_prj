@@ -151,21 +151,29 @@ public class AdminSubjectMgrDesignEvt extends WindowAdapter implements ActionLis
 		int rowCnt = asmds.addCourseSub(cDTOList.get(courseNum).getCourseCode(), sDTOList.get(subNum).getSubCode());
 		if(rowCnt==-1) {
 			JOptionPane.showMessageDialog(asmd, "이미 추가된 과목입니다.");
+			return;
 		}
+		JOptionPane.showMessageDialog(asmd, "과목이 추가되었습니다.");
+		
 	}//addProcess
 	public void deleteProcess() {
 		AdminSubjectMgrDesignService asmds = new AdminSubjectMgrDesignService();
 		
 		int courseNum = asmd.getJcbCourse().getSelectedIndex();
 		int subNum =  asmd.getJtAdminSubMgr().getSelectedRow();
+		String courseName = asmd.getJcbCourse().getSelectedItem().toString();
 		
 		if(subNum==-1) {
-			JOptionPane.showMessageDialog(asmd, "삭제할 과목을 설정해주세요.");
+			JOptionPane.showMessageDialog(asmd, "삭제할 과목을 선택하세요.");
 			return;
 		}//end if 
-		
-		int rowCnt = asmds.removeCourseSub(cDTOList.get(courseNum).getCourseCode(),courseSubList.get(subNum).getSubCode());
-		
+	
+		int isDel = JOptionPane.showConfirmDialog(asmd, courseName+"과목을 삭제하시겠습니까?");
+		if(isDel == JOptionPane.OK_OPTION) {
+			int rowCnt = asmds.removeCourseSub(cDTOList.get(courseNum).getCourseCode(),courseSubList.get(subNum).getSubCode());
+			
+			JOptionPane.showMessageDialog(asmd, "과목이 삭제되었습니다.");
+		}//end if
 	} //deleteProcess
 	public void mgrTestExamProcess() {
 		int row =asmd.getJtAdminSubMgr().getSelectedRow();

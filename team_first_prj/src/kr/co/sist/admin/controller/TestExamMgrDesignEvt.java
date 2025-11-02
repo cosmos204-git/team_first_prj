@@ -76,7 +76,7 @@ public class TestExamMgrDesignEvt extends WindowAdapter implements ActionListene
 		try {
 			String text = temd.getJlblEICodeData().getText();
 			if(text ==null || text.isEmpty()) {
-				JOptionPane.showMessageDialog(temd, "문제를 선택 후 수정하세요.");
+				JOptionPane.showMessageDialog(temd, "문제번호를 선택 후 등록하세요.");
 				 return;
 			}
 			String[] check = {temd.getJtaExamQuest().getText()
@@ -124,7 +124,7 @@ public class TestExamMgrDesignEvt extends WindowAdapter implements ActionListene
 			eiDTO.setExamCorrectTChoice(correct);
 			int cnt = tems.modifyEI(eiDTO, eiCode);
 			if(cnt ==1) {
-				JOptionPane.showMessageDialog(temd, "수정 되었습니다.");
+				JOptionPane.showMessageDialog(temd, "등록	 되었습니다.");
 				resetProcess();
 			}
 		}catch(NumberFormatException nfe) {

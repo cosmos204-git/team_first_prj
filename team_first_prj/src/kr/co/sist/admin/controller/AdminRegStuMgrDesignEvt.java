@@ -1,4 +1,4 @@
-package kr.co.sist.admin.controller;
+ package kr.co.sist.admin.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -33,6 +33,10 @@ public class AdminRegStuMgrDesignEvt extends WindowAdapter implements ActionList
 			}
 			searchProcess();
 		}//end if 
+		if(ae.getSource() == aamd.getjbtnCancleCourse()) {
+			cancleStuCourse();
+			searchAllStuProcess();
+		}//end if 
 	}//actionPerformed
 
 
@@ -47,6 +51,7 @@ public class AdminRegStuMgrDesignEvt extends WindowAdapter implements ActionList
 		DefaultTableModel dtm = aamd.getDtmStudent();
 		List<RegStuMgrDTO> list = arsms.searchAllstu();
 		String[] rowData = new String[5];
+		dtm.setRowCount(0);
 		for(RegStuMgrDTO rsmDTO : list) {
 			rowData[0] = rsmDTO.getCourseName() ;
 			rowData[1] = rsmDTO.getProfName();
@@ -56,6 +61,7 @@ public class AdminRegStuMgrDesignEvt extends WindowAdapter implements ActionList
 			
 			dtm.addRow(rowData);
 		}//end for
+		System.out.println("dsss");
 		
 	}//searchAllStu
 	public void searchComboProcess() {
@@ -82,7 +88,7 @@ public class AdminRegStuMgrDesignEvt extends WindowAdapter implements ActionList
 			
 			dcbm.addElement(courseName+isIng);
 		}
-	}//searchAllCourseProcess\
+	}//searchAllCourseProcess
 	public void searchProcess(){
 		AdminRegStuMgrService arsms = new AdminRegStuMgrService();
 		DefaultTableModel dtm = aamd.getDtmStudent();
@@ -105,7 +111,22 @@ public class AdminRegStuMgrDesignEvt extends WindowAdapter implements ActionList
 		}//end for
 		
 		
-	}//searchProcess
+	}//searchProcess\
+	
+	public void cancleStuCourse() {
+		AdminRegStuMgrService arsms = new AdminRegStuMgrService();
+		DefaultTableModel dtm = aamd.getDtmStudent();
+		int selectRow = aamd.getJtAdminSubjectMgr().getSelectedRow();
+		int stuNum = Integer.parseInt(dtm.getValueAt(selectRow, 3).toString());
+		int isDel = JOptionPane.showConfirmDialog(aamd, stuNum + "번 학생의 수강을 취소하시겠습니까?");
+		if(isDel == JOptionPane.OK_OPTION) {
+			int cnt = arsms.ModifyStuCourse(stuNum);
+			JOptionPane.showMessageDialog(aamd, "수강이 취소되었습니다.");
+		}//end if
+		
+		
+		}//searchAllCourseProcess\
+	
 	public boolean numbercheck(JTextField jtf) {
 		boolean flag = false;
 		if(!jtf.getText().trim().isEmpty() && jtf.getText()!=null ) {

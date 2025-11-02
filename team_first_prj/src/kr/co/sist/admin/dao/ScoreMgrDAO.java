@@ -133,7 +133,7 @@ List<CourseDTO> courseList = new ArrayList<CourseDTO>();
 
 			StringBuilder selectScore = new StringBuilder();
 			if(jcCourse.equals("         --선택--")) {jcCourse="";}
-			if(jcSub.equals("         --선택--")) {jcSub="";}
+			if(jcSub.equals("      --선택--")) {jcSub="";}
 			
 			if (jtfstuNum != null && !jtfstuNum.getText().trim().isEmpty() && !jcCourse.isEmpty() && !jcSub.isEmpty()) {
 				// 과정,과목 콤보 박스 값 얻기

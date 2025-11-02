@@ -43,11 +43,12 @@ public class AdminRegStuMgrDAO {
 			con = gc.getConn();
 
 			StringBuilder selectAllStu = new StringBuilder();
-			selectAllStu.append("	select course_name, prof_name, stu_num, stu_name, to_char(stu_reg_inputdate,'yyyy-mm-dd') stu_reg_inputdate	")
-					.append("	from student s, course c, professor p	")
-					.append("	where s.course_code= c.course_code and c.prof_num=p.prof_num	")
-					.append("   and s.stu_del_flag='N'   ")
-					.append("	order by c.course_code, stu_name	");
+			selectAllStu
+			.append("	select course_name, prof_name, stu_num, stu_name, to_char(stu_reg_inputdate,'yyyy-mm-dd') stu_reg_inputdate	")
+			.append("	from student s, course c, professor p	")
+			.append("	where s.course_code= c.course_code and c.prof_num=p.prof_num	")
+			.append("   and s.stu_del_flag='N'   ")
+			.append("	order by c.course_code, stu_name	");
 
 			pstmt = con.prepareStatement(selectAllStu.toString());
 
@@ -118,6 +119,38 @@ public class AdminRegStuMgrDAO {
 		
 		return courseList;
 	}//selectCourse
+	
+	
+	public int updateStuCourse(int stuNum) throws IOException, SQLException{
+		int cnt =0 ; 
+		
+		Connection con =null;
+		PreparedStatement pstmt = null;
+		
+		GetConnection gc = GetConnection.getInstance();
+		
+		try {
+			con = gc.getConn();
+			
+			StringBuilder selectCourse = new StringBuilder();
+			selectCourse
+			.append("	update student	 ")
+			.append("	set course_code = ''	")
+			.append("	where stu_num=?	");
+			pstmt = con.prepareStatement(selectCourse.toString());
+			
+			pstmt.setInt(1, stuNum);
+			
+			cnt = pstmt.executeUpdate();
+			
+			
+		}finally {
+			gc.dbClose(con, pstmt, null);
+		}
+		
+		
+		return cnt;
+	}//updateStuCourse
 
 	public List<RegStuMgrDTO> selectStu(JComboBox<String> jc, JTextField jtfStuNum) throws SQLException,IOException{
 		List<RegStuMgrDTO> cList = new ArrayList<RegStuMgrDTO>();

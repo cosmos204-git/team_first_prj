@@ -87,7 +87,7 @@ public class AdminScoreMgrDesignEvt extends WindowAdapter implements ActionListe
 		AdminScoreMgrService asms = new AdminScoreMgrService();
 		DefaultComboBoxModel<String> dcbm = asmd.getDcbmSub();
 		dcbm.removeAllElements();
-		dcbm.addElement("         --선택--");
+		dcbm.addElement("      --선택--");
 		List<SubjectDTO> sDTOList = asms.searchSubject(asmd.getJcbCourse());
 		for(SubjectDTO sDTO : sDTOList) {
 			dcbm.addElement(sDTO.getSubName());

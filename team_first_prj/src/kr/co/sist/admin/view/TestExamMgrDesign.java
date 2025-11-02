@@ -69,7 +69,7 @@ public class TestExamMgrDesign extends JDialog {
 		
 		jbtnReset = new JButton("초기화");
 		jbtnReset.setFont(font1);
-		jbtnModify = new JButton("수정");
+		jbtnModify = new JButton("등록");
 		jbtnModify.setFont(font1);
 		
 	

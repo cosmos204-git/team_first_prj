@@ -31,7 +31,7 @@ public class AdminRegStuMgrDesign extends JDialog {
 	private DefaultComboBoxModel<String> dcbmCoure;
 	private JComboBox<String> jcbCourse;
 	private JTextField jtfStuNum;
-	private JButton jbtnSearchStuNum;
+	private JButton jbtnSearchStuNum,cancleCourse;
 	private DefaultTableModel dtmStudent;
 	private JTable jtAdminSubjectMgr;
 	
@@ -48,10 +48,11 @@ public class AdminRegStuMgrDesign extends JDialog {
 		JLabel jlblStu = new JLabel("   학번 :  ");
 		jlblStu.setFont(font);
 		JLabel jlblCorse = new JLabel("과정 :  ");
+		JLabel jlblSpace = new JLabel();
 		jlblCorse.setFont(font);
 		jbtnSearchStuNum = new JButton("검색");
 		jbtnSearchStuNum.setFont(font);
-		
+		cancleCourse = new JButton("수강 취소");		
 		
 		JPanel jpNorth = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		jpNorth.add(jlblCorse);
@@ -65,6 +66,7 @@ public class AdminRegStuMgrDesign extends JDialog {
 		
 		jcbCourse.setBackground(new Color(0xF8F9FA));
 		jbtnSearchStuNum.setBackground(new Color(0xE6E6E6));
+		cancleCourse.setBackground(new Color(0xE6E6E6));
 		jcbCourse.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		jbtnSearchStuNum.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		
@@ -90,15 +92,21 @@ public class AdminRegStuMgrDesign extends JDialog {
 		JPanel jpCenter = new JPanel(new BorderLayout());
 		jpCenter.add(jsp);
 		
+		JPanel jpSouth = new JPanel();
+		jpSouth.add(jlblSpace);
+		jpSouth.add(cancleCourse);
+			
 		jpCenter.setBorder(new EmptyBorder(5, 10, 10, 10));// top, left, bottom, right 여백
 		jpNorth.setBorder(new EmptyBorder(5, 10, 0, 7));// top, left, bottom, right 여백
 		
 		add("North",jpNorth);
 		add("Center",jpCenter);
+		add("South",jpSouth);
 		
 		//리스너 추가 
 		AdminRegStuMgrDesignEvt aamd= new AdminRegStuMgrDesignEvt(this);
 		jbtnSearchStuNum.addActionListener(aamd);
+		cancleCourse.addActionListener(aamd);
 		aamd.searchAllStuProcess();
 		aamd.searchComboProcess();
 		addWindowListener(aamd);
@@ -109,6 +117,7 @@ public class AdminRegStuMgrDesign extends JDialog {
 		setLocationRelativeTo(null);
 		jpNorth.setBackground(new Color(0xF8F9FA));
 		jpCenter.setBackground(new Color(0xF8F9FA));
+		jpSouth.setBackground(new Color(0xF8F9FA));
 		getContentPane().setBackground(new Color(0xF8F9FA));
 		
 		setResizable(false);
@@ -132,6 +141,9 @@ public class AdminRegStuMgrDesign extends JDialog {
 
 	public JButton getJbtnSearchStuNum() {
 		return jbtnSearchStuNum;
+	}
+	public JButton getjbtnCancleCourse() {
+		return cancleCourse;
 	}
 
 	public DefaultTableModel getDtmStudent() {

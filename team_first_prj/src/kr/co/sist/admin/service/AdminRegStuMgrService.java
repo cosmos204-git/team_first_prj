@@ -55,4 +55,18 @@ public class AdminRegStuMgrService {
 		
 		return rsmDTOList;
 	}//searchStu
+	public int ModifyStuCourse(int stuNum){
+		int cnt = 0;
+		AdminRegStuMgrDAO arsmDAO = AdminRegStuMgrDAO.getinstance();
+		
+		try {
+			cnt = arsmDAO.updateStuCourse(stuNum);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}//end catch
+		
+		return cnt;
+	}//searchStu
 }//class
