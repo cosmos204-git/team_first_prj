@@ -5,9 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,6 +14,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -97,6 +96,7 @@ public class ProfScoreMgrDesign extends JDialog{
 		JPanel jpCenter = new JPanel();
 		JPanel jpSouth = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		
+		
 		jp.setPreferredSize(new Dimension(20,100));
 		jpa.setPreferredSize(new Dimension(20,100));
 		
@@ -113,11 +113,14 @@ public class ProfScoreMgrDesign extends JDialog{
 		jbtnShowStuReportInfo.setForeground(Color.white);
 		
 		
+		JLabel jlbStuNum = new JLabel("학번 : ");
 		
 		jtfStuNum.setPreferredSize(new Dimension(110,25));
 		//North Panel
 		jpNorth.add(jcbProfCourse);
 		jpNorth.add(jcbProfSub);
+		
+		jpNorth.add(jlbStuNum);
 		jpNorth.add(jtfStuNum);
 		jpNorth.add(jbtnSearchStuNum);
 		//Center Panel		
@@ -177,7 +180,7 @@ public class ProfScoreMgrDesign extends JDialog{
 		addWindowListener(psmde);
 		
 	
-		setBounds(100,100,500,300);
+		setBounds(pid.getX()+50,pid.getY()+150,600,300);
 		setVisible(true);
 	}
 

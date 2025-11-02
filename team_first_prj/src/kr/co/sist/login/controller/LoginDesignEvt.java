@@ -129,6 +129,8 @@ public class LoginDesignEvt extends WindowAdapter implements ActionListener{
 	public void loginProfProcess() throws IOException {
 		
 		
+		try {	
+		
 		int profNum = Integer.parseInt(ld.getJtfNum().getText());
 		String profPass = ld.getJtfPw().getText();
 		int courseCount = 0;
@@ -164,22 +166,34 @@ public class LoginDesignEvt extends WindowAdapter implements ActionListener{
 			return;
 		}
 		
-		StringBuilder CourseName = new StringBuilder();
+		StringBuilder courseName = new StringBuilder();
 		
-		try {	
+		
 			int i = 0;
 			if(list.size()!=-1) {
 				for(i = 0; i< list.size()-1;i++) {
 					if(list.get(i).getCourseName()!=null && list.get(i).getCourseDelFlag().equals("N")) {
-						CourseName.append(list.get(i).getCourseName()).append(",");
+						courseName.append(list.get(i).getCourseName()).append(",");
 					}
 				}
 			}
 			if(list.get(i).getCourseName()!=null && list.get(i).getCourseDelFlag().equals("N")) {
-				CourseName.append(list.get(i).getCourseName());
+				courseName.append(list.get(i).getCourseName());
 			}
+			
+			
+			if(!courseName.isEmpty()) {			
+				if (courseName.length() > 0) {
+					int lastIndex = courseName.length() - 1;
+				    if (courseName.charAt(lastIndex) == ',') {
+				    	courseName.deleteCharAt(lastIndex);
+				    }
+				}
+			}
+			
+			
 			logDTO = list.get(0);
-			logDTO.setCourseName(CourseName.toString());
+			logDTO.setCourseName(courseName.toString());
 			
 			
 			if(logDTO.getProfDelFlag().equals("Y"))
