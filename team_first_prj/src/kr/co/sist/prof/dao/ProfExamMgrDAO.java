@@ -50,12 +50,13 @@ public class ProfExamMgrDAO {
 			StringBuilder strSelectExamList= new StringBuilder();
 			
 			// 교수 교번을 기준으로 과정, 과목, 시험오픈, 시작시간, 종료시간을 과정명 + 과목 순으로 리스트업 
+			// 과정 종료 일자가 지나지 않은 자료만 불러온다.
 			strSelectExamList
 			.append(" SELECT c.course_code, c.course_name, s.sub_code, s.sub_name, e.exam_open, e.exam_start, e.exam_end " ) 
 			.append(" FROM  course c JOIN  course_subject cs ON c.course_code = cs.course_code ")
 			.append("                JOIN  subject s ON cs.sub_code = s.sub_code ")
 			.append("                JOIN  exam e ON e.course_code = c.course_code AND e.sub_code = s.sub_code")
-			.append(" Where c.prof_num=? ")                                      
+			.append(" Where c.course_enddate > sysdate and c.prof_num=? ")                                      
 			.append(" ORDER BY c.course_name, s.sub_name ");			
 			
 			// 3. 쿼리문 생성객체 얻기
@@ -99,12 +100,14 @@ public class ProfExamMgrDAO {
 		try {
 			con=gc.getConn();
 			StringBuilder updateExamState= new StringBuilder();
+			
+			// 과정 종료 일자가 지나지 않은 자료만 불러온다. 
 			updateExamState
 			.append(" update (select course_name,sub_name,exam_open,exam_start,exam_end " ) 
 			.append("         from exam e,COURSE c,subject s ")
 			.append("         where e.course_code=c.course_code and s.sub_code=e.sub_code) ")
 			.append(" set exam_open=? ,exam_start=?, exam_end=? ")
-			.append(" where course_name=? and sub_name=? ");
+			.append(" where c.course_enddate > sysdate and course_name=? and sub_name=? ");
 
 			
 			// 3. 쿼리문 생성객체 얻기

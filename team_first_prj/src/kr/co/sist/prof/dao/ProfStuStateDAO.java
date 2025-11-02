@@ -54,7 +54,7 @@ public class ProfStuStateDAO {
 			.append(" s.stu_name, s.stu_num, s.stu_tel " ) 
 			.append(" FROM course c left JOIN professor p ON p.prof_num = c.prof_num ")
 			.append("               left JOIN student s ON c.course_code = s.course_code ")
-			.append(" where c.course_del_flag='N' and p.prof_num=? ")                                      
+			.append(" where c.course_del_flag='N' and c.course_enddate > sysdate and p.prof_num=? ")                                      
 			.append(" ORDER BY  p.prof_name, c.course_name, s.stu_num ");			
 			
 			// 3. 쿼리문 생성객체 얻기
@@ -107,7 +107,7 @@ public class ProfStuStateDAO {
 			.append(" s.stu_name, s.stu_num, s.stu_tel " ) 
 			.append(" FROM course c left JOIN professor p ON p.prof_num = c.prof_num ")
 			.append("               left JOIN student s ON s.course_code = c.course_code ")
-			.append(" where c.course_del_flag='N' and c.course_name=? ")                                      
+			.append(" where c.course_del_flag='N' and c.course_enddate > sysdate and c.course_name=? ")                                      
 			.append(" ORDER BY  p.prof_name, c.course_name, s.stu_num ");		
 
 			
