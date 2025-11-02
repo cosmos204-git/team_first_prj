@@ -61,7 +61,6 @@ public class AdminRegStuMgrDesignEvt extends WindowAdapter implements ActionList
 			
 			dtm.addRow(rowData);
 		}//end for
-		System.out.println("dsss");
 		
 	}//searchAllStu
 	public void searchComboProcess() {
@@ -116,6 +115,10 @@ public class AdminRegStuMgrDesignEvt extends WindowAdapter implements ActionList
 	public void cancleStuCourse() {
 		AdminRegStuMgrService arsms = new AdminRegStuMgrService();
 		DefaultTableModel dtm = aamd.getDtmStudent();
+		if(aamd.getJtAdminSubjectMgr().getSelectedRow()==-1) {
+			JOptionPane.showMessageDialog(aamd, "학생을 선택해 주세요.");
+			return;
+		}
 		int selectRow = aamd.getJtAdminSubjectMgr().getSelectedRow();
 		int stuNum = Integer.parseInt(dtm.getValueAt(selectRow, 3).toString());
 		int isDel = JOptionPane.showConfirmDialog(aamd, stuNum + "번 학생의 수강을 취소하시겠습니까?");
