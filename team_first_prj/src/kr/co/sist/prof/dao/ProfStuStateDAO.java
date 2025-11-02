@@ -2,9 +2,11 @@ package kr.co.sist.prof.dao;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,10 +53,10 @@ public class ProfStuStateDAO {
 			selectStuState
 
 			.append(" SELECT      p.prof_num, p.prof_name,  c.course_name," ) 
-			.append(" s.stu_name, s.stu_num, s.stu_tel " ) 
+			.append(" s.stu_name, s.stu_num, s.stu_tel, c.course_enddate " ) 
 			.append(" FROM course c left JOIN professor p ON p.prof_num = c.prof_num ")
 			.append("               left JOIN student s ON c.course_code = s.course_code ")
-			.append(" where c.course_del_flag='N' and c.course_enddate > sysdate and p.prof_num=? ")                                      
+			.append(" where c.course_del_flag='N' and p.prof_num=? ")                                      
 			.append(" ORDER BY  p.prof_name, c.course_name, s.stu_num ");			
 			
 			// 3. 쿼리문 생성객체 얻기
@@ -68,11 +70,23 @@ public class ProfStuStateDAO {
 
 			rs=pstmt.executeQuery();
 			
+			LocalDate currentDateNow, getDate;
+			String courseNameStatus;
+			
 			while(rs.next()) {
 				sDTO = new ProfStuStateDTO();
 		        // Alias 이름을 넣으면 오류남...
+				currentDateNow = LocalDate.now();
+				getDate= rs.getDate("course_enddate").toLocalDate();
+				
+				if ( getDate.isBefore(currentDateNow) ) {
+					courseNameStatus= rs.getString("course_name")+"(종료)";
+				} else {
+					courseNameStatus= rs.getString("course_name");
+				}
+				
 				sDTO.setprofName(rs.getString("prof_num"));
-				sDTO.setCourseName(rs.getString("course_name"));
+				sDTO.setCourseName(courseNameStatus);			
 				sDTO.setStuNum(rs.getInt("stu_num"));
 				sDTO.setStuName(rs.getString("stu_name"));
 				sDTO.setStuTel(rs.getString("stu_tel"));
@@ -101,13 +115,14 @@ public class ProfStuStateDAO {
 		try {
 			con=gc.getConn();
 			StringBuilder selectCourseState= new StringBuilder();
-			selectCourseState
 
-			.append(" SELECT      p.prof_num, p.prof_name,  c.course_name," ) 
-			.append(" s.stu_name, s.stu_num, s.stu_tel " ) 
+			// 종료된 과정도 관리를 위해 나오야 한다.
+			selectCourseState
+			.append(" SELECT      p.prof_num, p.prof_name, c.course_name, " ) 
+			.append(" s.stu_name, s.stu_num, s.stu_tel, c.course_enddate " ) 
 			.append(" FROM course c left JOIN professor p ON p.prof_num = c.prof_num ")
 			.append("               left JOIN student s ON s.course_code = c.course_code ")
-			.append(" where c.course_del_flag='N' and c.course_enddate > sysdate and c.course_name=? ")                                      
+			.append(" where c.course_del_flag='N' and c.course_name=? ")                                      
 			.append(" ORDER BY  p.prof_name, c.course_name, s.stu_num ");		
 
 			
@@ -119,11 +134,26 @@ public class ProfStuStateDAO {
 
 			rs=pstmt.executeQuery();
 			
+			LocalDate currentDateNow, getDate;
+			String courseNameStatus;
+			
 			while(rs.next()) {
 				sDTO = new ProfStuStateDTO();
 		        // Alias 이름을 넣으면 오류남...
+				
+				currentDateNow = LocalDate.now();
+				getDate= rs.getDate("course_enddate").toLocalDate();
+				
+				if ( getDate.isBefore(currentDateNow) ) {
+					courseNameStatus= rs.getString("course_name")+"(종료)";
+					
+				} else {
+					courseNameStatus= rs.getString("course_name");
+				}
+			
+					
 				sDTO.setprofName(rs.getString("prof_num"));
-				sDTO.setCourseName(rs.getString("course_name"));
+				sDTO.setCourseName(courseNameStatus);
 				sDTO.setStuNum(rs.getInt("stu_num"));
 				sDTO.setStuName(rs.getString("stu_name"));
 				sDTO.setStuTel(rs.getString("stu_tel"));
