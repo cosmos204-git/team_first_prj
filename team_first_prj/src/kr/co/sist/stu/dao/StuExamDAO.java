@@ -86,6 +86,25 @@ public class StuExamDAO {
             }
         }
     }
+    public boolean canTakeNow(int testCode) throws SQLException, IOException {
+        GetConnection gc = GetConnection.getInstance();
+        String sql =
+            "SELECT COUNT(*) " +
+            "FROM exam e " +
+            "WHERE e.test_code = ? " +
+            "  AND e.exam_open IN ('시험가능','응시가능') " +
+            "  AND SYSDATE BETWEEN " +
+            "      TO_DATE(TO_CHAR(SYSDATE,'YYYY-MM-DD ')||TRIM(e.exam_start),'YYYY-MM-DD HH24:MI') " +
+            "  AND TO_DATE(TO_CHAR(SYSDATE,'YYYY-MM-DD ')||TRIM(e.exam_end)  ,'YYYY-MM-DD HH24:MI')";
+        try (Connection con = gc.getConn();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, testCode);
+            try (ResultSet rs = ps.executeQuery()) {
+                rs.next();
+                return rs.getInt(1) > 0;
+            }
+        }
+    }
 
     public int[] insertExamResult(int stuNum, Map<Integer,Integer> answerByExamCode)
             throws SQLException, IOException {

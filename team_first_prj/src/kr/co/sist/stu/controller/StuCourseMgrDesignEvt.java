@@ -17,116 +17,93 @@ import kr.co.sist.stu.view.StuExamDesign;
 import kr.co.sist.stu.view.StuReportDesign;
 
 public class StuCourseMgrDesignEvt extends WindowAdapter implements ActionListener, MouseListener {
-    private final StuCourseMgrDesign scmd;
+ private final StuCourseMgrDesign scmd;
 
-    public StuCourseMgrDesignEvt(StuCourseMgrDesign scmd) {
-        this.scmd = scmd;
-        viewStuInfo();
-        showExamProcess();
-    }
+ public StuCourseMgrDesignEvt(StuCourseMgrDesign scmd) {
+     this.scmd = scmd;
+     viewStuInfo();
+ }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == scmd.getJbtnShowStuReport()) {
-            showReportProcess();
-        } else if (e.getSource() == scmd.getJbtnShowExam()) {
-            showExamProcess();
-        } else if (e.getSource() == scmd.getJbtnclose()) {
-            scmd.dispose();
-        }
-    }
+ @Override
+ public void actionPerformed(ActionEvent e) {
+     if (e.getSource() == scmd.getJbtnShowStuReport()) {
+         showReportProcess();
+     } else if (e.getSource() == scmd.getJbtnShowExam()) {
+         showExamProcess();        
+     } else if (e.getSource() == scmd.getJbtnclose()) {
+         scmd.dispose();
+     }
+ }
 
-    public void viewAllCourse() {
-        JTable table = scmd.getJtStuCourseMgr();
-        int row = table.getSelectedRow();
-        if (row == -1) return;
+ public void viewStuInfo() {
+     CurrentStuData csd = CurrentStuData.getInstance();
+     scmd.getJtfStuNameData().setText(csd.getLogStuDTO().getStuName());
+     scmd.getJtfStuNumData().setText(Integer.toString(csd.getLogStuDTO().getStuNum()));
+ }
 
-        DefaultTableModel model = (DefaultTableModel) table.getModel();
-        String course   = String.valueOf(model.getValueAt(row, 0));
-        String subject  = String.valueOf(model.getValueAt(row, 1));
-        String examTime = String.valueOf(model.getValueAt(row, 2));
-        System.out.println(course + ", " + subject + ", " + examTime);
+ @Override public void windowClosing(WindowEvent e) { scmd.dispose(); }
 
-        if ("시험불가".equals(examTime)) {
-            JOptionPane.showMessageDialog(scmd, "시험불가, 시간이 등록된 과목을 선택하세요.");
-            return;
-        }
-    }
+ public void showExamProcess() {
+     JTable table = scmd.getJtStuCourseMgr();
+     int row = table.getSelectedRow();
+     if (row == -1) {
+         JOptionPane.showMessageDialog(scmd, "시험 볼 과목을 먼저 선택해주세요.");
+         return;
+     }
 
-    public void viewStuInfo() {
-        CurrentStuData csd = CurrentStuData.getInstance();
-        scmd.getJtfStuNameData().setText(csd.getLogStuDTO().getStuName());
-        scmd.getJtfStuNumData().setText(Integer.toString(csd.getLogStuDTO().getStuNum()));
-    }
+     DefaultTableModel m = (DefaultTableModel) table.getModel();
+     String course   = m.getValueAt(row, 0).toString();
+     String subject  = m.getValueAt(row, 1).toString();
 
-    @Override public void windowClosing(WindowEvent e) { scmd.dispose(); }
+     String stuName = scmd.getJtfStuNameData().getText();
+     int stuNum = Integer.parseInt(scmd.getJtfStuNumData().getText().trim());
 
-    public void showExamProcess() {
-        JTable table = scmd.getJtStuCourseMgr();
-        int row = table.getSelectedRow();
-        if (row == -1) return;
+     kr.co.sist.stu.service.StuExamService svc = new kr.co.sist.stu.service.StuExamService();
+     Integer testCode = svc.findTestCode(course, subject);
+     if (testCode == null) {
+         JOptionPane.showMessageDialog(scmd, "시험이 개설되지 않았습니다. \n시험가능한 과목을 선택해주세요.");
+         return;
+     }
 
-        DefaultTableModel m = (DefaultTableModel) table.getModel();
-        String course = m.getValueAt(row, 0).toString();
-        String subject = m.getValueAt(row, 1).toString();
-        String examTime = m.getValueAt(row, 2).toString();
-        if ("시험불가".equals(examTime)) return;
+     try {
+         kr.co.sist.stu.dao.StuExamDAO dao = kr.co.sist.stu.dao.StuExamDAO.getInstance();
+         boolean okNow = dao.canTakeNow(testCode);
+         if (!okNow) {
+             JOptionPane.showMessageDialog(scmd, "현재 시간에는 응시할 수 없습니다. \n시험시간을 확인해주세요.");
+             return;
+         }
+     } catch (Exception ex) {
+         JOptionPane.showMessageDialog(scmd, "시험 가능 여부 확인 중 오류가 발생했습니다.");
+         ex.printStackTrace();
+         return;
+     }
 
-        String stuName = scmd.getJtfStuNameData().getText();
-        int stuNum = Integer.parseInt(scmd.getJtfStuNumData().getText().trim());
+     if (svc.alreadyTaken(stuNum, testCode)) {
+         JOptionPane.showMessageDialog(scmd, "이미 응시한 시험입니다.");
+         return;
+     }
 
-        kr.co.sist.stu.service.StuExamService svc = new kr.co.sist.stu.service.StuExamService();
-        Integer testCode = svc.findTestCode(course, subject);
-        if (testCode == null) return;
+     java.util.List<kr.co.sist.stu.dto.ExamItemDTO> items = svc.getExamItems(testCode);
+     if (items == null || items.isEmpty()) {
+         JOptionPane.showMessageDialog(scmd, "문항이 없습니다.");
+         return;
+     }
 
+     StuExamDesign examDialog =
+         new kr.co.sist.stu.view.StuExamDesign(scmd, true, stuNum, stuName, subject, items, testCode);
+     examDialog.setVisible(true);
+ }
 
-        if (svc.alreadyTaken(stuNum, testCode)) {
-            JOptionPane.showMessageDialog(scmd, "이미 응시한 시험입니다.");
-            return;
-        }
+ @Override public void mouseClicked(MouseEvent me) {}
+ @Override public void mousePressed(MouseEvent e) {}
+ @Override public void mouseReleased(MouseEvent e) {}
+ @Override public void mouseEntered(MouseEvent e) {}
+ @Override public void mouseExited(MouseEvent e) {}
 
-        java.util.List<kr.co.sist.stu.dto.ExamItemDTO> items = svc.getExamItems(testCode);
-        if (items == null || items.isEmpty()) return;
-
-        StuExamDesign examDialog =
-        	    new kr.co.sist.stu.view.StuExamDesign(scmd, true, stuNum, stuName, subject, items, testCode);
-        	examDialog.setVisible(true);
-
-    }
-
-    public void showReportProcess() {
-    	
-    	CurrentStuData csd = CurrentStuData.getInstance();
-    	
-        int stuNum = csd.getLogStuDTO().getStuNum();
-        String stuName = csd.getLogStuDTO().getStuName();
-        new StuReportDesign(scmd, true, stuNum, stuName);
-    }
-    
-    
-
-    @Override
-    public void mouseClicked(MouseEvent me) {
-        if (me.getButton() == MouseEvent.BUTTON1) {
-            try { viewAllCourse(); }
-            catch (Exception ex) {
-                JOptionPane.showMessageDialog(scmd, "선택값을 가져오는 중 오류가 발생했습니다.");
-            }
-        }
-    }
-    @Override public void mousePressed(MouseEvent e) {
-    	
-    	
-    }
-    @Override public void mouseReleased(MouseEvent e) {
-    	
-    	
-    }
-    @Override public void mouseEntered(MouseEvent e) {
-    	
-    	
-    }
-    @Override public void mouseExited(MouseEvent e) 
-    
-    {}
+ public void showReportProcess() {
+     CurrentStuData csd = CurrentStuData.getInstance();
+     int stuNum = csd.getLogStuDTO().getStuNum();
+     String stuName = csd.getLogStuDTO().getStuName();
+     new StuReportDesign(scmd, true, stuNum, stuName);
+ }
 }
