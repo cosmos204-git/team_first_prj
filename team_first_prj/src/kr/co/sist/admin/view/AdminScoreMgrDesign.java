@@ -6,8 +6,6 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -25,8 +23,6 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import kr.co.sist.admin.controller.AdminScoreMgrDesignEvt;
-import kr.co.sist.admin.dto.CourseDTO;
-import kr.co.sist.admin.service.AdminScoreMgrService;
 
 public class AdminScoreMgrDesign extends JDialog {
 	private DefaultTableModel dtmAdminScoreMgr ; 
@@ -42,7 +38,7 @@ public class AdminScoreMgrDesign extends JDialog {
 		
 		Font font = new Font("맑은 고딕" , Font.BOLD,15);
 		
-		String[] columNames = {"학번", "학생명","과목명","점수"};
+		String[] columNames = {"학번", "학생명","과목명","점수","등수"};
 		dtmAdminScoreMgr = new DefaultTableModel(columNames,0);
 		jtAdminScoreMgr = new JTable(dtmAdminScoreMgr);
 		jsp = new JScrollPane(jtAdminScoreMgr);

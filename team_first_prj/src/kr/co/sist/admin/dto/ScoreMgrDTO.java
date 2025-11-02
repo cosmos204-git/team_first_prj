@@ -1,19 +1,20 @@
 package kr.co.sist.admin.dto;
 
 public class ScoreMgrDTO {
-	private int stuNum,stuScore ;
+	private int stuNum,stuScore,rank ;
 	private String stuName,	subName;
 	
 	public ScoreMgrDTO() {
 		super();
 	}
 	
-	public ScoreMgrDTO(int stuNum, int stuScore, String stuName, String subName) {
+	public ScoreMgrDTO(int stuNum, int stuScore, String stuName, String subName, int rank) {
 		super();
 		this.stuNum = stuNum;
 		this.stuScore = stuScore;
 		this.stuName = stuName;
 		this.subName = subName;
+		this.rank = rank;
 		
 	}//ScoreMgrDTO
 	
@@ -40,6 +41,14 @@ public class ScoreMgrDTO {
 	}
 	public void setSubName(String subName) {
 		this.subName = subName;
+	}
+
+	public int getRank() {
+		return rank;
+	}
+
+	public void setRank(int rank) {
+		this.rank = rank;
 	}
 
 	@Override

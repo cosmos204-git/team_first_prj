@@ -47,13 +47,14 @@ public class AdminScoreMgrDesignEvt extends WindowAdapter implements ActionListe
 		DefaultTableModel dtm = asmd.getDtmAdminScoreMgr();
 		dtm.setRowCount(0);
 		List<ScoreMgrDTO> smDTOList = asms.searchScore(asmd.getJcbCourse(),asmd.getJcbSub(),asmd.getJtfStuNum());
-		String stuNum, stuName, subName, score  = null;
+		String stuNum, stuName, subName, score, rank = "";
 		for(ScoreMgrDTO smDTO : smDTOList) {
 			stuNum = String.valueOf(smDTO.getStuNum()) ;
 			stuName = smDTO.getStuName();
 			subName= smDTO.getSubName();
 			score = String.valueOf( smDTO.getStuScore());
-			String[] rowData = {stuNum,stuName,subName,score};
+			rank = String.valueOf(smDTO.getRank());
+			String[] rowData = {stuNum,stuName,subName,score, rank};
 			dtm.addRow(rowData);
 		}
 		if(dtm.getRowCount() == 0) {JOptionPane.showMessageDialog(asmd, "검색 결과가 없습니다.");}
@@ -112,13 +113,15 @@ public class AdminScoreMgrDesignEvt extends WindowAdapter implements ActionListe
 		AdminScoreMgrService asms = new AdminScoreMgrService();
 		DefaultTableModel dtm = asmd.getDtmAdminScoreMgr();
 		List<ScoreMgrDTO> list =  asms.searchAllScore();
-		String stuNum, stuName, subName, score  = null;
+		String stuNum, stuName, subName, score, rank  = "";
 		for( ScoreMgrDTO smDTO : list) {
 			stuNum = String.valueOf(smDTO.getStuNum()) ;
 			stuName = smDTO.getStuName();
 			subName= smDTO.getSubName();
 			score = String.valueOf( smDTO.getStuScore());
-			String[] rowData = {stuNum,stuName,subName,score};
+			rank = String.valueOf( smDTO.getRank());
+			
+			String[] rowData = {stuNum,stuName,subName,score,rank};
 			dtm.addRow(rowData);
 		}
 	}//seacrhAllScore
