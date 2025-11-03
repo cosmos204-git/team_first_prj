@@ -39,6 +39,9 @@ public class ProfStuStateDesignEvt extends WindowAdapter implements ActionListen
 					if (selectedCourse=="전체 과정") {
 					    viewProfStuState(); // 초기 데이터 로딩
 					} else {
+						if (selectedCourse.contains("(종료)")) {
+							selectedCourse=selectedCourse.substring(0,selectedCourse.indexOf("(종료)"));
+						}
 						updateTableByCourse(selectedCourse);
 					}
 				} catch (SQLException e1) {
@@ -51,7 +54,7 @@ public class ProfStuStateDesignEvt extends WindowAdapter implements ActionListen
             }
         }
     }
-    
+
     
     @Override
     public void windowClosing(WindowEvent e) {
