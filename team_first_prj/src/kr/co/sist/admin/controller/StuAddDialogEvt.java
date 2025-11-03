@@ -83,7 +83,7 @@ public class StuAddDialogEvt extends WindowAdapter implements ActionListener{
 		boolean flag=sas.AddStudnet(sDTO)==1;//새로운 계정이 문제 없이 생성되었을 경우 true
 		
 		if(flag) {//flag가 true일 경우만
-			msg=sDTO.getStuName()+"이름으로 새로운 계정이 추가되었습니다.";
+			msg=sDTO.getStuName()+" 이름으로 새로운 계정이 추가되었습니다.";
 		}//end if 
 		
 		

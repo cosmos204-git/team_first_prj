@@ -27,8 +27,7 @@ public class AdminCourseMgrDesignEvt extends WindowAdapter implements ActionList
 	private AdminCourseMgrDesign acmd;
 	private AdminCourseMgrDesignService acmds;
 	private List<CourseMgrDTO> listCourseData;
-	private int selectedNum =-1;
-	private int maxRow;
+	private int CourseTableRow;
 
 
 	
@@ -40,7 +39,6 @@ public class AdminCourseMgrDesignEvt extends WindowAdapter implements ActionList
 		searchAllProcess();
 		searchProfProcess();
 		resetInputField();
-//		acmd.getJlblCourseCodeData().setText(String.valueOf(acmds.AddCourseNum()));
 	}//AdminCourseMgrDesignEvt
 	
 	@Override
@@ -78,8 +76,7 @@ public class AdminCourseMgrDesignEvt extends WindowAdapter implements ActionList
 		//1. 왼 2. 휠 3. 오른쪽
 		switch(me.getButton()) {
 		case MouseEvent.BUTTON1 : //왼쪽버튼 클릭
-				clickedOneCourse();
-				selectedNum=acmd.getJtAdminCourseMgr().getSelectedRow();
+				selectViewCourse();
 			}//end switch
 		
 	}//mouseClicked
@@ -91,7 +88,7 @@ public class AdminCourseMgrDesignEvt extends WindowAdapter implements ActionList
 			
 			if(ie.getSource() == acmd.getJcbProfName() ){
 				String ProfName = (String)ie.getItem();
-				Map<String, String> list = acmds.searchCombo();
+				Map<String, String> list = acmds.searchProfessor();
 				
 				acmd.getJlblProfNumData().setText(list.get(ProfName));
 				}//end if 
@@ -126,8 +123,8 @@ public class AdminCourseMgrDesignEvt extends WindowAdapter implements ActionList
 
 	public void searchProfProcess() {
 		DefaultComboBoxModel<String> dcbm = acmd.getDcbmProfName();
-		dcbm.addElement("");
-		Map<String, String> list = acmds.searchCombo();
+		dcbm.addElement("       --선택--");
+		Map<String, String> list = acmds.searchProfessor();
 		for( String profName : list.keySet()) {
 			dcbm.addElement(profName);
 		}//end for 
@@ -135,7 +132,7 @@ public class AdminCourseMgrDesignEvt extends WindowAdapter implements ActionList
 	
 
 	
-	public void clickedOneCourse() {
+	public void selectViewCourse() {//왼쪽 화면에 보여주기 selectViewCourse
 		int selectedCourse = acmd.getJtAdminCourseMgr().getSelectedRow();
 		
 		CourseMgrDTO cmDTO = listCourseData.get(selectedCourse);
@@ -193,10 +190,11 @@ public class AdminCourseMgrDesignEvt extends WindowAdapter implements ActionList
 			
 			dtmAdminCouresMgr.addRow(rowData);
 		}//end for 
-		maxRow=acmd.getJtAdminCourseMgr().getRowCount();
-		selectedNum=-1;
+		CourseTableRow=acmd.getJtAdminCourseMgr().getRowCount();
+//		selectedNum=-1;
 		
 	}//searchAllProcess
+	
 	
 	public void searchProcess() {
 		
@@ -204,7 +202,6 @@ public class AdminCourseMgrDesignEvt extends WindowAdapter implements ActionList
 			JOptionPane.showMessageDialog(acmd, "검색할 과정명을 입력해주세요!");	
 			searchAllProcess();
 			resetInputField();
-//			acmd.getJlblCourseCodeData().setText(String.valueOf(acmds.AddCourseNum()));
 			return;
 		}if(!validCourseName(acmd.getJtfSearchCourse().getText())) {
 		
@@ -311,7 +308,7 @@ public class AdminCourseMgrDesignEvt extends WindowAdapter implements ActionList
 
 		String msg = "과정명,교수, 시작일, 종료일이 알맞게 들어갔는지 확인해주세요";
 		if(startDate==null||startDate.isEmpty()||endDate==null||endDate.isEmpty()
-			||courseName==null||courseName.isEmpty()||profName==null||profName.isEmpty()) {
+			||courseName==null||courseName.isEmpty()||profName.equals("       --선택--")||profName.isEmpty()) {
 				JOptionPane.showMessageDialog(acmd, msg);
 				return;
 		}//end if
@@ -358,6 +355,7 @@ public class AdminCourseMgrDesignEvt extends WindowAdapter implements ActionList
 	}//addProcess
 	
 	public void modifyProcess(){
+		int selectedNum = acmd.getJtAdminCourseMgr().getSelectedRow();
 		CourseMgrDTO cmDTO=new CourseMgrDTO();
 		
 		String startDate = (String)acmd.getJcbStartdateY().getSelectedItem()+"-"+
@@ -410,7 +408,6 @@ public class AdminCourseMgrDesignEvt extends WindowAdapter implements ActionList
 		cmDTO.setCourseCode(Integer.parseInt(acmd.getJlblCourseCodeData().getText()));
 		cmDTO.setCourseName(courseName);
 		cmDTO.setProfName(profName);
-//		cmDTO.setProfNum(Integer.parseInt(acmd.getJlblProfNumData().getText()));
 		cmDTO.setCourseStartDate(startDate);
 		cmDTO.setCourseEndDate(endDate);
 		
@@ -422,7 +419,6 @@ public class AdminCourseMgrDesignEvt extends WindowAdapter implements ActionList
 			resetInputField();
 		}//end if 
 		JOptionPane.showMessageDialog(acmd, msg);
-//		acmd.getJlblCourseCodeData().setText(String.valueOf(acmds.AddCourseNum()));
 		resetInputField();
 		searchAllProcess();
 		
@@ -464,7 +460,6 @@ public class AdminCourseMgrDesignEvt extends WindowAdapter implements ActionList
 		
 		//삭제된 것을 확인하기위해 새로 반영 후 selectedNum 초기화 
 		searchAllProcess();
-		selectedNum=-1;
 		
 	
 	}//deleteProces
@@ -472,10 +467,15 @@ public class AdminCourseMgrDesignEvt extends WindowAdapter implements ActionList
 	private void resetInputField() {
 		
 		LocalDate today= LocalDate.now();
-	
+		
+		int nextCourseNum=acmds.AddCourseNum() ;
+		if(nextCourseNum==100) {
+			nextCourseNum=1000;
+		}
+		
 		//입력칸을 초기화
-//		acmd.getJlblCourseCodeData().setText("");
-		acmd.getJlblCourseCodeData().setText(String.valueOf(acmds.AddCourseNum()));
+
+		acmd.getJlblCourseCodeData().setText(String.valueOf(nextCourseNum));
 		acmd.getJtfCourseName().setText("");
 		acmd.getJlblProfNumData().setText("");
 		acmd.getJcbProfName().setSelectedIndex(0);

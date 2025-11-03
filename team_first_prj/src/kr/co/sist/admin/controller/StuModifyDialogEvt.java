@@ -71,7 +71,7 @@ public class StuModifyDialogEvt extends WindowAdapter implements ActionListener{
 			return ;
 		}
 		if(!Pattern.matches(telRegex, stuTel)) {
-			JOptionPane.showMessageDialog(smd, "전화번호 형식이 올바르지 않습니다.\n 010-xxxx-xxxx");
+			JOptionPane.showMessageDialog(smd, "전화번호 형식이 올바르지 않습니다.\n ex)  010-xxxx-xxxx");
 			return ;
 		}
 		if(stuPass.length()<4||stuPass.length()>20) {

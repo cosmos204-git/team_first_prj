@@ -12,6 +12,7 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 
 import kr.co.sist.admin.controller.StuModifyDialogEvt;
+import kr.co.sist.admin.dto.StudentDTO;
 
 public class StuModifyDialog extends JDialog {
 	
@@ -22,7 +23,8 @@ public class StuModifyDialog extends JDialog {
 	private AdminStuMgrDesign asmd;
 	
 
-	public StuModifyDialog(AdminStuMgrDesign asmd, boolean modal,int StuNum) {
+//	public StuModifyDialog(AdminStuMgrDesign asmd, boolean modal,int StuNum) {
+	public StuModifyDialog(AdminStuMgrDesign asmd, boolean modal,StudentDTO sDTO) {
 		super(asmd,"관리자 - 학생관리(수정)",modal);
 		this.asmd=asmd;
 
@@ -31,9 +33,11 @@ public class StuModifyDialog extends JDialog {
 		jlbStuTel = new JLabel("휴대폰번호");
 		jlblStuPass = new JLabel("비밀번호");
 		
-		jtfStuNum = new JTextField(String.valueOf(StuNum));
-		jtfStuName= new JTextField();
-		jtfStuTel= new JTextField();
+//		jtfStuNum = new JTextField(String.valueOf(StuNum));
+//		jtfStuName= new JTextField();
+		jtfStuNum = new JTextField(String.valueOf(sDTO.getStuNum()));
+		jtfStuName= new JTextField(sDTO.getStuName());
+		jtfStuTel= new JTextField(sDTO.getStuTel());
 		jpfStuPass= new JPasswordField();
 		
 		jbtnAdd= new JButton("변경");

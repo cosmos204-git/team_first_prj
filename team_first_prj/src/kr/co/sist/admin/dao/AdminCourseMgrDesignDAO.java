@@ -34,7 +34,7 @@ public class AdminCourseMgrDesignDAO {
 		
 		try {
 			con=gc.getConn();
-			String nextProfNum = "select NVL(max(COURSE_CODE),0)+1000 max from COURSE";
+			String nextProfNum = "select NVL(max(COURSE_CODE),0)+100 max from COURSE";
 			pstmt = con.prepareStatement(nextProfNum);
 			
 			rs=pstmt.executeQuery();
@@ -109,86 +109,8 @@ public class AdminCourseMgrDesignDAO {
 		return list;
 	}//selectAllCourse
 	
-//	public List<CourseMgrDTO> selectAllCourse() throws SQLException,IOException{
-//		CourseMgrDTO cmDTO = null;
-//		
-//		List<CourseMgrDTO> list = new ArrayList<CourseMgrDTO>();
-//		
-//		Connection con = null;
-//		PreparedStatement pstmt= null;
-//		ResultSet rs = null;
-//		
-//		GetConnection gc = GetConnection.getInstance();
-//		try {
-//			con=gc.getConn();
-//			StringBuilder selectCourse= new StringBuilder();
-//			selectCourse
-//			.append("select c.COURSE_CODE,c.COURSE_NAME||CASE WHEN  c.COURSE_ENDDATE-c.COURSE_STARTDATE >0 THEN '(진행)' ELSE '(종료)'  END as COURSE_NAME")
-//			.append(", p.PROF_NUM,p.PROF_NAME, c.COURSE_STARTDATE, c.COURSE_ENDDATE, c.COURSE_INPUTDATE")
-//			.append("	from COURSE c,PROFESSOR p		")
-//			.append("where (c.PROF_NUM=p.PROF_NUM )and COURSE_DEL_FLAG='N'")
-//			.append("order by c.COURSE_CODE asc");
-//
-//			pstmt = con.prepareStatement(selectCourse.toString());
-//			
-//			rs=pstmt.executeQuery();
-//			
-//			while(rs.next()) {
-//				
-//				
-//				cmDTO = new CourseMgrDTO();
-//				
-//
-//				cmDTO.setCourseCode(rs.getInt("COURSE_CODE"));
-//				cmDTO.setCourseName(rs.getString("COURSE_NAME"));
-//				cmDTO.setProfNum(rs.getInt("PROF_NUM"));
-//				cmDTO.setProfName(rs.getString("PROF_NAME"));
-//				cmDTO.setCourseStartDate(String.valueOf(rs.getDate("COURSE_STARTDATE")));
-//				cmDTO.setCourseEndDate(String.valueOf(rs.getDate("COURSE_ENDDATE")));
-//				cmDTO.setCourseInputDate(String.valueOf(rs.getDate("COURSE_INPUTDATE")));
-//		
-//				list.add(cmDTO);
-//			}//end while
-//		}finally {
-//			gc.dbClose(con, pstmt, rs);
-//		}//end finally
-//				
-//		return list;
-//	}//selectAllCourse
-	
-//	public List<String> selectCombo() throws IOException, SQLException {
-//		List<String> list = new ArrayList<String>();
-//
-//		Connection con = null;
-//		PreparedStatement pstmt = null;
-//		ResultSet rs = null;
-//
-//		GetConnection gc = GetConnection.getInstance();
-//
-//		try {
-//			con = gc.getConn();
-//
-//			StringBuilder selectCombo = new StringBuilder();
-//			selectCombo.append("	select PROF_NUM,PROF_NAME	").append("	from PROFESSOR	")
-//					.append("	where PROF_DEL_FLAG='N'	");
-//
-//			pstmt = con.prepareStatement(selectCombo.toString());
-//
-//			rs = pstmt.executeQuery();
-//			String profName=null;
-//			while (rs.next()) {
-//				profName=rs.getString("PROF_NAME");
-//
-//				list.add(profName);
-//			} // end while
-//		} finally {
-//			gc.dbClose(con, pstmt, rs);
-//		} // end finally
-//
-//		return list;
-//	}// selectCombo
-//	
-//	
+
+
 	public Map<String, String> selectCombo() throws IOException, SQLException {
 		Map<String, String> list = new HashMap<String, String>();
 
@@ -222,55 +144,7 @@ public class AdminCourseMgrDesignDAO {
 		return list;
 	}// selectCombo
 	
-//	public List<CourseMgrDTO> selectCourse(String courseName) throws SQLException, IOException {
-//
-//
-//		CourseMgrDTO cmDTO=null;
-//		
-//		List<CourseMgrDTO> list = new ArrayList<CourseMgrDTO>();
-//		
-//		Connection con = null;
-//		PreparedStatement pstmt = null;
-//		ResultSet rs= null;
-//		
-//		GetConnection gc = GetConnection.getInstance();
-//		try {
-//			con=gc.getConn();
-//			StringBuilder selectCourse = new StringBuilder();
-//			selectCourse
-//			.append("	select c.COURSE_CODE,c.COURSE_NAME||CASE WHEN  c.COURSE_ENDDATE-c.COURSE_STARTDATE >0 THEN '(진행)' ELSE '(종료)'  END as COURSE_NAME	")
-//			.append("	, p.PROF_NUM,p.PROF_NAME, to_char(c.COURSE_STARTDATE,'yyyy-MM-dd') COURSE_STARTDATE, 	")
-//			.append("	to_char(c.COURSE_ENDDATE,'yyyy-MM-dd') COURSE_ENDDATE, to_char(c.COURSE_INPUTDATE,'yyyy-MM-dd') COURSE_INPUTDATE	")
-//			.append("	from COURSE c,PROFESSOR p	")
-//			.append("	where (c.PROF_NUM=p.PROF_NUM )and (PROF_DEL_FLAG='N'and COURSE_DEL_FLAG='N') and c.COURSE_NAME=?	")
-//			.append("	order by c.COURSE_CODE asc	");
-//			
-//
-//		
-//			pstmt= con.prepareStatement(selectCourse.toString());
-//			
-//			pstmt.setString(1, courseName);
-//			
-//			rs=pstmt.executeQuery();
-//			
-//			while(rs.next()) {
-//				cmDTO=new CourseMgrDTO();
-//				cmDTO.setCourseCode(rs.getInt("COURSE_CODE"));
-//				cmDTO.setCourseName(rs.getString("COURSE_NAME"));
-//				cmDTO.setProfNum(rs.getInt("PROF_NUM"));
-//				cmDTO.setProfName(rs.getString("PROF_NAME"));
-//				cmDTO.setCourseStartDate(String.valueOf(rs.getDate("COURSE_STARTDATE")));
-//				cmDTO.setCourseEndDate(String.valueOf(rs.getDate("COURSE_ENDDATE")));
-//				cmDTO.setCourseInputDate(String.valueOf(rs.getDate("COURSE_INPUTDATE")));
-//				
-//				list.add(cmDTO);
-//			}//while
-//		}finally {
-//			gc.dbClose(con, pstmt, rs);
-//		}//end finally
-//	
-//		return list; 
-//	}//selectCourse
+
 	
 	public List<CourseMgrDTO> selectCourse(String courseName) throws SQLException, IOException {
 
@@ -349,11 +223,7 @@ public class AdminCourseMgrDesignDAO {
 			pstmt=con.prepareStatement(updateCourse.toString());
 			
 			
-//			pstmt.setString(1,cDTO.getCourseName());
-//			pstmt.setString(2,cDTO.getCourseStartDate());
-//			pstmt.setString(3,cDTO.getCourseEndDate());
-//			pstmt.setString(4,cDTO.getProfName());
-//			pstmt.setInt(5,cDTO.getCourseCode());
+
 			pstmt.setString(1,cDTO.getCourseName());
 			pstmt.setString(2,cDTO.getCourseStartDate());
 			pstmt.setString(3,cDTO.getCourseEndDate());

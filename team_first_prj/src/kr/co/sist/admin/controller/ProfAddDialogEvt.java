@@ -83,7 +83,7 @@ public class ProfAddDialogEvt extends WindowAdapter implements ActionListener{
 			return ;
 		}
 		if(!Pattern.matches(telRegex, profTel)) {
-			msg= "전화번호 형식이 올바르지 않습니다.\n 010-xxxx-xxxx";
+			msg= "전화번호 형식이 올바르지 않습니다.\n ex) 010-xxxx-xxxx";
 			JOptionPane.showMessageDialog(pad, msg);
 			return;
 		}//end if
@@ -98,7 +98,7 @@ public class ProfAddDialogEvt extends WindowAdapter implements ActionListener{
 		boolean flag=pas.AddProfessor(pDTO)==1;//새로운 계정이 문제 없이 생성되었을 경우 true
 		
 		if(flag) {//flag가 true일 경우만
-			msg=pDTO.getProfName()+"이름으로 새로운 계정이 추가되었습니다.";
+			msg=pDTO.getProfName()+" 이름으로 새로운 계정이 추가되었습니다.";
 		}//end if 
 		
 		

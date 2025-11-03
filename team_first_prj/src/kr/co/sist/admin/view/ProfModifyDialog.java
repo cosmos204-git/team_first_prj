@@ -11,6 +11,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import kr.co.sist.admin.controller.ProfModifyDialogEvt;
+import kr.co.sist.admin.dto.ProfDTO;
 
 public class ProfModifyDialog extends JDialog {
 	
@@ -21,7 +22,7 @@ public class ProfModifyDialog extends JDialog {
 //	private StudentDTO sDTO;
 	
 
-	public ProfModifyDialog(AdminProfMgrDesign asmd, boolean modal,int ProfNum) {
+	public ProfModifyDialog(AdminProfMgrDesign asmd, boolean modal,ProfDTO pDTO) {
 		super(asmd,"관리자 - 교수관리(수정)",modal);
 		
 
@@ -30,10 +31,12 @@ public class ProfModifyDialog extends JDialog {
 		jlblProfTel = new JLabel("휴대폰번호");
 		jlblProfPass = new JLabel("비밀번호");
 		
-		jtfProfNum = new JTextField(String.valueOf(ProfNum));
-		jtfProfName= new JTextField();
-		jtfProfTel= new JTextField();
-//		jtfProfPass= new JTextField();
+//		jtfProfNum = new JTextField(String.valueOf(ProfNum));
+//		jtfProfName= new JTextField();
+//		jtfProfTel= new JTextField();
+		jtfProfNum = new JTextField(String.valueOf(pDTO.getProfNum()));
+		jtfProfName= new JTextField(pDTO.getProfName());
+		jtfProfTel= new JTextField(pDTO.getProfTel());
 		jpfProfPass= new JPasswordField();
 		
 		

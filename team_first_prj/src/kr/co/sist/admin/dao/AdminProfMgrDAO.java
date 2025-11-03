@@ -27,7 +27,7 @@ public class AdminProfMgrDAO {
 	}//getInstance
 	
 	/**
-	 * 모든 학생의 정보 조회
+	 * 모든 교수의 정보 조회
 	 * @return
 	 * @throws SQLException
 	 */
@@ -76,7 +76,7 @@ public class AdminProfMgrDAO {
 	
 	
 	/**
-	 * 선택된 학생의 데이터만 출력 
+	 * 선택된 교수의 데이터만 출력 
 	 * @param stuNum
 	 * @return StudentDTO
 	 * @throws SQLException

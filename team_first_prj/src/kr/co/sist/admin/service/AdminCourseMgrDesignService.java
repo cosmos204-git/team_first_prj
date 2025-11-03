@@ -31,7 +31,7 @@ public class AdminCourseMgrDesignService {
 	
 
 //	
-	public Map<String,String> searchCombo(){
+	public Map<String,String> searchProfessor(){//
 		 Map<String,String> list = new HashMap<String,String>();
 		AdminCourseMgrDesignDAO acmdDAO =AdminCourseMgrDesignDAO.getInstance();
 		try {
@@ -45,19 +45,7 @@ public class AdminCourseMgrDesignService {
 		return list;
 	}//searchCombo
 	
-//	public List<String> searchCombo(){
-//		 List<String> list = new ArrayList<String>();
-//		AdminCourseMgrDesignDAO acmdDAO =AdminCourseMgrDesignDAO.getInstance();
-//		try {
-//			list = acmdDAO.selectCombo();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		
-//		return list;
-//	}//searchCombo
+
 	
 	public List<CourseMgrDTO> searchCourse(String courseName) {
 		
@@ -130,7 +118,7 @@ public class AdminCourseMgrDesignService {
 		
 	}//removeCourse
 	
-	public int AddCourseNum(){
+	public int AddCourseNum(){//CourseNumView
 		int courseNum=0;
 		AdminCourseMgrDesignDAO acmdDAO= AdminCourseMgrDesignDAO.getInstance();
 		try {

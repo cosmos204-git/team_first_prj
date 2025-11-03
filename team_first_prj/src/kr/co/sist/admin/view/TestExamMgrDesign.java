@@ -42,7 +42,7 @@ public class TestExamMgrDesign extends JDialog {
 
 		String[] columNames = {"문제번호", "정답" , "문제코드"};
 		dtmExamList = new DefaultTableModel(columNames,0);
-		jtExamList = new JTable(dtmExamList);
+		jtExamList = new JTable(dtmExamList);                                                                         
 		JScrollPane jspExamList = new JScrollPane(jtExamList);
 		
 		jlblEICodeData = new JLabel("");

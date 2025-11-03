@@ -108,9 +108,8 @@ public class AdminStuMgrDesignEvt extends WindowAdapter implements ActionListene
 		}else {
 			
 			StudentDTO sDTO = asms.searchAllStudent().get(selectedNum);
-			int stuNum =sDTO.getStuNum();
-			
-			new StuModifyDialog(asmd,true,stuNum);
+
+			new StuModifyDialog(asmd,true,sDTO);
 		}//end else
 	}//ModifyProcess
 	

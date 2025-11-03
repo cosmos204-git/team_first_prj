@@ -40,7 +40,7 @@ public class ProfModifyDialogEvt extends WindowAdapter implements ActionListener
 	
 
 	
-	public boolean modifiyProfName(String profName, int profNum) {
+	public boolean ModifiyProfName(String profName, int profNum) {
 		boolean flag=false;
 		
 		List<ProfDTO> list = pms.searchAllProfessor();
@@ -94,7 +94,7 @@ public class ProfModifyDialogEvt extends WindowAdapter implements ActionListener
 		}//end if 
 		
 		
-		if(modifiyProfName(profName,profNum)) {
+		if(ModifiyProfName(profName,profNum)) {
 			profName=profName+"("+Integer.parseInt(pmd.getJtfProfNum().getText())+")";
 		}
 		

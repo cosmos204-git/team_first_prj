@@ -115,7 +115,7 @@ public class AdminProfMgrDesignEvt extends WindowAdapter implements ActionListen
       }//end for 
       maxRow=apmd.getJtProfMgr().getRowCount();
       
-//      maxRow=apmd.getJtProfMgr().getRowCount();
+
    }//ProfInfoProcess
    
    public void searchProcess() throws NumberFormatException,NullPointerException{
@@ -139,13 +139,7 @@ public class AdminProfMgrDesignEvt extends WindowAdapter implements ActionListen
       dtmProMgr.addRow(rowData);
    }//searchProcess
    public void addProcess() {
-//   DefaultTableModel dtmProMgr = apmd.getDtmProMgr();
-      
-//      int dtmStuMgrlastIndex= dtmProMgr.getRowCount()-1;
-////      StudentDTO sDTO= asms.searchStudent(dtmStuMgrlastIndex);
-//      
-//      
-//      int newProfNum=listProfData.get(dtmStuMgrlastIndex).getProfNum()+1;
+
       
       
       new ProfAddDialog(apmd,true);
@@ -159,9 +153,8 @@ public class AdminProfMgrDesignEvt extends WindowAdapter implements ActionListen
       }else {
          
          ProfDTO pDTO = apms.searchAllProfessor().get(selectedNum);
-         int ProfNum =pDTO.getProfNum();
-         
-         new ProfModifyDialog(apmd,true,ProfNum);
+
+         new ProfModifyDialog(apmd,true,pDTO);
       }//end else
    }//modifyProcess
    
@@ -169,7 +162,7 @@ public class AdminProfMgrDesignEvt extends WindowAdapter implements ActionListen
       DefaultTableModel dtm = apmd.getDtmProMgr();
       
       if(selectedNum==-1) {
-         JOptionPane.showMessageDialog(apmd, "삭제할 학생을 선택해주세요.");
+         JOptionPane.showMessageDialog(apmd, "삭제할 교수을 선택해주세요.");
          return;
       }//end if
       
@@ -177,7 +170,7 @@ public class AdminProfMgrDesignEvt extends WindowAdapter implements ActionListen
       ProfDTO pDTO = listProfData.get(selectedNum);
       int deleteProfNum=pDTO.getProfNum();
       
-      switch (JOptionPane.showConfirmDialog(apmd,deleteProfNum+"번 학생 정보를 정말 삭제 하시겠습니까?")) {
+      switch (JOptionPane.showConfirmDialog(apmd,deleteProfNum+"번 교수 정보를 정말 삭제 하시겠습니까?")) {
       case JOptionPane.OK_OPTION: 
          break;
       case JOptionPane.NO_OPTION: 

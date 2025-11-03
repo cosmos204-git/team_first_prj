@@ -103,8 +103,8 @@ public class AdminCourseMgrDesign extends JDialog {
 	jtAdminCourseMgr = new JTable(dtmAdminCouresMgr);
 	
 	TableColumnModel tcm = jtAdminCourseMgr.getColumnModel();
-	tcm.getColumn(0).setPreferredWidth(50);
-	tcm.getColumn(1).setPreferredWidth(100);
+	tcm.getColumn(0).setPreferredWidth(40);
+	tcm.getColumn(1).setPreferredWidth(110);
 	tcm.getColumn(2).setPreferredWidth(20);
 	tcm.getColumn(3).setPreferredWidth(50);
 	tcm.getColumn(4).setPreferredWidth(60);
@@ -190,7 +190,6 @@ public class AdminCourseMgrDesign extends JDialog {
 	
 	
 	jsp.setBounds(297,60,500,320);
-//	jsp.setBounds(297,60,440,280);
 	jbtnClose.setBounds(660,390,80,30);
 	jbtnDelete.setBounds(570,390,80,30);
 	jbtnAdd.setBounds(455,390,105,30);
@@ -255,10 +254,7 @@ public class AdminCourseMgrDesign extends JDialog {
 		
 		
 	}//AdminCourseMgrDesign
-//	public static void main(String[] args) {
-//		new AdminCourseMgrDesign();
-//		
-//	}//main
+
 
 	public DefaultTableModel getDtmAdminCouresMgr() {
 		return dtmAdminCouresMgr;
