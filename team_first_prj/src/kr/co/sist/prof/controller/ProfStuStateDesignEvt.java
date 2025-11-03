@@ -36,7 +36,14 @@ public class ProfStuStateDesignEvt extends WindowAdapter implements ActionListen
             String selectedCourse = (String) pssd.getJcbStuState().getSelectedItem();
             if (selectedCourse != null && !selectedCourse.isEmpty()) {
                 try {
-					updateTableByCourse(selectedCourse);
+					if (selectedCourse=="전체 과정") {
+					    viewProfStuState(); // 초기 데이터 로딩
+					} else {
+						if (selectedCourse.contains("(종료)")) {
+							selectedCourse=selectedCourse.substring(0,selectedCourse.indexOf("(종료)"));
+						}
+						updateTableByCourse(selectedCourse);
+					}
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -47,6 +54,7 @@ public class ProfStuStateDesignEvt extends WindowAdapter implements ActionListen
             }
         }
     }
+
     
     
     @Override
