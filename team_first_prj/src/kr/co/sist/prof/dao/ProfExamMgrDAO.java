@@ -27,7 +27,7 @@ public class ProfExamMgrDAO {
 		return pemDAO;
 	}//getInstance
 	
-	
+	 
 	/**
 	 * 헤딩 교수의 과정과 해당학생의 정보 조회
 	 * @return
@@ -107,7 +107,7 @@ public class ProfExamMgrDAO {
 			.append("         from exam e,COURSE c,subject s ")
 			.append("         where e.course_code=c.course_code and s.sub_code=e.sub_code) ")
 			.append(" set exam_open=? ,exam_start=?, exam_end=? ")
-			.append(" where c.course_enddate > sysdate and course_name=? and sub_name=? ");
+			.append(" where course_name=? and sub_name=? ");
 
 			
 			// 3. 쿼리문 생성객체 얻기
